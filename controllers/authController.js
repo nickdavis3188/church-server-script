@@ -74,34 +74,43 @@ exports.signup = catchAsync(async (req, res, next) => {
   let { fullName, email, password, passwordConfirm} = userData;
 
 	//console.log(req.body)
+	 try{
+		 
+		  // check if user with the same email allready exit
+		  const adminExists = await AdminModel.exists({ email });
+		  //const memberExists = await Member.exists({ email });
+
+
+		  if (adminExists) {
+			return res.status(400).json({
+			  message: 'User already exists',
+			});
+		  }
+
+		 
+		  const newUser2 = await AdminModel.create({
+			fullName,
+			email,
+			password,
+			passwordConfirm,
+			role:'admin',
+			photoUrl:`${req.protocol}://${req.get('host')}/public/img/admin/default.jpg`
+		  })
+		  
+		  console.log(newUser2)
+		  
+		  res.status(200).json({
+			   status:'success',
+			   data:newUser2
+		   })
+	}catch (error) {
+		res.status(500).json({
+			   status:'fail',
+			   data:error
+		   })
+	}
  
-  // check if user with the same email allready exit
-  const adminExists = await AdminModel.exists({ email });
-  //const memberExists = await Member.exists({ email });
 
-
-  if (adminExists) {
-    return res.status(400).json({
-      message: 'User already exists',
-    });
-  }
-
- 
-  const newUser2 = await AdminModel.create({
-	fullName,
-	email,
-	password,
-	passwordConfirm,
-	role:'admin',
-	photoUrl:`${req.protocol}://${req.get('host')}/public/img/admin/default.jpg`
-  })
-  
-  console.log(newUser2)
-  
-  res.status(200).json({
-	   status:'success',
-	   data:newUser2
-   })
   
 
 
@@ -115,63 +124,87 @@ exports.signup = catchAsync(async (req, res, next) => {
 //Code for user login
 exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
+	try{
+		 
+		  //1) check if email or password was passed in
+		  if (!email || !password) {
+			  res.status(400).json({
+				   status:'not found',
+				   message:'Please Provide email and password!'
+			   })
+			
+		  }
 
-  //1) check if email or password was passed in
-  if (!email || !password) {
-	  res.status(400).json({
-		   status:'not found',
-		   message:'Please Provide email and password!'
-	   })
-    
-  }
+		  //2) Check if  user exists && password is correct
+		  let admin = await AdminModel.findOne({ email }).select('+password');
 
-  //2) Check if  user exists && password is correct
-  let admin = await AdminModel.findOne({ email }).select('+password');
+		  if (!admin) {
+			  return next(new AppError('No User with that email',404))
+			 
+		  }
 
-  if (!admin) {
-	  return next(new AppError('No User with that email',404))
-	 
-  }
+		  //Check if inputed password is correct
 
-  //Check if inputed password is correct
+		  const correct = await AdminModel.correctPassword(password, admin.password);
 
-  const correct = await AdminModel.correctPassword(password, admin.password);
+		  if (!correct) {
+			  return next(new AppError('Incorrect email or password',401))
+			 
+		   
+		  }
 
-  if (!correct) {
-	  return next(new AppError('Incorrect email or password',401))
-	 
-   
-  }
+		  // Update last login time
+		  admin.lastLoginTime = new Date();
+		  admin.lastLogoutTime = null;
+		  await admin.save()
 
-  // Update last login time
-  admin.lastLoginTime = new Date();
-  admin.lastLogoutTime = null;
-  await admin.save()
+		  //3) If everything is ok, send token to client
+		  createSendToken(admin, 200, res);
+	}catch (error) {
+		res.status(500).json({
+			   status:'fail',
+			   data:error
+		   })
+	}
 
-  //3) If everything is ok, send token to client
-  createSendToken(admin, 200, res);
 });
 
 // User logout
 exports.logout = catchAsync(async (req, res, next) => {
-  let user = await AdminModel.findById(req.user.id)
-  user.lastLogoutTime = new Date();
-  user.save()
-  res.status(200).json({
-	  status:'success',
-	  message:'signout successfull'
-  })
+	try{
+		let user = await AdminModel.findById(req.user.id)
+		user.lastLogoutTime = new Date();
+		user.save()
+		res.status(200).json({
+			status:'success',
+			message:'signout successfull'
+		})
+	}catch (error) {
+		res.status(500).json({
+			   status:'fail',
+			   data:error
+		   })
+	}
+ 
 });
 
 
 exports.cheackLog = catchAsync(async (req,res,nex)=>{
-	const getUser = await AdminModel.findById(req.user.id)
-	if(getUser){
-		res.status(200).json({
-			status:'success',
-			data:getUser
-		})
+	try{
+		const getUser = await AdminModel.findById(req.user.id)
+		if(getUser){
+			res.status(200).json({
+				status:'success',
+				data:getUser
+			})
+		}
+	}catch (error) {
+		res.status(500).json({
+		   status:'fail',
+		   data:error
+	    })
 	}
+	
 })
 
 exports.protect = catchAsync(async (req, res, next) => {
@@ -186,43 +219,50 @@ exports.protect = catchAsync(async (req, res, next) => {
     //token = req.headers.authorization.slice(6)
     token = req.headers.authorization.split(' ')[1];
   }
+	try{
+		 //2) Validate token
+		if (!token) {
+			return next(
+			 res.status(401).json({
+				   status:'fail',
+				   message:'You are not logged in! Please login to get access'
+			  })
+			
+			);
+		  }
 
-  //2) Validate token
-  if (!token) {
-    return next(
-	 res.status(401).json({
+		 // const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+		 const decoded = await jwt.verify(token, process.env.JWT_SECRET);
+		console.log(decoded)
+		  //3) Check if user still exists
+		  const currentUser = await AdminModel.findById(decoded.id);
+		  console.log(currentUser)
+		  if (!currentUser) {
+			return next(
+			 res.status(401).json({
+				   status:'fail',
+				   message:'The user belonging to the token no longer exists.'
+			   })
+			  
+			);
+		  }
+
+		  //4) Check if user changed password after jwt was issued
+		  if (AdminModel.changedPasswordAfter(decoded.iat)) {
+			return next(new AppError('User recently changed password! Please login  again',401)) 
+		  }
+
+		  // GRANT ACCESS TO ROUTE
+		  req.user = currentUser;
+		console.log('protrect');
+		  next();
+	}catch (error) {
+		res.status(500).json({
 		   status:'fail',
-		   message:'You are not logged in! Please login to get access'
-	  })
-    
-    );
-  }
-
- // const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
- const decoded = await jwt.verify(token, process.env.JWT_SECRET);
-console.log(decoded)
-  //3) Check if user still exists
-  const currentUser = await AdminModel.findById(decoded.id);
-  console.log(currentUser)
-  if (!currentUser) {
-    return next(
-	 res.status(401).json({
-		   status:'fail',
-		   message:'The user belonging to the token no longer exists.'
-	   })
-      
-    );
-  }
-
-  //4) Check if user changed password after jwt was issued
-  if (AdminModel.changedPasswordAfter(decoded.iat)) {
-    return next(new AppError('User recently changed password! Please login  again',401)) 
-  }
-
-  // GRANT ACCESS TO ROUTE
-  req.user = currentUser;
-console.log('protrect');
-  next();
+		   data:error
+	    })
+	}
+ 
 });
 
 //Access Control
@@ -239,24 +279,25 @@ exports.accessControl = catchAsync(async (req, res, next) => {
 exports.forgotPassword = catchAsync(async (req, res, next) => {
   //1) Get user based on posted email
   const { email } = req.body;
-  const user = await AdminModel.findOne({ email });
-
-  if (!user) {
-	   res.status(404).json({
-		   status:'fail',
-		   message:'There is no user with that email'
-	   })
-   
-  }
-  // if (user.role == 'sub-admin') {
-  //   return next(new AppError('Please request a new password from Super admin', 403));
-  // }
-  // const resetToken = user.createPasswordResetToken();
-  // await user.save({ validateBeforeSave: false });
-
-  //3) Send it back as an email
-
   try {
+	  const user = await AdminModel.findOne({ email });
+
+	  if (!user) {
+		   res.status(404).json({
+			   status:'fail',
+			   message:'There is no user with that email'
+		   })
+	   
+	  }
+	  // if (user.role == 'sub-admin') {
+	  //   return next(new AppError('Please request a new password from Super admin', 403));
+	  // }
+	  // const resetToken = user.createPasswordResetToken();
+	  // await user.save({ validateBeforeSave: false });
+
+	  //3) Send it back as an email
+
+  
     //2) Generate the random restet CODE
     const resetCode = Math.floor(1000 + Math.random() * 9000);
 
@@ -292,7 +333,8 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
       await user.save({ validateBeforeSave: false });
 		 res.status(500).json({
 		   status:'fail',
-		   message:'There was an error sending the email. Try again later!'
+		   message:'There was an error sending the email. Try again later!',
+		   error
 	   })
       
     }
@@ -301,27 +343,35 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
 
 //confirm password reset code
 exports.confirmResetCode = catchAsync(async (req, res, next) => {
-  //check if the code exist
-  const user = await AdminModel.findOne({
-    passwordResetCode: req.params.code,
-    passwordRE: { $gt: Date.now() },
-  });
+	try{
+		 //check if the code exist
+		  const user = await AdminModel.findOne({
+			passwordResetCode: req.params.code,
+			passwordRE: { $gt: Date.now() },
+		  });
 
-  //2) If token  has not expired, and there is user, set new password
-  if (!user) {
-	   res.status(400).json({
+		  //2) If token  has not expired, and there is user, set new password
+		  if (!user) {
+			   res.status(400).json({
+				   status:'fail',
+				   message:'Reset code is invalid or has expired'
+			   })
+		 
+		  }
+
+		  // GIVE PREMISION
+		  res.status(200).json({
+			status: 'success',
+			message: 'Reset code is valid',
+			passwordResetCode: req.params.code,
+		  });
+	}catch (error) {
+		res.status(500).json({
 		   status:'fail',
-		   message:'Reset code is invalid or has expired'
-	   })
+		   data:error
+	    })
+	}
  
-  }
-
-  // GIVE PREMISION
-  res.status(200).json({
-    status: 'success',
-    message: 'Reset code is valid',
-    passwordResetCode: req.params.code,
-  });
 });
 
 //Code to reset User password
@@ -329,55 +379,71 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   // Update changedPasswordAt property for the user
   const { code } = req.params;
   const { password, passwordConfirm } = req.body;
-  const mainUser = await AdminModel.findOne({ passwordResetCode: code });
-  if (mainUser) {
-    if (passwordConfirm && password) {
-      mainUser.password = password;
-      mainUser.passwordConfirm = passwordConfirm;
-      mainUser.passwordResetExpires = undefined;
-      mainUser.passwordResetCode = undefined;
-      mainUser.passwordRE = undefined;
-      await mainUser.save();
+  try{
+	   const mainUser = await AdminModel.findOne({ passwordResetCode: code });
+	  if (mainUser) {
+		if (passwordConfirm && password) {
+		  mainUser.password = password;
+		  mainUser.passwordConfirm = passwordConfirm;
+		  mainUser.passwordResetExpires = undefined;
+		  mainUser.passwordResetCode = undefined;
+		  mainUser.passwordRE = undefined;
+		  await mainUser.save();
 
-      // Log the user in, send JWT to the client
-      createSendToken(mainUser, 200, res);
-    } else {
-		 res.status(400).json({
+		  // Log the user in, send JWT to the client
+		  createSendToken(mainUser, 200, res);
+		} else {
+			 res.status(400).json({
+			   status:'fail',
+			   message:'password and passwordConfirm cant be empty, pleass set your password'
+		   })
+		 
+		}
+	  } else {
+		   res.status(400).json({
+			   status:'fail',
+			   message:'Error #U404R: sorry something went wrong, if this contenue pls contact the customer care'
+		   })
+		
+	  }
+  }catch (error) {
+		res.status(500).json({
 		   status:'fail',
-		   message:'password and passwordConfirm cant be empty, pleass set your password'
-	   })
-     
-    }
-  } else {
-	   res.status(400).json({
-		   status:'fail',
-		   message:'Error #U404R: sorry something went wrong, if this contenue pls contact the customer care'
-	   })
-    
-  }
+		   data:error
+	    })
+	}
+ 
 });
 
 exports.updatePassword = catchAsync(async (req, res, next) => {
-  
-  //1) Get user from collection
-  const user = await AdminModel.findById(req.user.id).select('+password');
-  // console.log(user);
-  //2) Check if posted password is correct
-  if (!(await user.correctPassword(req.body.passwordCurrent, user.password))) {
-	   res.status(401).json({
+  try{
+	   //1) Get user from collection
+	  const user = await AdminModel.findById(req.user.id).select('+password');
+	  // console.log(user);
+	  //2) Check if posted password is correct
+	  if (!(await user.correctPassword(req.body.passwordCurrent, user.password))) {
+		   res.status(401).json({
+			   status:'fail',
+			   message:'Your current password is wrong'
+		   })
+		
+	  }
+
+	  //3) If so, update password
+	  user.password = req.body.password;
+	  user.passwordConfirm = req.body.passwordConfirm;
+	  await user.save();
+
+	  //4) Log user in, send JWT
+	  createSendToken(user, 200, res);
+	  
+  }catch (error) {
+		res.status(500).json({
 		   status:'fail',
-		   message:'Your current password is wrong'
-	   })
-    
-  }
-
-  //3) If so, update password
-  user.password = req.body.password;
-  user.passwordConfirm = req.body.passwordConfirm;
-  await user.save();
-
-  //4) Log user in, send JWT
-  createSendToken(user, 200, res);
+		   data:error
+	    })
+	}
+ 
 });
 
 
@@ -385,22 +451,31 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
 exports.inviteAdmin = catchAsync(async (req, res, next) => {
   const userData = { ...req.body };
   const { fullName, email, password, passwordConfirm } = userData;
-  const role = 'sub-admin'
-  const adminExists = await AdminModel.exists({ email, role });
+  try{
+		const role = 'sub-admin'
+	  const adminExists = await AdminModel.exists({ email, role });
 
-  if (adminExists) {
-    return res.status(400).json({
-      message: 'Admin already exists',
-    });
-  }
+	  if (adminExists) {
+		return res.status(400).json({
+		  message: 'Admin already exists',
+		});
+	  }
 
-  const newAdmin = await AdminModel.create({
-    fullName,
-    email,
-    password,
-    passwordConfirm,
-    role,
-  });
-  await new Email(newAdmin).sendWelcome();
-  createSendToken(newAdmin, 201, res);
+	  const newAdmin = await AdminModel.create({
+		fullName,
+		email,
+		password,
+		passwordConfirm,
+		role,
+	  });
+	  await new Email(newAdmin).sendWelcome();
+	  createSendToken(newAdmin, 201, res);
+	  
+  }catch (error) {
+		res.status(500).json({
+		   status:'fail',
+		   data:error
+	    })
+	}
+
 })

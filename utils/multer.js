@@ -23,4 +23,4 @@ var storage = multer.diskStorage({
 
 var uploadFile = multer({ storage: storage});
 
-module.exports = uploadFile.single('file');
+module.exports = uploadFile.single('file')
