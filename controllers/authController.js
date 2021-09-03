@@ -249,10 +249,10 @@ exports.protect = catchAsync(async (req, res, next) => {
 		  }
 
 		 // const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
-		 const decoded = await jwt.verify(token, process.env.JWT_SECRET);
+		 const decoded = await jwt.verify(token,"davisSecret");
 		console.log(decoded)
 		  //3) Check if user still exists
-		  const currentUser = await AdminModel.findById(decoded.id);
+		  const currentUser = await AdminModel.findById(decoded.userId);
 		  console.log(currentUser)
 		  if (!currentUser) {
 			return next(
@@ -265,9 +265,9 @@ exports.protect = catchAsync(async (req, res, next) => {
 		  }
 
 		  //4) Check if user changed password after jwt was issued
-		  if (AdminModel.changedPasswordAfter(decoded.iat)) {
-			return next(new AppError('User recently changed password! Please login  again',401)) 
-		  }
+		//  if (AdminModel.changedPasswordAfter(decoded.iat)) {
+		//	return next(new AppError('User recently changed password! Please login  again',401)) 
+		 // }
 
 		  // GRANT ACCESS TO ROUTE
 		  req.user = currentUser;
