@@ -136,7 +136,7 @@ exports.login = catchAsync(async (req, res, next) => {
 		  }
 
 		  //2) Check if  user exists && password is correct
-		  let admin = await AdminModel.findOne({ email }).select('+password');
+		  let admin = await AdminModel.find({ email })
 
 		  if (!admin) {
 			  return next(new AppError('No User with that email',404))
