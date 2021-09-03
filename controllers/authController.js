@@ -1,4 +1,3 @@
-const jwt = require('jsonwebtoken');
 const { promisify } = require('util');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
@@ -8,6 +7,7 @@ const Member = require('../models/membersModel');
 const AdminModel = require('../models/adminModel');
 const crypto = require('crypto');
 const multer = require('multer');
+const jwt = require("jsonwebtoken")
 // const url = require('../host')
 
 const createSendToken = (user, statusCode, res) => {
@@ -124,7 +124,7 @@ exports.signup = catchAsync(async (req, res, next) => {
 //Code for user login
 exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
-	//try{
+	try{
 		 
 		  //1) check if email or password was passed in
 		  if (!email || !password) {
@@ -136,7 +136,7 @@ exports.login = catchAsync(async (req, res, next) => {
 		  }
 
 		  //2) Check if  user exists && password is correct
-		  let admin = await AdminModel.find({ email })
+		  let admin = await AdminModel.findOne({ email }).select('+password');
 
 		  if (!admin) {
 			  return next(new AppError('No User with that email',404))
@@ -157,18 +157,32 @@ exports.login = catchAsync(async (req, res, next) => {
 		  admin.lastLoginTime = new Date();
 		  admin.lastLogoutTime = null;
 		  await admin.save()
-
+			
+	   const tokenm = await jwt.sign({
+			 userId:admin._id,
+			 userName:admin.fullName,
+			 isAdmin:admin.role
+		 },"davisSecret",
+		 {
+			 expiresIn:"24h"
+		 })
+		 
+		 res.status(500).json({
+			    status: 'success',
+			   token:tokenm
+			})
+			
 		  //3) If everything is ok, send token to client
-		  createSendToken(admin, 200, res);
-//	}catch (error) {
-//		if(error){
-	//		res.status(500).json({
-//			   status:'fail',
-//			   data:error
-///			})
-	//	}
+		 // createSendToken(admin, 200, res);
+	}catch (error) {
+		if(error){
+			res.status(500).json({
+			   status:'fail',
+			   data:error
+			})
+		}
 		
-	//}
+	}
 
 });
 
