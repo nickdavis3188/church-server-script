@@ -161,10 +161,13 @@ exports.login = catchAsync(async (req, res, next) => {
 		  //3) If everything is ok, send token to client
 		  createSendToken(admin, 200, res);
 	}catch (error) {
-		res.status(500).json({
+		if(error){
+			res.status(500).json({
 			   status:'fail',
 			   data:error
-		   })
+			})
+		}
+		
 	}
 
 });
