@@ -80,9 +80,10 @@ const dashboradFilter = (yearFilterdData,selectedYear)=>{
 //static
 exports.dashboarStatic = catchAsync(async(req, res, next) => {
    //const staticM = await Member.find({});
-   tyr{
-	     const lists = await Member.find({})
-   //console.log(lists)
+   try{
+	   
+	    const lists = await Member.find({})
+		//console.log(lists)
 		if(lists){
 			let male = [];
 			let female = [];
@@ -93,14 +94,14 @@ exports.dashboarStatic = catchAsync(async(req, res, next) => {
 				//console.log(data[i])
 				}
 			}
-		//female
+			//female
 			for(let i = 0; i < lists.length; i++){
 				if(lists[i].Sex == 'female'){
 					female.push(lists[i])
 				//console.log(data[i])
 				}
 			}
-		//total
+			//total
 			let mNum = male.length
 			let fNum = female.length
 			let totNum = lists.length
