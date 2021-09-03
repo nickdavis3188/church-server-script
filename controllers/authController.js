@@ -124,7 +124,7 @@ exports.signup = catchAsync(async (req, res, next) => {
 //Code for user login
 exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
-	try{
+	//try{
 		 
 		  //1) check if email or password was passed in
 		  if (!email || !password) {
@@ -160,15 +160,15 @@ exports.login = catchAsync(async (req, res, next) => {
 
 		  //3) If everything is ok, send token to client
 		  createSendToken(admin, 200, res);
-	}catch (error) {
-		if(error){
-			res.status(500).json({
-			   status:'fail',
-			   data:error
-			})
-		}
+//	}catch (error) {
+//		if(error){
+	//		res.status(500).json({
+//			   status:'fail',
+//			   data:error
+///			})
+	//	}
 		
-	}
+	//}
 
 });
 
