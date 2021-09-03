@@ -80,37 +80,45 @@ const dashboradFilter = (yearFilterdData,selectedYear)=>{
 //static
 exports.dashboarStatic = catchAsync(async(req, res, next) => {
    //const staticM = await Member.find({});
-   const lists = await Member.find({})
+   tyr{
+	     const lists = await Member.find({})
    //console.log(lists)
-   if(lists){
-	    let male = [];
-		let female = [];
+		if(lists){
+			let male = [];
+			let female = [];
 		
-		for(let i = 0; i < lists.length; i++){
-			if(lists[i].Sex == 'male'){
-				male.push(lists[i])
+			for(let i = 0; i < lists.length; i++){
+				if(lists[i].Sex == 'male'){
+					male.push(lists[i])
 				//console.log(data[i])
+				}
 			}
-		}
 		//female
-		for(let i = 0; i < lists.length; i++){
-			if(lists[i].Sex == 'female'){
-				female.push(lists[i])
+			for(let i = 0; i < lists.length; i++){
+				if(lists[i].Sex == 'female'){
+					female.push(lists[i])
 				//console.log(data[i])
+				}
+			}
+		//total
+			let mNum = male.length
+			let fNum = female.length
+			let totNum = lists.length
+		
+			if(male.length > 1){
+				res.status(200).json({
+					status:'success',
+					data:{male:mNum ,female:fNum,total:totNum}
+				})
 			}
 		}
-		//total
-		let mNum = male.length
-		let fNum = female.length
-		let totNum = lists.length
-		
-		if(male.length > 1){
-			res.status(200).json({
-			   status:'success',
-			   data:{male:mNum ,female:fNum,total:totNum}
-		   })
-		}
-   }
+   }catch (error) {
+		res.status(500).json({
+		   status:'fail',
+		   data:error
+	    })
+	}
+ 
 
    
    
