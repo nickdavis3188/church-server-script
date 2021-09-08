@@ -30,19 +30,28 @@ const onlyAdminPermitted = (role) => {
 }
 
 
-const multerStorage = multer.memoryStorage();
+//////////////////////////////////Multer config//////////
 
-const multerFilter = (req, file, cb) => {
-  if (file.mimetype.startsWith('image')) {
-    cb(null, true);
-  } else {
-    cb(new AppError('Not an image! Please upload only images', 400), false);
-  }
-};
+const storage = multer.diskStorage({
+	destination:function(req,file,cb){
+		cb(null,'./publicFile/admin/');
+	},
+	filename:function(req,file,cb){
+		cb(null,new Date().getFullYear()+file.originalname);
+	}
+})
 
-const upload = multer({ storage: multerStorage, fileFilter: multerFilter });
+const fileFilter = (req,file,cb)=>{
+	if(file.mimetype.startsWith('image')){
+		cb(null,true)
+	}else{
+		cb(new AppError('Not an image! Please upload only images', 400),false)
+	}
+}
 
-exports.uploadUserPhoto = upload.single('photo');
+exports.upload = multer({storage:storage,fileFilter:fileFilter})
+
+//////////////////////////////////////////////
 
 //Code to resize image and store as jpg
 exports.resizeUserPhoto = catchAsync(async (req, res, next) => {
@@ -68,7 +77,7 @@ const filterObj = (obj, ...allowedFileds) => {
 
 
 //Code for user signup
-exports.signup = catchAsync(async (req, res, next) => {
+exports.signup = async (req, res, next) => {
   const userData = { ...req.body };
 
   let { fullName, email, password, passwordConfirm} = userData;
@@ -87,22 +96,40 @@ exports.signup = catchAsync(async (req, res, next) => {
 			});
 		  }
 
+		 if(req.file){
+			const newUser = await AdminModel.create({
+				fullName,
+				email,
+				password,
+				passwordConfirm,
+				role:'admin',
+				photoUrl:`${req.protocol}://${req.get('host')}/publicFile/admin/${req.file.filename}`
+			  })
+			  
+			  console.log(newUser)
+			  
+			  res.status(200).json({
+				   status:'success',
+				   data:newUser
+			   }) 
+		 }else{
+			const newUser2 = await AdminModel.create({
+				fullName,
+				email,
+				password,
+				passwordConfirm,
+				role:'admin',
+				photoUrl:`${req.protocol}://${req.get('host')}/publicFile/admin/default.jpg`
+			})
+			  
+			console.log(newUser2)
+			  
+			res.status(200).json({
+				   status:'success',
+				   data:newUser2
+			})
+		}
 		 
-		  const newUser2 = await AdminModel.create({
-			fullName,
-			email,
-			password,
-			passwordConfirm,
-			role:'admin',
-			photoUrl:`${req.protocol}://${req.get('host')}/public/img/admin/default.jpg`
-		  })
-		  
-		  console.log(newUser2)
-		  
-		  res.status(200).json({
-			   status:'success',
-			   data:newUser2
-		   })
 	}catch (error) {
 		res.status(500).json({
 			   status:'fail',
@@ -118,7 +145,7 @@ exports.signup = catchAsync(async (req, res, next) => {
   // await new Email(newUser).sendWelcome();
 
   
-});
+};
 
 
 //Code for user login

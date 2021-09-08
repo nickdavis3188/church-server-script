@@ -3,6 +3,7 @@ const AppError = require('../utils/appError');
 //const dashFilter = require('../utils/memberDashboradFilter');
 const Member = require('../models/membersModel');
 
+//statistics function
 const dashboradFilter = (yearFilterdData,selectedYear)=>{
 	// let membersTotal = 0;
 	// membersTotal += data.length;
@@ -77,74 +78,80 @@ const dashboradFilter = (yearFilterdData,selectedYear)=>{
 }
 				
 
+
+
+
 //static
-exports.dashboarStatic = catchAsync(async(req, res, next) => {
+exports.dashboarStatic =((req, res, next) => {
    //const staticM = await Member.find({});
-   try{
-	   
-	    const lists = await Member.find({})
-		//console.log(lists)
-		if(lists){
+   Member.find()
+   .exec()
+   .then((memsData)=>{
+	   if(memsData.length >= 1){
+			//console.log(memsData)	
 			let male = [];
 			let female = [];
-		
-			for(let i = 0; i < lists.length; i++){
-				if(lists[i].Sex == 'male'){
-					male.push(lists[i])
+			//console.log(data)
+			for(let i = 0; i < memsData.length; i++){
+				if(memsData[i].Sex == 'male'){
+					male.push(memsData[i])
 				//console.log(data[i])
 				}
 			}
 			//female
-			for(let i = 0; i < lists.length; i++){
-				if(lists[i].Sex == 'female'){
-					female.push(lists[i])
+			for(let i = 0; i < memsData.length; i++){
+				if(memsData[i].Sex == 'female'){
+					female.push(memsData[i])
 				//console.log(data[i])
 				}
 			}
 			//total
 			let mNum = male.length
 			let fNum = female.length
-			let totNum = lists.length
-		
-			if(male.length > 1){
-				res.status(200).json({
-					status:'success',
-					data:{male:mNum ,female:fNum,total:totNum}
-				})
-			}
+			let totNum = memsData.length
+			
+			let dd = {male:mNum ,female:fNum,total:totNum}
+			console.log(dd)
+			
+			res.status(200).json({
+				status:'success',
+				data:dd
+			})		
 		}
-   }catch (error) {
-		res.status(500).json({
+   })	
+   .catch((err)=>{
+	   res.status(500).json({
 		   status:'fail',
-		   data:error
-	    })
-	}
- 
-
-   
-   
+		   data:err
+		})
+   })
+    
    
 })
 
 
 // statisticsDashborad
-exports.statisticsDashborad = catchAsync(async(req, res, next) => {
+exports.statisticsDashborad = (req, res, next) => {
    
 	//console.log(req.body.ya)
-	const memsData = await Member.find({Year:req.body.ya})
-	//console.log(memsData)
-	
-	
-		let maindd = dashboradFilter(memsData,req.body.ya)
-		if(maindd){
-			//console.log(maindd)
+	 Member.find({Year:req.body.ya})
+	.exec()
+	.then((memsData)=>{
+		if(memsData.length >= 1){
+			let maindd = dashboradFilter(memsData,req.body.ya)
 			res.status(200).json({
 				status:'success',
 				data:maindd
-			})
+			})	
 		}
 		
-		
-	
-    
-})
+	})
+	.catch((err)=>{
+	   res.status(500).json({
+		   status:'fail',
+		   data:err
+		})
+   })
+	//console.log(memsData)
+		 
+}

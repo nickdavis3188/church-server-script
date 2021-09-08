@@ -7,6 +7,7 @@ const router = express.Router();
 
 router.post(
   '/signup',
+  authController.upload.single('adminImg'),
   authController.signup,
 );
 router.post(

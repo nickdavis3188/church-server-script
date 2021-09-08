@@ -5,12 +5,12 @@ const authController = require('../controllers/authController');
 
 const router = express.Router();
 router.get(
-  '/getSingleMember/:id',
+  '/getSingleMember',
   membersController.singleMember 
 )
 router.post(
     '/memberRegistration',
-    authController.protect,
+    membersController.upload.single('memberImg'),
     membersController.memberRegistration
   );
 
@@ -21,9 +21,11 @@ router.post(
   );
 
 router.post(
-  '/attendance',
+  '/attendance/:id',
   membersController.Attendace
 )
+
+router.post('/fuploads',membersController.upload.single('memberImg') ,membersController.singleFile)
   
 
 module.exports = router;

@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 const url = require("../host")
+const JourneyModel = require('../models/JourneyModel')
 
 const memberSchema = mongoose.Schema(
   {
-    MemberID:String,
     
     Firstname: {
       type: String,
@@ -24,7 +24,6 @@ const memberSchema = mongoose.Schema(
     },
     ImageUrl:{
       type:String,
-      default:`${url}/public/img/members/default.jpg`
     },
     RegNumber: {
       type:String,
@@ -97,34 +96,20 @@ const memberSchema = mongoose.Schema(
       enum: ['admin','sub-admin','member'],
       default: 'member',
     },
-   currentJourney: {
-      type: String,
-      enum: ['Journey 101','Journey 201','Journey 202','Journey 301','Journey 401'],
-      default: 'Journey 101',
-    },
-    nextJourney:String,
+   currentJourney: {type:mongoose.Schema.Types.ObjectId,ref:"journey"},
+    nextJourney:{type:mongoose.Schema.Types.ObjectId,ref:"journey"},
     journeyAttend:[{type:mongoose.Schema.Types.ObjectId,ref:"attendance"}],
     memberStatus:String,
     password:String,
     monthCreated:Number,
     Year:Number,
-    timeStamp:Date,
-   // lastLoginTime: Date,
-  //  lastLogoutTime: Date,
-  //  passwordChangedAt: Date,
-  //  passwordResetCode: Number,
-  //  passwordResetExpires: Date,
-  //  passwordRE: Number,
-  });
+  },{ timestamps: true });
 
   memberSchema.pre('save', function (next) {
     this.password = this.Surname;
     this.monthCreated =  new Date().getMonth();
     this.Year =  new Date().getFullYear();
-    this.timeStamp = Date.now() - 1000;
-    this.currentJourney = 'Journey 101'
     this.role = 'member'
-    this.nextJourney = 'Journey 201'
     next();
   });
 

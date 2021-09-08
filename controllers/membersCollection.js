@@ -1,41 +1,36 @@
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const multer = require('multer');
-const Member = require('../models/membersModel');
-const XLSX = require("xlsx");
-const BulkModel = require('../models/bulkUploadModel');
-const nextJ = require('../utils/journeyCheck');
-const xlmulter = require('../utils/multer');
-const JourneyModel = require('../models/journeyAttendanceModel');
-const multerStorage = multer.memoryStorage();
-
-const multerFilter = (req, file, cb) => {
-  if (file.mimetype.startsWith('image')) {
-    cb(null, true);
-  } else {
-    cb(new AppError('Not an image! Please upload only images', 400), false);
-  }
-};
+const MemberModel = require('../models/membersModel');
+const JourneyAttendanceModel = require('../models/journeyAttendanceModel');
+const JourneyModel = require('../models/JourneyModel');
 
 
-var storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null,"upload");
-  },
-  filename: (req, file, cb) => {
-    console.log(file);
-    cb(null, `${Date.now()}-${file.originalname}`);
-  },
-});
+//////////////////////////////////Multer config//////////
 
-var uploadFile = multer({ storage: storage});
+const storage = multer.diskStorage({
+	destination:function(req,file,cb){
+		cb(null,'./publicFile/members/');
+	},
+	filename:function(req,file,cb){
+		cb(null,new Date().getFullYear()+file.originalname);
+	}
+})
 
-const upload = multer({ storage: multerStorage, fileFilter: multerFilter });
-const upload2 = multer({ storage: storage});
+const fileFilter = (req,file,cb)=>{
+	if(file.mimetype.startsWith('image')){
+		cb(null,true)
+	}else{
+		cb(new AppError('Not an image! Please upload only images', 400),false)
+	}
+}
 
-exports.uploadUserPhoto = upload.single('file');
-exports.xlsFileUpload = upload2.single('file');
+exports.upload = multer({storage:storage,fileFilter:fileFilter})
 
+//////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////
 //Code to resize image and store as jpg
 exports.resizeUserPhoto = catchAsync(async (req, res, next) => {
   if (!req.file) return next();
@@ -57,6 +52,8 @@ const filterObj = (obj, ...allowedFileds) => {
   });
   return newObj;
 };
+/////////////////////////////////////////////////////////////
+
 
 //convert excel date serial int to Date
 function ExcelDateToJSDate(serial) {
@@ -79,142 +76,374 @@ function ExcelDateToJSDate(serial) {
 }
 
 
-exports.memberRegistration = catchAsync(async (req,res,next)=>{
-    const {MemberID,RegNumber,Surname,Firstname,Address,PhoneNo,Sex,Email,DOB,MaritalStatus,WeddingAnniversary,Occupation,Business,Expertise,MemberTypeName,Status,DateJoinedTKA,ALTDate,MinistryID1,MinistryID2,MinistryID3} = req.body
-	console.log(req.body)
-	 const newMember = await Member.create({
-		MemberID,
-		RegNumber,
-		Surname,
-		Firstname,
-		Address,
-		PhoneNo,
-		ImageUrl:`${req.protocol}://${req.get('host')}/public/img/members/default.jpg`,
-		Sex,
-		Email,
-		DOB,
-		MaritalStatus,
-		WeddingAnniversary,
-		Occupation,
-		Business,
-		Expertise,
-		MemberTypeName,
-		Status,
-		DateJoinedTKA,
-		ALTDate,
-		MinistryID1,
-		MinistryID2,
-		MinistryID3
-	})
-	
-   if(newMember){
-	   res.status(200).json({
-        status:'success',
-        message:'Member Registration Successful'
-		})
-   }
-    
-})
+function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+}
 
-exports.membersBulkUpload = catchAsync(async (req,res,next)=>{
+
+exports.memberRegistration = async (req,res,next)=>{
+    const {MemberID,RegNumber,Surname,Firstname,Address,PhoneNo,Sex,Email,DOB,MaritalStatus,WeddingAnniversary,Occupation,Business,Expertise,MemberTypeName,Status,DateJoinedTKA,ALTDate} = req.body
+	//console.log(req.body)
+
+	// try{
+		const memberExist = await MemberModel.findOne({RegNumber:RegNumber})
+		if(memberExist){
+			res.status(500).json({
+				status:'fail',
+				message:'RegNumber exist!!'
+			})
+		}else{
+			if(req.file){
+				let journey22 = await JourneyModel.find({JourneyPriority:1})
+			//	console.log(journey22)
+				let journey33 = await JourneyModel.find({JourneyPriority:2})
+			//	console.log(journey33)
+				const newMember = await MemberModel.create({
+					RegNumber,
+					Surname,
+					Firstname,
+					Address,
+					PhoneNo,
+					ImageUrl:`${req.protocol}://${req.get('host')}/publicFile/members/${req.file.filename}`,
+					Sex,
+					Email,
+					DOB,
+					MaritalStatus,
+					WeddingAnniversary,
+					Occupation,
+					Business,
+					Expertise,
+					MemberTypeName,
+					Status,
+					DateJoinedTKA,
+					ALTDate,
+					currentJourney:journey22[0]._id,
+					nextJourney:journey33[0]._id
+				})
+				
+			   if(newMember){
+				//   console.log(newMember)
+				   res.status(200).json({
+					status:'success',
+					message:'Member Registration Successful'
+					})
+			   }
+			}else{
+				let journey11 = await JourneyModel.find({JourneyPriority:1})
+				//console.log(journey11)
+				let journey44 = await JourneyModel.find({JourneyPriority:2})
+				//console.log(journey44)
+				const newMember2 = await MemberModel.create({
+		
+					RegNumber,
+					Surname,
+					Firstname,
+					Address,
+					PhoneNo,
+					ImageUrl:`${req.protocol}://${req.get('host')}/publicFile/members/default.jpg`,
+					Sex,
+					Email,
+					DOB,
+					MaritalStatus,
+					WeddingAnniversary,
+					Occupation,
+					Business,
+					Expertise,
+					MemberTypeName,
+					Status,
+					DateJoinedTKA,
+					ALTDate,
+					currentJourney:journey11[0]._id,
+					nextJourney:journey44[0]._id
+					
+				})
+				
+			   if(newMember2){
+				  // console.log(newMember2)
+				   res.status(200).json({
+					status:'success',
+					message:'Member Registration Successful'
+					})
+			   }
+			}
+		
+		}
+	
+	// }catch(err){
+	// 	res.status(500).json({
+	// 		status:'fail',
+	// 		message:err
+	// 	})
+	
+	// }
+
+    
+}
+
+exports.membersBulkUpload = async (req,res,next)=>{
 	console.log(req.body)
-	if(req.body){
-		const maindata = req.body
-		maindata.forEach((e)=>{
-			e.currentJourney = 'Journey 101'
-			e.nextJourney = 'Journey 201'
-			e.role = 'member'
-			e.journeyAttend = []
-			e.monthCreated = new Date().getMonth()
-			e.Year = new Date().getFullYear()
-			e.DOB = Number.isInteger(e.DOB)?ExcelDateToJSDate(e.DOB):e.DOB
-			e.WeddingAnniversary = Number.isInteger(e.WeddingAnniversary)?ExcelDateToJSDate(e.WeddingAnniversary):e.WeddingAnniversary
-			e.DateJoinedTKA = Number.isInteger(e.DateJoinedTKA)?ExcelDateToJSDate(e.DateJoinedTKA):e.DateJoinedTKA,
-			e.ALTDate = Number.isInteger(e.ALTDate)?ExcelDateToJSDate(e.ALTDate):e.ALTDate
-			let mydata = [e]
-			const bulkMember = Member.insertMany(e)
-			
-		})
-	
-		 
-		 res.status(200).json({
-			status:'success',
-			message:'Bulk upload successful'
-		})
-	
-		 
+	try {
+		if(req.body){
+			const current = await JourneyModel.find({JourneyPriority:1})
+			const nextj = await JourneyModel.find({JourneyPriority:2})
+			const maindata = req.body
+			maindata.forEach((e)=>{	
+				e.currentJourney = current[0]._id
+				e.nextJourney =nextj[0]._id
+				e.role = 'member'
+				e.journeyAttend = []
+				e.monthCreated = new Date().getMonth()
+				e.Year = new Date().getFullYear()
+				e.DOB = Number.isInteger(e.DOB)?ExcelDateToJSDate(e.DOB):e.DOB
+				e.WeddingAnniversary = Number.isInteger(e.WeddingAnniversary)?ExcelDateToJSDate(e.WeddingAnniversary):e.WeddingAnniversary
+				e.DateJoinedTKA = Number.isInteger(e.DateJoinedTKA)?ExcelDateToJSDate(e.DateJoinedTKA):e.DateJoinedTKA,
+				e.ALTDate = Number.isInteger(e.ALTDate)?ExcelDateToJSDate(e.ALTDate):e.ALTDate
+				let mydata = [e]
+				MemberModel.insertMany(e)
+				
+			})
+		
+			 
+			 res.status(200).json({
+				status:'success',
+				message:'Bulk upload successful'
+			})
+		
+			 
+		}
+		return next(new AppError('File not found',404))
+	} catch (error) {
+		if(error){
+			res.status(500).json({
+				status:'fail',
+				message:error
+			})
+		}
 	}
-	return next(new AppError('File not found',404))
+	
 
 	    
-})
+}
 
 // getBulkFiles
 
 // Attendace
 
-exports.Attendace = catchAsync(async (req,res,next)=>{
+exports.Attendace = async (req,res,next)=>{
      const {id} = req.params
-     const {date} = req.body
-     const journey = ['Journey 101','Journey 201','Journey 202','Journey 301','Journey 401'];
+	 console.log(id)
+   try {
+	   const journey = [1,2,3,4,5];
+	   if(req.body.date){
+		  
+		const attainedMember = await MemberModel.findById(id);
+		if(attainedMember){
+			
+			const currentJourney = await JourneyModel.find({_id:attainedMember.currentJourney})
+			if(currentJourney.length >= 1){
+				
+				const newJourneyAttaindance = await JourneyAttendanceModel.create({
+				   JourneyDate:req.body.date,
+				   JourneyId:currentJourney[0]._id,				  
+				})
 
-     const attainedMember = await Member.findById(id);
+				if(newJourneyAttaindance){
 
-     if(attainedMember){
+					
+					const currentNextJourney = await JourneyModel.find({_id:attainedMember.nextJourney})
+					
+					const currentJourney = await JourneyModel.find({_id:attainedMember.currentJourney})
+					
+					let currentNextJourneyIndex = journey.indexOf(currentNextJourney[0].JourneyPriority);
+					
+					let currentCurrentJourneyIndex = journey.indexOf(currentJourney[0].JourneyPriority);
+					
 
-       let nextJournySystem = nextJ(attainedMember.currentJourney)
 
-       const newJourneyAttaindance = await JourneyModel.create({
-          JourneyDate:date,
-          JourneyAtten:attainedMember.currentJourney,
-          MemberID:attainedMember._id
-        })
+					if(currentNextJourneyIndex === 4){
+						const allJourney = await JourneyModel.find({JourneyPriority:6})
+						const updataMember = await MemberModel.updateOne(
+							{_id:attainedMember._id},
+							{
+								$push:{journeyAttend:newJourneyAttaindance._id},
+								$set:{currentJourney:attainedMember.nextJourney, nextJourney:allJourney[0]._id}
+							}
+						)
+						if(updataMember){
+						
+							res.status(200).json({
+								status:'success',
+								message:'successful'
+							})
+						}
+					}else if(currentCurrentJourneyIndex === 4 ){
+						const allJourney2 = await JourneyModel.find({JourneyPriority:6})
+						const updataMember2 = await MemberModel.updateOne(
+							{_id:attainedMember._id},
+							{
+								$push:{journeyAttend:newJourneyAttaindance._id},
+								$set:{currentJourney:allJourney2[0]._id}
+							}
+						)
+						if(updataMember2){
+							
+							res.status(200).json({
+								status:'success',
+								message:'successful'
+							})
+						}
+					}
+					else{
+						const allJourney3 = await JourneyModel.find({})
+						const updataMember3 = await MemberModel.updateOne(
+							{_id:attainedMember._id},
+							{
+								$push:{journeyAttend:newJourneyAttaindance._id},
+								$set:{currentJourney:attainedMember.nextJourney,nextJourney:allJourney3[currentNextJourneyIndex + 1]}
+							}
+						)
+						if(updataMember3){
+							
+							res.status(200).json({
+								status:'success',
+								message:'successful'
+							})
+						}
+					}
+							
+				}
+			}
+		}
+	}
+	   
+   } catch (error) {
+	if(error){
+		res.status(500).json({
+			status:'fail',
+			message:error
+		})
+	}
+   } 
+}
+     
 
-       if(nextJournySystem !== 'final'){
-           let indexJ = journey.indexOf(nextJournySystem)
-           if(attainedMember.currentJourney !== 'Journey 301'){
-               const updataMember = await Member.updateOne(
-                   {_id:attainedMember._id},
-                   {
-                       $push:{journeyAttend:newJourneyAttaindance._id}
-                   },
-                   {currentJourney:nextJournySystem},
-                   {nextJourney:indexJ + 1},
-                   )
-               }
 
-               res.status(200).json({
-                   status:'success',
-                   data:updataMember
-               })
+function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+}
+exports.singleMember = (req,res,next)=>{
+    const {word} = req.body;
+	let isnum = /^\d+$/.test(word);
+	//console.log(isnum)
+	if(isnum){
+		// console.log('number')
+		MemberModel.find({PhoneNo:parseInt(word)})
+		.populate('currentJourney')
+		.populate('nextJourney')
+		. populate({
+			path: 'journeyAttend',
+			populate: {
+			path: ' JourneyId'
+			}
+		})
+		.exec()
+		.then((result)=>{
+			if(result.length >= 1){
+				console.log(result)
+				res.status(200).json({
+				 status:'success',
+				 data:result
+				})
+			}else{
+				res.status(404).json({
+				 status:'fail',
+				 message:'Member not found'
+			 })
+			}
+		})
+		.catch((err)=>{
+			if(err){
+				res.status(500).json({
+					status:'fail',
+					message:err
+				})
+			}
+			
+		})
+	}else{
+		//console.log('string')
+		const regex = new RegExp(!isnum?escapeRegex(word):'', 'gi')
+		MemberModel.find({$or:[{Surname:regex},{RegNumber:regex},{Email:regex}]})
+		.populate('currentJourney')
+		.populate('nextJourney')
+		. populate({
+			path: 'journeyAttend',
+			populate: {
+			path: ' JourneyId'
+			}
+		})
+		.exec()
+		.then((result)=>{
+			if(result.length >= 1){
+				console.log(result)
+				res.status(200).json({
+				 status:'success',
+				 data:result
+				})
+			}else{
+				res.status(404).json({
+				 status:'fail',
+				 message:'Member not found'
+			 })
+			}
+		})
+		.catch((err)=>{
+			if(err){
+				res.status(500).json({
+					status:'fail',
+					message:err
+				})
+			}
+			
+		})
+	}
+	
+	
+	
+     
+}
 
-           }
-           const updataMember1 = await Member.updateOne(
-               {_id:attainedMember._id},
-                {
-                   $push:{journeyAttend:newJourneyAttaindance._id}
-                },
-               {currentJourney:nextJournySystem},
-               {nextJourney:'Journey Completed'},
-               )
-           }
-           res.status(200).json({
-            status:'success',
-            data:updataMember1
-          })
-        
-})
+exports.singleFile = (req,res,next)=>{
+	console.log(req.file)
+	res.status(200).json({
+		status:'file uploaded'
+	})
+}
 
-exports.singleMember = catchAsync(async (req,res,next)=>{
-    const {id} = req.params;
+exports.updateUser = async (req,res,next)=>{
+	try {
+		const memberUpdate = await MemberModel.updateOne(
+			{_id:req.params.id},
+			{$set:req.body}
+		)
+		if(memberUpdate.nModified !== 0){
+			res.status(200).json({
+				status:'success',
+				message:'Update successful'
+			})
+		}else{
+			res.status(500).json({
+				status:'fail',
+				message:'Update fail'
+			})
+		}
+	} catch (error) {
+		if(error){
+			res.status(500).json({
+				status:'fail',
+				message:error
+			})
+		}
+	}
 
-    const memberProfile = await Member.findOne({_id:id})
-    .populate('journeyAttend')
-
-     if(memberProfile){
-         res.status(200).json({
-             status:'success',
-             data:memberProfile
-         })
-     }
-})
+}
