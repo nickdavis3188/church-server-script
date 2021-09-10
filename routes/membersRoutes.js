@@ -4,7 +4,7 @@ const authController = require('../controllers/authController');
 //const xlmulter = require('../utils/multer');
 
 const router = express.Router();
-router.get(
+router.post(
   '/getSingleMember',
   membersController.singleMember 
 )

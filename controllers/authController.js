@@ -277,10 +277,10 @@ exports.protect = catchAsync(async (req, res, next) => {
 
 		 // const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 		 const decoded = await jwt.verify(token,"davisSecret");
-		console.log(decoded)
+		//console.log(decoded)
 		  //3) Check if user still exists
 		  const currentUser = await AdminModel.findById(decoded.userId);
-		  console.log(currentUser)
+		  //console.log(currentUser)
 		  if (!currentUser) {
 			return next(
 			 res.status(401).json({
@@ -298,7 +298,7 @@ exports.protect = catchAsync(async (req, res, next) => {
 
 		  // GRANT ACCESS TO ROUTE
 		  req.user = currentUser;
-		console.log('protrect');
+		//console.log('protrect');
 		  next();
 	}catch (error) {
 		res.status(500).json({

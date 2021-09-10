@@ -333,10 +333,11 @@ function escapeRegex(text) {
 }
 exports.singleMember = (req,res,next)=>{
     const {word} = req.body;
+	console.log(word)
 	let isnum = /^\d+$/.test(word);
-	//console.log(isnum)
+	console.log(isnum)
 	if(isnum){
-		// console.log('number')
+		 console.log('number')
 		MemberModel.find({PhoneNo:parseInt(word)})
 		.populate('currentJourney')
 		.populate('nextJourney')
@@ -371,7 +372,7 @@ exports.singleMember = (req,res,next)=>{
 			
 		})
 	}else{
-		//console.log('string')
+		console.log('string')
 		const regex = new RegExp(!isnum?escapeRegex(word):'', 'gi')
 		MemberModel.find({$or:[{Surname:regex},{RegNumber:regex},{Email:regex}]})
 		.populate('currentJourney')
