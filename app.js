@@ -32,11 +32,12 @@ app.use("/publicFile",express.static("publicFile"))
 const corsOptions ={
    origin:'*', 
    credentials:true,            //access-control-allow-credentials:true
+   preflightContinue: false,
    optionSuccessStatus:200,
 }
 
-//app.use(cors(corsOptions))
-app.use(cors())
+app.use(cors(corsOptions))
+//app.use(cors())
 
 //app.use((req,res,next)=>{
 	//allow cross access
