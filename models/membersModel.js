@@ -64,33 +64,9 @@ const memberSchema = mongoose.Schema(
       type:String,
 	  trim:true
     },
-
-    MemberTypeName: {
-      type:String,
-	  trim:true
-    },
-    Status: {
-      type:String,
-	  trim:true
-    },
     DateJoinedTKA: {
       type:Date
-    },
-    ALTDate: {
-      type:Date
-    },
-    MinistryID1: {
-      type:String,
-	  trim:true
-    },
-    MinistryID2: {
-      type:String,
-	  trim:true
-    },
-    MinistryID3: {
-      type:String,
-	  trim:true
-    },
+    },   
     role: {
       type: String,
       enum: ['admin','sub-admin','member'],

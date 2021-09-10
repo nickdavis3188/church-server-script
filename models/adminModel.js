@@ -13,7 +13,6 @@ const adminShema = mongoose.Schema(
     },
     photoUrl: {
         type: String,
-        default:`${url}/public/img/admin/default.jpg`,
       },
     email: {
         type: String,

@@ -32,7 +32,6 @@ app.use("/publicFile",express.static("publicFile"))
 const corsOptions ={
    origin:'*', 
    credentials:true,            //access-control-allow-credentials:true
-   preflightContinue: false,
    optionSuccessStatus:200,
 }
 

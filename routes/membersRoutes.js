@@ -24,7 +24,10 @@ router.post(
   '/attendance/:id',
   membersController.Attendace
 )
-
+router.post(
+  '/memberUpdate/:id',
+  membersController.updateUser
+)
 router.post('/fuploads',membersController.upload.single('memberImg') ,membersController.singleFile)
   
 

@@ -1,6 +1,57 @@
 const JourneyModel = require('../models/JourneyModel');
 const journeyModel = require('../models/JourneyModel');
 
+
+exports.findAllJourney = async (req,res,next)=>{
+	try{
+		const Journey = await journeyModel.find({})
+	if(Journey.length >= 1){
+		res.status(200).json({
+			status:'success',
+			data:Journey 
+		})
+	}else{
+		res.status(404).json({
+		status:'fail',
+		message:'Not found' 
+		})
+	}
+	}catch(err){
+		if(err){
+			res.status(500).json({
+				status:"fail",
+				message:err
+			})
+		}
+	}
+	
+}
+
+exports.findSingleJourney = async (req,res,next)=>{
+	try{
+		const Journey = await journeyModel.find({_id:req.body.id})
+		if(Journey.length >= 1){
+			res.status(200).json({
+				status:'success',
+				data:Journey 
+			})
+		}else{
+			res.status(404).json({
+			status:'fail',
+			message:'Not found' 
+			})
+		}
+	}catch(err){
+		if(err){
+			res.status(500).json({
+				status:"fail",
+				message:err
+			})
+		}
+	}
+	
+}
+
 exports.journeyRegistration = async (req,res,next)=>{
     try{
        // console.log(req.body)

@@ -82,7 +82,7 @@ function escapeRegex(text) {
 
 
 exports.memberRegistration = async (req,res,next)=>{
-    const {MemberID,RegNumber,Surname,Firstname,Address,PhoneNo,Sex,Email,DOB,MaritalStatus,WeddingAnniversary,Occupation,Business,Expertise,MemberTypeName,Status,DateJoinedTKA,ALTDate} = req.body
+    const {MemberID,RegNumber,Surname,Firstname,Address,PhoneNo,Sex,Email,DOB,MaritalStatus,WeddingAnniversary,Occupation,Business,Expertise,MemberTypeName,Status,DateJoinedTKA} = req.body
 	//console.log(req.body)
 
 	// try{
@@ -95,9 +95,9 @@ exports.memberRegistration = async (req,res,next)=>{
 		}else{
 			if(req.file){
 				let journey22 = await JourneyModel.find({JourneyPriority:1})
-			//	console.log(journey22)
+				console.log(journey22)
 				let journey33 = await JourneyModel.find({JourneyPriority:2})
-			//	console.log(journey33)
+				console.log(journey33)
 				const newMember = await MemberModel.create({
 					RegNumber,
 					Surname,
@@ -113,16 +113,13 @@ exports.memberRegistration = async (req,res,next)=>{
 					Occupation,
 					Business,
 					Expertise,
-					MemberTypeName,
-					Status,
 					DateJoinedTKA,
-					ALTDate,
 					currentJourney:journey22[0]._id,
 					nextJourney:journey33[0]._id
 				})
 				
 			   if(newMember){
-				//   console.log(newMember)
+				   console.log(newMember)
 				   res.status(200).json({
 					status:'success',
 					message:'Member Registration Successful'
@@ -130,9 +127,9 @@ exports.memberRegistration = async (req,res,next)=>{
 			   }
 			}else{
 				let journey11 = await JourneyModel.find({JourneyPriority:1})
-				//console.log(journey11)
+				console.log(journey11)
 				let journey44 = await JourneyModel.find({JourneyPriority:2})
-				//console.log(journey44)
+				console.log(journey44)
 				const newMember2 = await MemberModel.create({
 		
 					RegNumber,
@@ -149,17 +146,14 @@ exports.memberRegistration = async (req,res,next)=>{
 					Occupation,
 					Business,
 					Expertise,
-					MemberTypeName,
-					Status,
 					DateJoinedTKA,
-					ALTDate,
 					currentJourney:journey11[0]._id,
 					nextJourney:journey44[0]._id
 					
 				})
 				
 			   if(newMember2){
-				  // console.log(newMember2)
+				   console.log(newMember2)
 				   res.status(200).json({
 					status:'success',
 					message:'Member Registration Successful'
@@ -197,8 +191,7 @@ exports.membersBulkUpload = async (req,res,next)=>{
 				e.DOB = Number.isInteger(e.DOB)?ExcelDateToJSDate(e.DOB):e.DOB
 				e.WeddingAnniversary = Number.isInteger(e.WeddingAnniversary)?ExcelDateToJSDate(e.WeddingAnniversary):e.WeddingAnniversary
 				e.DateJoinedTKA = Number.isInteger(e.DateJoinedTKA)?ExcelDateToJSDate(e.DateJoinedTKA):e.DateJoinedTKA,
-				e.ALTDate = Number.isInteger(e.ALTDate)?ExcelDateToJSDate(e.ALTDate):e.ALTDate
-				let mydata = [e]
+				//let mydata = [e]
 				MemberModel.insertMany(e)
 				
 			})
