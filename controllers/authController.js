@@ -322,59 +322,38 @@ exports.accessControl = catchAsync(async (req, res, next) => {
 //Code for forgot password
 exports.forgotPassword = catchAsync(async (req, res, next) => {
   //1) Get user based on posted email
-  const { email } = req.body;
+  const { email,host } = req.body;
   try {
-	  const user = await AdminModel.findOne({ email });
+	  const user99 = await AdminModel.findOne({ email });
 
-	  if (!user) {
+	  if (!user99) {
 		   res.status(404).json({
 			   status:'fail',
 			   message:'There is no user with that email'
 		   })
 	   
 	  }
-	  // if (user.role == 'sub-admin') {
-	  //   return next(new AppError('Please request a new password from Super admin', 403));
-	  // }
-	  // const resetToken = user.createPasswordResetToken();
-	  // await user.save({ validateBeforeSave: false });
-
-	  //3) Send it back as an email
-
-  
-    //2) Generate the random restet CODE
-    const resetCode = Math.floor(1000 + Math.random() * 9000);
-
-    // const resetURL = `${req.protocol}://${req.get(
-    //   'host'
-    // )}/api/v1/users/resetPassword/${resetToken}`;
+	  
+	  let resetLink = `${host}/${user99._id}`
 
     //send reset code through email
-    await new Email(user, resetCode).sendPasswordReset();
+    await new Email(user99, resetLink).sendPasswordReset();
 
-    //send reset code through whatsapp
-    if (user.homePhone || user.workPhone) {
-      await new Whatsapp(
-        user.homePhone || user.workPhone,
-        resetCode
-      ).sendMessage();
-    }
-
-    user.passwordResetCode = resetCode;
-    user.passwordRE = Date.now() + 60 * 10000;
-    user.passwordResetExpires = Date.now() + 60 * 10000;
-    await user.save({ validateBeforeSave: false });
+    user99.passwordResetCode = resetCode;
+    user99.passwordRE = Date.now() + 60 * 10000;
+    user99.passwordResetExpires = Date.now() + 60 * 10000;
+    await user99.save({ validateBeforeSave: false });
 
     res.status(200).json({
       status: 'success',
       message:
-        'Code has been sent to your Email and WhatsApp\n check your inbox',
+        'Reset Link has been sent to your Email address, check your inbox',
     });
   } catch (error) {
     if (error) {
-      user.createPassswordResetCode = undefined;
-      user.passwordResetExpires = undefined;
-      await user.save({ validateBeforeSave: false });
+      user99.createPassswordResetCode = undefined;
+      user99.passwordResetExpires = undefined;
+      await user99.save({ validateBeforeSave: false });
 		 res.status(500).json({
 		   status:'fail',
 		   message:'There was an error sending the email. Try again later!',
@@ -386,56 +365,66 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
 });
 
 //confirm password reset code
-exports.confirmResetCode = catchAsync(async (req, res, next) => {
-	try{
-		 //check if the code exist
-		  const user = await AdminModel.findOne({
-			passwordResetCode: req.params.code,
-			passwordRE: { $gt: Date.now() },
-		  });
+// exports.confirmResetCode = catchAsync(async (req, res, next) => {
+	// try{
+		// check if the code exist
+		  // const user = await AdminModel.findOne({
+			// passwordResetCode: req.params.code,
+			// passwordRE: { $gt: Date.now() },
+		  // });
 
 		  //2) If token  has not expired, and there is user, set new password
-		  if (!user) {
-			   res.status(400).json({
-				   status:'fail',
-				   message:'Reset code is invalid or has expired'
-			   })
+		  // if (!user) {
+			   // res.status(400).json({
+				   // status:'fail',
+				   // message:'Reset code is invalid or has expired'
+			   // })
 		 
-		  }
+		  // }
 
-		  // GIVE PREMISION
-		  res.status(200).json({
-			status: 'success',
-			message: 'Reset code is valid',
-			passwordResetCode: req.params.code,
-		  });
-	}catch (error) {
-		res.status(500).json({
-		   status:'fail',
-		   data:error
-	    })
-	}
+		  //GIVE PREMISION
+		  // res.status(200).json({
+			// status: 'success',
+			// message: 'Reset code is valid',
+			// passwordResetCode: req.params.code,
+		  // });
+	// }catch (error) {
+		// res.status(500).json({
+		   // status:'fail',
+		   // data:error
+	    // })
+	// }
  
-});
+// });
 
 //Code to reset User password
 exports.resetPassword = catchAsync(async (req, res, next) => {
   // Update changedPasswordAt property for the user
-  const { code } = req.params;
+  const {id} = req.params;
   const { password, passwordConfirm } = req.body;
   try{
-	   const mainUser = await AdminModel.findOne({ passwordResetCode: code });
+	   const mainUser = await AdminModel.findOne({_id:id});
 	  if (mainUser) {
 		if (passwordConfirm && password) {
 		  mainUser.password = password;
 		  mainUser.passwordConfirm = passwordConfirm;
-		  mainUser.passwordResetExpires = undefined;
-		  mainUser.passwordResetCode = undefined;
-		  mainUser.passwordRE = undefined;
 		  await mainUser.save();
 
 		  // Log the user in, send JWT to the client
-		  createSendToken(mainUser, 200, res);
+		   const tokenm1 = await jwt.sign({
+			 userId:mainUser._id,
+			 userName:mainUser.fullName,
+			 isAdmin:mainUser.role
+			 },"davisSecret",
+			 {
+				 expiresIn:"24h"
+		   })
+		   
+		    res.status(statusCode).json({
+				status: 'success',
+				tokenm1
+		    });
+		  
 		} else {
 			 res.status(400).json({
 			   status:'fail',

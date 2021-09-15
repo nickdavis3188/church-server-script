@@ -24,31 +24,26 @@ const memberSchema = mongoose.Schema(
     },
     ImageUrl:{
       type:String,
+	  trim:true
     },
     RegNumber: {
       type:String,
 	  trim:true
     },
-    PhoneNo: {
-      type:Number,
-      
-    },
+    PhoneNo:Number,
     Sex: {
         type:String,
         trim:true
     },
 
-    Dob: {
-      type:Date,
-    },
+    Dob:Date,
 
     MaritalStatus: {
       type: String,
+	  trim:true
     },
 
-    WeddingAnniversary: {
-      type:Date,
-    },
+    WeddingAnniversary:Date,
 
     Occupation: {
       type: String,
@@ -64,9 +59,7 @@ const memberSchema = mongoose.Schema(
       type:String,
 	  trim:true
     },
-    DateJoinedTKA: {
-      type:Date
-    },   
+    DateJoinedTKA:Date,   
     role: {
       type: String,
       enum: ['admin','sub-admin','member'],

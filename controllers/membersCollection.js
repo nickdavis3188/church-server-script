@@ -82,7 +82,7 @@ function escapeRegex(text) {
 
 
 exports.memberRegistration = async (req,res,next)=>{
-    const {MemberID,RegNumber,Surname,Firstname,Address,PhoneNo,Sex,Email,DOB,MaritalStatus,WeddingAnniversary,Occupation,Business,Expertise,MemberTypeName,Status,DateJoinedTKA} = req.body
+    const {RegNumber,Surname,Firstname,Address,PhoneNo,Sex,Email,Dob,MaritalStatus,WeddingAnniversary,Occupation,Business,Expertise,DateJoinedTKA} = req.body
 	//console.log(req.body)
 
 	// try{
@@ -94,71 +94,133 @@ exports.memberRegistration = async (req,res,next)=>{
 			})
 		}else{
 			if(req.file){
+				console.log(Dob)
 				let journey22 = await JourneyModel.find({JourneyPriority:1})
 				console.log(journey22)
 				let journey33 = await JourneyModel.find({JourneyPriority:2})
 				console.log(journey33)
-				const newMember = await MemberModel.create({
-					RegNumber,
-					Surname,
-					Firstname,
-					Address,
-					PhoneNo,
-					ImageUrl:`${req.protocol}://${req.get('host')}/publicFile/members/${req.file.filename}`,
-					Sex,
-					Email,
-					DOB,
-					MaritalStatus,
-					WeddingAnniversary,
-					Occupation,
-					Business,
-					Expertise,
-					DateJoinedTKA,
-					currentJourney:journey22[0]._id,
-					nextJourney:journey33[0]._id
-				})
-				
-			   if(newMember){
-				   console.log(newMember)
-				   res.status(200).json({
-					status:'success',
-					message:'Member Registration Successful'
+				if(WeddingAnniversary !== "null"){
+					const newMember2 = await MemberModel.create({
+						RegNumber,
+						Surname,
+						Firstname,
+						Address,
+						PhoneNo,
+						ImageUrl:`${req.protocol}://${req.get('host')}/publicFile/members/${req.file.filename}`,
+						Sex,
+						Email,
+						Dob,
+						MaritalStatus,
+						WeddingAnniversary,
+						Occupation,
+						Business,
+						Expertise,
+						DateJoinedTKA,
+						currentJourney:journey22[0]._id,
+						nextJourney:journey33[0]._id
 					})
-			   }
+					
+				   if(newMember2){
+					   console.log(newMember2)
+					   res.status(200).json({
+						status:'success',
+						message:'Member Registration Successful'
+						})
+					}
+				}else{
+					const newMember3 = await MemberModel.create({
+						RegNumber,
+						Surname,
+						Firstname,
+						Address,
+						PhoneNo,
+						ImageUrl:`${req.protocol}://${req.get('host')}/publicFile/members/${req.file.filename}`,
+						Sex,
+						Email,
+						Dob,
+						MaritalStatus,
+						Occupation,
+						Business,
+						Expertise,
+						DateJoinedTKA,
+						currentJourney:journey22[0]._id,
+						nextJourney:journey33[0]._id
+					})
+						
+				   if(newMember3){
+					   console.log(newMember3)
+					   res.status(200).json({
+						status:'success',
+						message:'Member Registration Successful'
+						})
+					}
+				
+				}
+			
 			}else{
 				let journey11 = await JourneyModel.find({JourneyPriority:1})
 				console.log(journey11)
 				let journey44 = await JourneyModel.find({JourneyPriority:2})
 				console.log(journey44)
-				const newMember2 = await MemberModel.create({
-		
-					RegNumber,
-					Surname,
-					Firstname,
-					Address,
-					PhoneNo,
-					ImageUrl:`${req.protocol}://${req.get('host')}/publicFile/members/default.jpg`,
-					Sex,
-					Email,
-					DOB,
-					MaritalStatus,
-					WeddingAnniversary,
-					Occupation,
-					Business,
-					Expertise,
-					DateJoinedTKA,
-					currentJourney:journey11[0]._id,
-					nextJourney:journey44[0]._id
-					
-				})
-				
-			   if(newMember2){
-				   console.log(newMember2)
-				   res.status(200).json({
-					status:'success',
-					message:'Member Registration Successful'
+				if(WeddingAnniversary !== "null"){
+					const newMember4 = await MemberModel.create({
+						RegNumber,
+						Surname,
+						Firstname,
+						Address,
+						PhoneNo,
+						ImageUrl:`${req.protocol}://${req.get('host')}/publicFile/members/default.jpg`,
+						Sex,
+						Email,
+						Dob,
+						MaritalStatus,
+						WeddingAnniversary,
+						Occupation,
+						Business,
+						Expertise,
+						DateJoinedTKA,
+						currentJourney:journey11[0]._id,
+						nextJourney:journey44[0]._id
+						
 					})
-			   }
+					
+				   if(newMember4){
+					  console.log(newMember4)
+					   res.status(200).json({
+						status:'success',
+						message:'Member Registration Successful'
+						})
+				   }
+				}else{
+					const newMember5 = await MemberModel.create({
+						RegNumber,
+						Surname,
+						Firstname,
+						Address,
+						PhoneNo,
+						ImageUrl:`${req.protocol}://${req.get('host')}/publicFile/members/default.jpg`,
+						Sex,
+						Email,
+						Dob,
+						MaritalStatus,
+						Occupation,
+						Business,
+						Expertise,
+						DateJoinedTKA,
+						currentJourney:journey11[0]._id,
+						nextJourney:journey44[0]._id
+						
+					})
+					
+				   if(newMember5){
+					   console.log(newMember5)
+					   res.status(200).json({
+						status:'success',
+						message:'Member Registration Successful'
+						})
+				   }
+				}
+				
 			}
 		
 		}
@@ -195,12 +257,29 @@ exports.membersBulkUpload = async (req,res,next)=>{
 				MemberModel.insertMany(e)
 				
 			})
-		
-			 
-			 res.status(200).json({
+				
+					 
+			res.status(200).json({
 				status:'success',
 				message:'Bulk upload successful'
 			})
+			// for(let i = 0; i < maindata.length;i++){
+				// MemberModel.find({RegNumber:maindata[i].RegNumber},(err,data22)=>{
+					// if(data22.length >= 1){
+						// res.status(500).json({
+							// status:'fail',
+							// message:'reg exist',
+						//	data:data22
+						// })
+						
+					// }else{
+					
+					// }		
+				// })
+			// }
+			
+				
+	
 		
 			 
 		}
@@ -228,7 +307,7 @@ exports.Attendace = async (req,res,next)=>{
    try {
 	   const journey = [1,2,3,4,5];
 	   if(req.body.date){
-		  
+		  console.log(req.body.date)
 		const attainedMember = await MemberModel.findById(id);
 		if(attainedMember){
 			
@@ -415,7 +494,8 @@ exports.singleFile = (req,res,next)=>{
 }
 
 exports.updateUser = async (req,res,next)=>{
-	try {
+	const {RegNumber,Surname,Firstname,Address,PhoneNo,Sex,Email,Dob,MaritalStatus,WeddingAnniversary,Occupation,Business,Expertise,DateJoinedTKA} = req.body
+	
 		const memberUpdate = await MemberModel.updateOne(
 			{_id:req.params.id},
 			{$set:req.body}
@@ -431,13 +511,6 @@ exports.updateUser = async (req,res,next)=>{
 				message:'Update fail'
 			})
 		}
-	} catch (error) {
-		if(error){
-			res.status(500).json({
-				status:'fail',
-				message:error
-			})
-		}
-	}
+	
 
 }

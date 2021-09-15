@@ -50,9 +50,7 @@ const adminShema = mongoose.Schema(
       lastLoginTime: Date,
       lastLogoutTime: Date,
       passwordChangedAt: Date,
-      passwordResetCode: Number,
-      passwordResetExpires: Date,
-      passwordRE: Number,
+     
    
   });
 

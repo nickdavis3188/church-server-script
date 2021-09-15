@@ -32,9 +32,8 @@ router.post(
   authController.forgotPassword
 );
 router.post(
-  '/resetPassword',
-  authController.confirmResetCode,
-  authController.resetPassword
+  '/resetPassword/:id',
+  authController.resetPassword 
 );
 router.post(
   '/updatePassword',

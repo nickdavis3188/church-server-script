@@ -26,11 +26,11 @@ const { DEV_MAIL_USER, DEV_MAIL_PORT, DEV_MAIL_PASS, DEV_MAIL_HOST } = process.e
 // })
 
 module.exports = class Email {
-  constructor(user,resetCode = 1234) {
+  constructor(user,resetHost = 1234) {
     this.to = user.email;
     this.firstName = user.fullName.split(' ')[0];
     this.from = `${(process.env.NODE_ENV !== "production")? DEV_MAIL_USER : process.env.EMAIL_USERNAME}`;
-    this.resetCode = resetCode;
+    this.resetCode = resetHost;
   }
 
   //read file Async
@@ -140,7 +140,7 @@ await this.myTransporter().sendMail(mailOptions1);
     // 2) replacing the parameters with real values
   
     let setFirstName2 = setFirstName.replace(/{%NAME%}/g,this.firstName)
-    let setCode = setFirstName2.replace(/{%RESETCODE%}/g,this.resetCode)
+    let setCode = setFirstName2.replace(/{%RESETCODE%}/g,this.resetHost)
     // console.log(setCode)
 
     
@@ -150,7 +150,7 @@ await this.myTransporter().sendMail(mailOptions1);
     to: this.to,
     subject,
     html:setCode,
-    text:"Reset Password Code"
+    text:"Password reset link"
   };
 
   // 4) Create a transport and send email
@@ -158,12 +158,12 @@ await this.myTransporter().sendMail(mailOptions1);
   }
 
   async sendWelcome() {
-    await this.send('welcome', 'Welcome to the DTMDMS!');
+    await this.send('welcome', 'Welcome to the Kings Assembly DTMDMS!');
   }
 
   async sendPasswordReset() {
     await this.send2(
-      'Your password reset code (valid for only 10 minutes)'
+      'Your password reset Link'
     );
   }
 };
