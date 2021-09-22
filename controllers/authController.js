@@ -102,7 +102,7 @@ exports.signup = async (req, res, next) => {
 				email,
 				password,
 				passwordConfirm,
-				role:'admin',
+				role:'sub-admin',
 				photoUrl:`${req.protocol}://${req.get('host')}/publicFile/admin/${req.file.filename}`
 			  })
 			  
@@ -118,7 +118,7 @@ exports.signup = async (req, res, next) => {
 				email,
 				password,
 				passwordConfirm,
-				role:'admin',
+				role:'sub-admin',
 				photoUrl:`${req.protocol}://${req.get('host')}/publicFile/admin/default.jpg`
 			})
 			  
@@ -330,7 +330,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
 		   res.status(404).json({
 			   status:'fail',
 			   message:'There is no user with that email'
-		   })
+		   }
 	   
 	  }
 	  

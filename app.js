@@ -14,6 +14,7 @@ const adminRouter = require('./routes/adminRoutes');
 const authRouter = require('./routes/authRoutes')
 const seachRouter = require("./routes/searchRoutes")
 const journeyRouter = require("./routes/journeyRoutes")
+const journeyDate = require("./routes/journeyDateRoutes")
 
 
 const app = express();
@@ -58,6 +59,7 @@ app.use('/api/v1/dashborad',membersDashboradRouter);
 app.use('/api/v1/admin', adminRouter);
 app.use('/api/v1/search',seachRouter);
 app.use('/api/v1/journey',journeyRouter);
+app.use('/api/v1/journeyDate',journeyDate);
 
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

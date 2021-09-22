@@ -1,171 +1,195 @@
-var _ = require('underscore')
-var employeesCollection1 = [
-    {
-        id:1,
-        name:"Soni",
-        designation:"S",
-        salary:25000
-    },
-    {
-        id:2,
-        name:"Rohit",
-        designation:"SE33",
-        salary:35000
-    },
-    {
-        id:3,
-        name:"Akanksha",
-        designation:"Manager",
-        salary:45000
-    },
-    {
-        id:4,
-        name:"Mohan",
-        designation:"Accountant",
-        salary:30000
-    },
-    {
-        id:5,
-        name:"Gita",
-        designation:"SE",
-        salary:35000
-    },
-	{
-        id:5,
-        name:"Gita",
-        designation:"AA",
-        salary:35000
-    },
-	{
-        id:5,
-        name:"Gita",
-        designation:"SE166",
-        salary:35000
-    },
-	 {
-        id:4,
-        name:"Mohan",
-        designation:"Accountant1",
-        salary:30000
-    },
-    {
-        id:5,
-        name:"Gita",
-        designation:"SA",
-        salary:35000
-    },
-	{
-        id:5,
-        name:"Gita",
-        designation:"A",
-        salary:35000
-    }
-];
-var employeesCollection = [
-    
-    
-    {
-        id:3,
-        name:"Akanksha",
-        designation:"Manager",
-        salary:45000
-    },
-	{
-        id:5,
-        name:"Gita",
-        designation:"SE166",
-        salary:35000
-    },
-	 {
-        id:4,
-        name:"Mohan",
-        designation:"Accountant",
-        salary:30000
-    },
-    {
-        id:5,
-        name:"Gita",
-        designation:"SE",
-        salary:35000
-    },
-	{
-        id:5,
-        name:"Gita",
-        designation:"AW",
-        salary:35000
-    },
-	{
-        id:5,
-        name:"Gita",
-        designation:"AZ",
-        salary:35000
-    }
- 
-];
 
-let se1 = _.pluck(employeesCollection1, "designation")
-let se2 = _.pluck(employeesCollection, "designation")
+var gg = 44
+console.log(gg)
+// subadmin22
+// console.log('2021/9/2' === '2021/9/2')
+// console.log(new Date().getMonth())//"2021-09-19T19:14:09.993Z"
+
+//       const formatDate = (date)=>{
+//         var d = new Date(date),
+//         month = '' + (d.getMonth() + 1),
+//         day = '' + d.getDate(),
+//         year = d.getFullYear();
+    
+//         if (month.length < 2) 
+//             month = '0' + month;
+//         if (day.length < 2) 
+//             day = '0' + day;
+    
+//         return [year, month, day].join('-');
+//       }
+// 	console.log(formatDate("2021-09-19T19:14:09.993Z"))
+	
+// 	let  gg = [3]
+// 	console.log(gg[gg.length -1])
+// var _ = require('underscore')
+// var employeesCollection1 = [
+    // {
+        // id:1,
+        // name:"Soni",
+        // designation:"S",
+        // salary:25000
+    // },
+    // {
+        // id:2,
+        // name:"Rohit",
+        // designation:"SE33",
+        // salary:35000
+    // },
+    // {
+        // id:3,
+        // name:"Akanksha",
+        // designation:"Manager",
+        // salary:45000
+    // },
+    // {
+        // id:4,
+        // name:"Mohan",
+        // designation:"Accountant",
+        // salary:30000
+    // },
+    // {
+        // id:5,
+        // name:"Gita",
+        // designation:"SE",
+        // salary:35000
+    // },
+	// {
+        // id:5,
+        // name:"Gita",
+        // designation:"AA",
+        // salary:35000
+    // },
+	// {
+        // id:5,
+        // name:"Gita",
+        // designation:"SE166",
+        // salary:35000
+    // },
+	 // {
+        // id:4,
+        // name:"Mohan",
+        // designation:"Accountant1",
+        // salary:30000
+    // },
+    // {
+        // id:5,
+        // name:"Gita",
+        // designation:"SA",
+        // salary:35000
+    // },
+	// {
+        // id:5,
+        // name:"Gita",
+        // designation:"A",
+        // salary:35000
+    // }
+// ];
+// var employeesCollection = [
+    
+    
+    // {
+        // id:3,
+        // name:"Akanksha",
+        // designation:"Manager",
+        // salary:45000
+    // },
+	// {
+        // id:5,
+        // name:"Gita",
+        // designation:"SE166",
+        // salary:35000
+    // },
+	 // {
+        // id:4,
+        // name:"Mohan",
+        // designation:"Accountant",
+        // salary:30000
+    // },
+    // {
+        // id:5,
+        // name:"Gita",
+        // designation:"SE",
+        // salary:35000
+    // },
+	// {
+        // id:5,
+        // name:"Gita",
+        // designation:"AW",
+        // salary:35000
+    // },
+	// {
+        // id:5,
+        // name:"Gita",
+        // designation:"AZ",
+        // salary:35000
+    // }
+ 
+// ];
+
+// let se1 = _.pluck(employeesCollection1, "designation")
+// let se2 = _.pluck(employeesCollection, "designation")
 // console.log(se1)
 
-let des = _.difference(se1,se2);
-let result = employeesCollection1.filter(o1 => employeesCollection.some(o2 => o1.designation !== o2.designation));
+// let des = _.difference(se1,se2);
+// let result = employeesCollection1.filter(o1 => employeesCollection.some(o2 => o1.designation !== o2.designation));
 // var result = employeesCollection1.filter(function (o1) {
     // return employeesCollection.some(function (o2) {
         // return o1.designation === o2.designation; // return the ones with equal id
    // });
 // });
-function arr_diff (a1, a2) {
+// function arr_diff (a1, a2) {
 
-    var a = [], diff = [];
+    // var a = [], diff = [];
 
-    for (var i = 0; i < a1.length; i++) {
-        a[a1[i]] = true;
-    }
+    // for (var i = 0; i < a1.length; i++) {
+        // a[a1[i]] = true;
+    // }
 
-    for (var i = 0; i < a2.length; i++) {
-        if (a[a2[i]]) {
-            delete a[a2[i]];
-        } else {
-            a[a2[i]] = true;
-        }
-    }
+    // for (var i = 0; i < a2.length; i++) {
+        // if (a[a2[i]]) {
+            // delete a[a2[i]];
+        // } else {
+            // a[a2[i]] = true;
+        // }
+    // }
 
-    for (var k in a) {
-        diff.push(k);
-    }
+    // for (var k in a) {
+        // diff.push(k);
+    // }
 
-    return diff;
-}
+    // return diff;
+// }
 
-let fina = []
-let rej = []
-let hhu = arr_diff(se2,se1)
-for(let i = 0;i< hhu.length;i++){
-		for(let j = 0; j<employeesCollection.length;j++){
-			if(hhu[i] === employeesCollection[j].designation ){
-			fina.push(employeesCollection[j])
+// let fina = []
+// let rej = []
+// let hhu = arr_diff(se2,se1)
+// for(let i = 0;i< hhu.length;i++){
+		// for(let j = 0; j<employeesCollection.length;j++){
+			// if(hhu[i] === employeesCollection[j].designation ){
+			// fina.push(employeesCollection[j])
 			
-		}
+		// }
 		
-	}
+	// }
 	
-}
+// }
 
-let nn = _.pluck(fina,"designation")
-let kk = _.difference(se2,nn)
+// let nn = _.pluck(fina,"designation")
+// let kk = _.difference(se2,nn)
 
-for(let h = 0;h<employeesCollection.length;h++){
-	for(let v = 0;v < kk.length;v++){
-		if(kk[v] === employeesCollection[h].designation)
-		rej.push(employeesCollection[h])
-	}
+// for(let h = 0;h<employeesCollection.length;h++){
+	// for(let v = 0;v < kk.length;v++){
+		// if(kk[v] === employeesCollection[h].designation)
+		// rej.push(employeesCollection[h])
+	// }
 	
-}
-console.log("nn",nn)
-console.log('save',fina)
-console.log('se2',se2)
-console.log('res',kk)
-console.log('res',rej)
+// }
+// console.log("nn",nn)
+// console.log('save',fina)
+// console.log('se2',se2)
+// console.log('res',kk)
+// console.log('res',rej)
 // console.log('ff1',result)
 // console.log('ff',arr_diff(se2,se1))
 // console.log(arr_diff(['a', 'b'], ['a', 'b', 'c', 'd']));

@@ -76,7 +76,7 @@ const memberSchema = mongoose.Schema(
 
   memberSchema.pre('save', function (next) {
     this.password = this.Surname;
-    this.monthCreated =  new Date().getMonth();
+    this.monthCreated =  new Date().getMonth() +1 ;
     this.Year =  new Date().getFullYear();
     this.role = 'member'
     next();

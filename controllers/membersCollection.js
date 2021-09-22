@@ -4,6 +4,7 @@ const multer = require('multer');
 const MemberModel = require('../models/membersModel');
 const JourneyAttendanceModel = require('../models/journeyAttendanceModel');
 const JourneyModel = require('../models/JourneyModel');
+const JourneyDateModel = require('../models/journeyDateModel');
 
 
 //////////////////////////////////Multer config//////////
@@ -297,105 +298,136 @@ exports.membersBulkUpload = async (req,res,next)=>{
 	    
 }
 
-// getBulkFiles
+// gchek Journey Date
+exports.journeyDateCheck = async (req,res,next)=>{
+	// try {
+		const journeyDate = await JourneyDateModel.find({})
+
+		if(journeyDate.length >= 1){
+			console.log('dateJ',journeyDate)
+			const currentOrLastDate = journeyDate[ journeyDate.length -1 ]
+
+			const journeyD = new Date(currentOrLastDate.createdAt).toLocaleDateString()
+			const currentD = new Date().toLocaleDateString()
+
+			if(currentD !== journeyD){
+				res.status(404).json({
+					status:'not found',
+					message:'Journey Date Not Set'
+				})
+			}
+
+			console.log('singlrDate',currentOrLastDate.journeyDate)
+			req.dateAttain = currentOrLastDate.journeyDate
+			// GRANT ACCESS TO ROUTE
+			next()
+			
+		}
+	// } catch (error) {
+	// 	res.status(500).json({
+	// 		status:'fail',
+	// 		message:console.error()
+	// 	})
+	// }
+	
+} 
 
 // Attendace
 
 exports.Attendace = async (req,res,next)=>{
-     const {id} = req.params
-	 console.log(id)
-   try {
-	   const journey = [1,2,3,4,5];
-	   if(req.body.date){
-		  console.log(req.body.date)
-		const attainedMember = await MemberModel.findById(id);
-		if(attainedMember){
-			
-			const currentJourney = await JourneyModel.find({_id:attainedMember.currentJourney})
-			if(currentJourney.length >= 1){
+    const {id} = req.body
+
+    try {
+		if(req.dateAttain){
+			// console.log(req.dateAttain)
+			const journey = [1,2,3,4,5];
+			const attainedMember = await MemberModel.findById(id);
+			if(attainedMember){
 				
-				const newJourneyAttaindance = await JourneyAttendanceModel.create({
-				   JourneyDate:req.body.date,
-				   JourneyId:currentJourney[0]._id,				  
-				})
-
-				if(newJourneyAttaindance){
-
+				const currentJourney = await JourneyModel.find({_id:attainedMember.currentJourney})
+				if(currentJourney.length >= 1){
 					
-					const currentNextJourney = await JourneyModel.find({_id:attainedMember.nextJourney})
-					
-					const currentJourney = await JourneyModel.find({_id:attainedMember.currentJourney})
-					
-					let currentNextJourneyIndex = journey.indexOf(currentNextJourney[0].JourneyPriority);
-					
-					let currentCurrentJourneyIndex = journey.indexOf(currentJourney[0].JourneyPriority);
-					
-
-
-					if(currentNextJourneyIndex === 4){
-						const allJourney = await JourneyModel.find({JourneyPriority:6})
-						const updataMember = await MemberModel.updateOne(
-							{_id:attainedMember._id},
-							{
-								$push:{journeyAttend:newJourneyAttaindance._id},
-								$set:{currentJourney:attainedMember.nextJourney, nextJourney:allJourney[0]._id}
-							}
-						)
-						if(updataMember){
+					const newJourneyAttaindance = await JourneyAttendanceModel.create({
+					   JourneyDate:new Date(req.dateAttain).toLocaleDateString(),
+					   JourneyId:currentJourney[0]._id				  
+					})
+	
+					if(newJourneyAttaindance){
+	
 						
-							res.status(200).json({
-								status:'success',
-								message:'successful'
-							})
-						}
-					}else if(currentCurrentJourneyIndex === 4 ){
-						const allJourney2 = await JourneyModel.find({JourneyPriority:6})
-						const updataMember2 = await MemberModel.updateOne(
-							{_id:attainedMember._id},
-							{
-								$push:{journeyAttend:newJourneyAttaindance._id},
-								$set:{currentJourney:allJourney2[0]._id}
+						const currentNextJourney = await JourneyModel.find({_id:attainedMember.nextJourney})
+						
+						const currentJourney = await JourneyModel.find({_id:attainedMember.currentJourney})
+						
+						let currentNextJourneyIndex = journey.indexOf(currentNextJourney[0].JourneyPriority);
+						
+						let currentCurrentJourneyIndex = journey.indexOf(currentJourney[0].JourneyPriority);
+						
+	
+	
+						if(currentNextJourneyIndex === 4){
+							const allJourney = await JourneyModel.find({JourneyPriority:6})
+							const updataMember = await MemberModel.updateOne(
+								{_id:attainedMember._id},
+								{
+									$push:{journeyAttend:newJourneyAttaindance._id},
+									$set:{currentJourney:attainedMember.nextJourney, nextJourney:allJourney[0]._id}
+								}
+							)
+							if(updataMember){
+							
+								res.status(200).json({
+									status:'success',
+									message:'successful'
+								})
 							}
-						)
-						if(updataMember2){
-							
-							res.status(200).json({
-								status:'success',
-								message:'successful'
-							})
-						}
-					}
-					else{
-						const allJourney3 = await JourneyModel.find({})
-						const updataMember3 = await MemberModel.updateOne(
-							{_id:attainedMember._id},
-							{
-								$push:{journeyAttend:newJourneyAttaindance._id},
-								$set:{currentJourney:attainedMember.nextJourney,nextJourney:allJourney3[currentNextJourneyIndex + 1]}
+						}else if(currentCurrentJourneyIndex === 4 ){
+							const allJourney2 = await JourneyModel.find({JourneyPriority:6})
+							const updataMember2 = await MemberModel.updateOne(
+								{_id:attainedMember._id},
+								{
+									$push:{journeyAttend:newJourneyAttaindance._id},
+									$set:{currentJourney:allJourney2[0]._id}
+								}
+							)
+							if(updataMember2){
+								
+								res.status(200).json({
+									status:'success',
+									message:'successful'
+								})
 							}
-						)
-						if(updataMember3){
-							
-							res.status(200).json({
-								status:'success',
-								message:'successful'
-							})
 						}
+						else{
+							const allJourney3 = await JourneyModel.find({})
+							const updataMember3 = await MemberModel.updateOne(
+								{_id:attainedMember._id},
+								{
+									$push:{journeyAttend:newJourneyAttaindance._id},
+									$set:{currentJourney:attainedMember.nextJourney,nextJourney:allJourney3[currentNextJourneyIndex + 1]}
+								}
+							)
+							if(updataMember3){
+								
+								res.status(200).json({
+									status:'success',
+									message:'successful'
+								})
+							}
+						}
+								
 					}
-							
 				}
-			}
+			}	   
 		}
-	}
-	   
-   } catch (error) {
-	if(error){
-		res.status(500).json({
-			status:'fail',
-			message:error
-		})
-	}
-   } 
+	} catch (error) {
+			if(error){
+				res.status(500).json({
+					status:'fail',
+					message:error
+				})
+			}
+	} 
 }
      
 

@@ -17,11 +17,12 @@ router.post(
 router.post(
     '/bulkUpload',
     authController.protect,
-    membersController.membersBulkUpload,
+    membersController.membersBulkUpload
   );
 
 router.post(
-  '/attendance/:id',
+  '/attendance',
+  membersController.journeyDateCheck,
   membersController.Attendace
 )
 router.post(
