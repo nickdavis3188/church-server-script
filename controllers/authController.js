@@ -330,7 +330,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
 		   res.status(404).json({
 			   status:'fail',
 			   message:'There is no user with that email'
-		   }
+		   })
 	   
 	  }
 	  
@@ -346,8 +346,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
 
     res.status(200).json({
       status: 'success',
-      message:
-        'Reset Link has been sent to your Email address, check your inbox',
+      message:'Reset Link has been sent to your Email address, check your inbox'
     });
   } catch (error) {
     if (error) {
