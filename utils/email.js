@@ -26,11 +26,11 @@ const { DEV_MAIL_USER, DEV_MAIL_PORT, DEV_MAIL_PASS, DEV_MAIL_HOST } = process.e
 // })
 
 module.exports = class Email {
-  constructor(user,resetHost = 1234) {
+  constructor(user,resetHost) {
     this.to = user.email;
     this.firstName = user.fullName.split(' ')[0];
     this.from = `${(process.env.NODE_ENV !== "production")? DEV_MAIL_USER : process.env.EMAIL_USERNAME}`;
-    this.resetCode = resetHost;
+    this.resetlink = resetHost;
   }
 
   //read file Async
@@ -134,14 +134,18 @@ await this.myTransporter().sendMail(mailOptions1);
   //send email for password reset code
   async send2(subject){
     // 1) rendering html
-    let htmlTxt = await this.readFilePro(`${__dirname}/../views/html/resetCode.html`)
+    let htmlTxt = await this.readFilePro(`${__dirname}/../views/html/resetlink.html`)
 
 
     // 2) replacing the parameters with real values
   
-    let setFirstName2 = setFirstName.replace(/{%NAME%}/g,this.firstName)
-    let setCode = setFirstName2.replace(/{%RESETCODE%}/g,this.resetHost)
-    // console.log(setCode)
+    let setFirstName2 = htmlTxt.replace(/{%NAME%}/g,this.firstName)
+    let setCode = setFirstName2.replace(/{%RESETLINK%}/g,this.resetlink)
+    let setCode2 = setCode.replace(/{%RESETCODE%}/g,this.resetlink)
+    // let setCode3 = setCode.replace(/{%RESETLINK%}/g,this.resetlink)
+    // let setCode4 = setCode3.replace(/{%RESETLINK2%}/g,this.resetlink)
+    // const htmlcode = setCode 
+    // console.log(htmlcode)
 
     
     // 3) Define email options
@@ -149,7 +153,7 @@ await this.myTransporter().sendMail(mailOptions1);
     from: this.from,
     to: this.to,
     subject,
-    html:setCode,
+    html:setCode2,
     text:"Password reset link"
   };
 

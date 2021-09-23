@@ -310,20 +310,20 @@ exports.protect = catchAsync(async (req, res, next) => {
 });
 
 //Access Control
-exports.accessControl = catchAsync(async (req, res, next) => {
+exports.accessControl = async (req, res, next) => {
   if (req.user.role === 'admin' || req.user.role === 'sub-admin') {
     return next();
   }
   
   return next(new AppError('Only Admins can do this', 403));
-});
+};
 
 
 //Code for forgot password
-exports.forgotPassword = catchAsync(async (req, res, next) => {
+exports.forgotPassword = async (req, res, next) => {
   //1) Get user based on posted email
   const { email,host } = req.body;
-  try {
+//   try {
 	  const user99 = await AdminModel.findOne({ email });
 
 	  if (!user99) {
@@ -335,11 +335,11 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
 	  }
 	  
 	  let resetLink = `${host}/${user99._id}`
-
+		console.log(resetLink)
     //send reset code through email
     await new Email(user99, resetLink).sendPasswordReset();
 
-    user99.passwordResetCode = resetCode;
+    
     user99.passwordRE = Date.now() + 60 * 10000;
     user99.passwordResetExpires = Date.now() + 60 * 10000;
     await user99.save({ validateBeforeSave: false });
@@ -348,20 +348,21 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
       status: 'success',
       message:'Reset Link has been sent to your Email address, check your inbox'
     });
-  } catch (error) {
-    if (error) {
-      user99.createPassswordResetCode = undefined;
-      user99.passwordResetExpires = undefined;
-      await user99.save({ validateBeforeSave: false });
-		 res.status(500).json({
-		   status:'fail',
-		   message:'There was an error sending the email. Try again later!',
-		   error
-	   })
+// 	user99.createPassswordResetCode = undefined;
+// 	user99.passwordResetExpires = undefined;
+//   await user99.save({ validateBeforeSave: false });
+//   } catch (error) {
+//     if (error) {
+	
+// 		 res.status(500).json({
+// 		   status:'fail',
+// 		   message:'There was an error sending the email. Try again later!',
+// 		   error
+// 	   })
       
-    }
-  }
-});
+//     }
+//   }
+};
 
 //confirm password reset code
 // exports.confirmResetCode = catchAsync(async (req, res, next) => {
@@ -397,11 +398,13 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
 // });
 
 //Code to reset User password
-exports.resetPassword = catchAsync(async (req, res, next) => {
+exports.resetPassword = async (req, res, next) => {
   // Update changedPasswordAt property for the user
   const {id} = req.params;
+  console.log(id)
   const { password, passwordConfirm } = req.body;
-  try{
+  console.log(req.body)
+//   try{
 	   const mainUser = await AdminModel.findOne({_id:id});
 	  if (mainUser) {
 		if (passwordConfirm && password) {
@@ -419,7 +422,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
 				 expiresIn:"24h"
 		   })
 		   
-		    res.status(statusCode).json({
+		    res.status(200).json({
 				status: 'success',
 				tokenm1
 		    });
@@ -438,14 +441,14 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
 		   })
 		
 	  }
-  }catch (error) {
-		res.status(500).json({
-		   status:'fail',
-		   data:error
-	    })
-	}
+//   }catch (error) {
+// 		res.status(500).json({
+// 		   status:'fail',
+// 		   data:error
+// 	    })
+// 	}
  
-});
+};
 
 exports.updatePassword = catchAsync(async (req, res, next) => {
   try{
