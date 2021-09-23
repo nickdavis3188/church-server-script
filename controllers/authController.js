@@ -102,7 +102,7 @@ exports.signup = async (req, res, next) => {
 				email,
 				password,
 				passwordConfirm,
-				role:'sub-admin',
+				role:'admin',
 				photoUrl:`${req.protocol}://${req.get('host')}/publicFile/admin/${req.file.filename}`
 			  })
 			  
@@ -118,7 +118,7 @@ exports.signup = async (req, res, next) => {
 				email,
 				password,
 				passwordConfirm,
-				role:'sub-admin',
+				role:'admin',
 				photoUrl:`${req.protocol}://${req.get('host')}/publicFile/admin/default.jpg`
 			})
 			  
