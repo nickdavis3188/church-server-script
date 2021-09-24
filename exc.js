@@ -1,12 +1,14 @@
 
 var gg = [
-{a:47,h:9},
-{a:37,h:9},
-{a:27,h:9},
-{a:17,h:9},
+{a:47,h:9,_id:"h1"},
+{a:37,h:9,_id:"h2"},
+{a:27,h:9,_id:"h3"},
+{a:17,h:9,_id:"h4"},
 ]
-
-const hh = gg.filter((e)=> e.a !== 47)
+const nn = gg.findIndex((e)=> e._id === 'h3')
+const arr = gg.splice(nn,1) 
+console.log('filterd',gg)
+const hh = gg.filter((e)=> e._id !== "h3")
 
 console.log(hh)
 // subadmin22

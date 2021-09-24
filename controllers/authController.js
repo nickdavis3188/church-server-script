@@ -542,10 +542,12 @@ exports.inviteAdmin = async (req, res, next) => {
 
 exports.allAdminExcludingMe = async (req, res, next) => {
 	const {id}= req.body
-	
+	console.log('id',id)
 	const alAdmin = await AdminModel.find({})
 	if(alAdmin.length >= 1){
-		const eceptMe = alAdmin.filter((e)=> e._id !== id)
+	
+		const eceptMe = alAdmin.filter((e)=> e._id != id)
+	
 		res.status(200).json({
 			status:'success',
 			data:eceptMe
