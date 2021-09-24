@@ -11,7 +11,7 @@ exports.setJourneyDate = async(req,res,next)=>{
                 message:'Journey Date successfully set.'
             })
         }else{
-            res.status(500).json({
+            res.status(403).json({
                 status:'fail',
                 message:'Journey Date not set'
             })

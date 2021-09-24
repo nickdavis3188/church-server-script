@@ -106,7 +106,7 @@ exports.signup = async (req, res, next) => {
 				photoUrl:`${req.protocol}://${req.get('host')}/publicFile/admin/${req.file.filename}`
 			  })
 			  
-			  console.log(newUser)
+			  // console.log(newUser)
 			  
 			  res.status(200).json({
 				   status:'success',
@@ -122,7 +122,7 @@ exports.signup = async (req, res, next) => {
 				photoUrl:`${req.protocol}://${req.get('host')}/publicFile/admin/default.jpg`
 			})
 			  
-			console.log(newUser2)
+			// console.log(newUser2)
 			  
 			res.status(200).json({
 				   status:'success',
@@ -335,7 +335,7 @@ exports.forgotPassword = async (req, res, next) => {
 	  }
 	  
 	  let resetLink = `${host}/${user99._id}`
-		console.log(resetLink)
+		// console.log(resetLink)
     //send reset code through email
     await new Email(user99, resetLink).sendPasswordReset();
 
@@ -401,9 +401,9 @@ exports.forgotPassword = async (req, res, next) => {
 exports.resetPassword = async (req, res, next) => {
   // Update changedPasswordAt property for the user
   const {id} = req.params;
-  console.log(id)
+  // console.log(id)
   const { password, passwordConfirm } = req.body;
-  console.log(req.body)
+  // console.log(req.body)
 //   try{
 	   const mainUser = await AdminModel.findOne({_id:id});
 	  if (mainUser) {
@@ -483,10 +483,10 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
 
 
 
-exports.inviteAdmin = catchAsync(async (req, res, next) => {
+exports.inviteAdmin = async (req, res, next) => {
   const userData = { ...req.body };
   const { fullName, email, password, passwordConfirm } = userData;
-  try{
+  // try{
 		const role = 'sub-admin'
 	  const adminExists = await AdminModel.exists({ email, role });
 
@@ -496,21 +496,87 @@ exports.inviteAdmin = catchAsync(async (req, res, next) => {
 		});
 	  }
 
-	  const newAdmin = await AdminModel.create({
-		fullName,
-		email,
-		password,
-		passwordConfirm,
-		role,
-	  });
-	  await new Email(newAdmin).sendWelcome();
-	  createSendToken(newAdmin, 201, res);
+	   if(req.file){
+			const newAdmin = await AdminModel.create({
+				fullName,
+				email,
+				password,
+				passwordConfirm,
+				role,
+				photoUrl:`${req.protocol}://${req.get('host')}/publicFile/admin/${req.file.filename}`
+			  })
+			  // await new Email(newAdmin).sendWelcome();
+			  // console.log(newAdmin)
+			  
+			  res.status(200).json({
+				   status:'success',
+				   data:newAdmin
+			   }) 
+		 }else{
+			const newAdmin2 = await AdminModel.create({
+				fullName,
+				email,
+				password,
+				passwordConfirm,
+				role,
+				photoUrl:`${req.protocol}://${req.get('host')}/publicFile/admin/default.jpg`
+			})
+		 
+			// console.log(newAdmin2)
+			  
+			res.status(200).json({
+				   status:'success',
+				   data:newAdmin2
+			})
+		}
+	 
 	  
-  }catch (error) {
-		res.status(500).json({
-		   status:'fail',
-		   data:error
-	    })
-	}
+  // }catch (error) {
+		// res.status(500).json({
+		   // status:'fail',
+		   // data:error
+	    // })
+	// }
 
-})
+}
+
+exports.allAdminExcludingMe = async (req, res, next) => {
+	const {id}= req.body
+	
+	const alAdmin = await AdminModel.find({})
+	if(alAdmin.length >= 1){
+		const eceptMe = alAdmin.filter((e)=> e._id !== id)
+		res.status(200).json({
+			status:'success',
+			data:eceptMe
+		})
+	}else{
+		res.status(404).json({
+			status:'not found',
+			message:'Data not found'
+		})
+	}
+	
+	
+	
+}
+
+exports.deleteAdmin = async (req, res, next) => {
+	const {id} = req.body
+	
+	const delAdmin = await AdminModel.deleteOne({_id:id})
+	if(delAdmin.deletedCount >= 1){
+		res.status(200).json({
+			status:'success',
+		})
+	}else{
+		res.status(500).json({
+			status:'fail',
+			message:'Fail to delete'
+		})
+	}
+	
+	
+	
+}
+

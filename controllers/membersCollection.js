@@ -95,11 +95,11 @@ exports.memberRegistration = async (req,res,next)=>{
 			})
 		}else{
 			if(req.file){
-				console.log(Dob)
+				// console.log(Dob)
 				let journey22 = await JourneyModel.find({JourneyPriority:1})
-				console.log(journey22)
+				// console.log(journey22)
 				let journey33 = await JourneyModel.find({JourneyPriority:2})
-				console.log(journey33)
+				// console.log(journey33)
 				if(WeddingAnniversary !== "null"){
 					const newMember2 = await MemberModel.create({
 						RegNumber,
@@ -122,7 +122,7 @@ exports.memberRegistration = async (req,res,next)=>{
 					})
 					
 				   if(newMember2){
-					   console.log(newMember2)
+					   // console.log(newMember2)
 					   res.status(200).json({
 						status:'success',
 						message:'Member Registration Successful'
@@ -149,7 +149,7 @@ exports.memberRegistration = async (req,res,next)=>{
 					})
 						
 				   if(newMember3){
-					   console.log(newMember3)
+					   // console.log(newMember3)
 					   res.status(200).json({
 						status:'success',
 						message:'Member Registration Successful'
@@ -160,9 +160,9 @@ exports.memberRegistration = async (req,res,next)=>{
 			
 			}else{
 				let journey11 = await JourneyModel.find({JourneyPriority:1})
-				console.log(journey11)
+				// console.log(journey11)
 				let journey44 = await JourneyModel.find({JourneyPriority:2})
-				console.log(journey44)
+				// console.log(journey44)
 				if(WeddingAnniversary !== "null"){
 					const newMember4 = await MemberModel.create({
 						RegNumber,
@@ -186,7 +186,7 @@ exports.memberRegistration = async (req,res,next)=>{
 					})
 					
 				   if(newMember4){
-					  console.log(newMember4)
+					  // console.log(newMember4)
 					   res.status(200).json({
 						status:'success',
 						message:'Member Registration Successful'
@@ -214,7 +214,7 @@ exports.memberRegistration = async (req,res,next)=>{
 					})
 					
 				   if(newMember5){
-					   console.log(newMember5)
+					   // console.log(newMember5)
 					   res.status(200).json({
 						status:'success',
 						message:'Member Registration Successful'
@@ -238,7 +238,7 @@ exports.memberRegistration = async (req,res,next)=>{
 }
 
 exports.membersBulkUpload = async (req,res,next)=>{
-	console.log(req.body)
+	// console.log(req.body)
 	try {
 		if(req.body){
 			const current = await JourneyModel.find({JourneyPriority:1})
@@ -317,7 +317,7 @@ exports.journeyDateCheck = async (req,res,next)=>{
 				})
 			}
 
-			console.log('singlrDate',currentOrLastDate.journeyDate)
+			// console.log('singlrDate',currentOrLastDate.journeyDate)
 			req.dateAttain = currentOrLastDate.journeyDate
 			// GRANT ACCESS TO ROUTE
 			next()
@@ -437,11 +437,11 @@ function escapeRegex(text) {
 }
 exports.singleMember = (req,res,next)=>{
     const {word} = req.body;
-	console.log(word)
+	// console.log(word)
 	let isnum = /^\d+$/.test(word);
-	console.log(isnum)
+	// console.log(isnum)
 	if(isnum){
-		 console.log('number')
+		 // console.log('number')
 		MemberModel.find({PhoneNo:parseInt(word)})
 		.populate('currentJourney')
 		.populate('nextJourney')
@@ -454,7 +454,7 @@ exports.singleMember = (req,res,next)=>{
 		.exec()
 		.then((result)=>{
 			if(result.length >= 1){
-				console.log(result)
+				// console.log(result)
 				res.status(200).json({
 				 status:'success',
 				 data:result
@@ -490,7 +490,7 @@ exports.singleMember = (req,res,next)=>{
 		.exec()
 		.then((result)=>{
 			if(result.length >= 1){
-				console.log(result)
+				// console.log(result)
 				res.status(200).json({
 				 status:'success',
 				 data:result
@@ -519,7 +519,7 @@ exports.singleMember = (req,res,next)=>{
 }
 
 exports.singleFile = (req,res,next)=>{
-	console.log(req.file)
+	// console.log(req.file)
 	res.status(200).json({
 		status:'file uploaded'
 	})

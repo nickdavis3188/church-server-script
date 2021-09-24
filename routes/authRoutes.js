@@ -41,4 +41,18 @@ router.post(
   authController.updatePassword
 );
 
+router.post(
+  '/inviteSignup',
+  authController.upload.single('adminImg'),
+  authController.inviteAdmin
+);
+router.post(
+  '/allAdmin',
+  authController.allAdminExcludingMe
+);
+router.post(
+  '/deleteAdmin',
+  authController.deleteAdmin
+);
+// 
 module.exports = router;

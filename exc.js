@@ -1,24 +1,32 @@
 
-var gg = 44
-console.log(gg)
+var gg = [
+{a:47,h:9},
+{a:37,h:9},
+{a:27,h:9},
+{a:17,h:9},
+]
+
+const hh = gg.filter((e)=> e.a !== 47)
+
+console.log(hh)
 // subadmin22
 // console.log('2021/9/2' === '2021/9/2')
-// console.log(new Date().getMonth())//"2021-09-19T19:14:09.993Z"
+// console.log(new Date("2021-09-24T06:34:22.462Z").getMonth())//"2021-09-19T19:14:09.993Z"
 
-//       const formatDate = (date)=>{
-//         var d = new Date(date),
-//         month = '' + (d.getMonth() + 1),
-//         day = '' + d.getDate(),
-//         year = d.getFullYear();
+      const formatDate = (date)=>{
+        var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
     
-//         if (month.length < 2) 
-//             month = '0' + month;
-//         if (day.length < 2) 
-//             day = '0' + day;
+        if (month.length < 2) 
+            month = '0' + month;
+        if (day.length < 2) 
+            day = '0' + day;
     
-//         return [year, month, day].join('-');
-//       }
-// 	console.log(formatDate("2021-09-19T19:14:09.993Z"))
+        return [year, month, day].join('-');
+      }
+	console.log(formatDate("2021-09-19T19:14:09.993Z"))
 	
 // 	let  gg = [3]
 // 	console.log(gg[gg.length -1])

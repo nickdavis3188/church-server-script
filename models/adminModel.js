@@ -52,7 +52,7 @@ const adminShema = mongoose.Schema(
       passwordChangedAt: Date,
      
    
-  });
+  },{ timestamps: true });
 
 //DOCUMENT MIDDLEWARE
 adminShema.pre('save', async function (next) {
