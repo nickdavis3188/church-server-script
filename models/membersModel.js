@@ -69,13 +69,13 @@ const memberSchema = mongoose.Schema(
     nextJourney:{type:mongoose.Schema.Types.ObjectId,ref:"journey"},
     journeyAttend:[{type:mongoose.Schema.Types.ObjectId,ref:"attendance"}],
     memberStatus:String,
-    password:String,
+    // password:String,
     monthCreated:Number,
     Year:Number,
   },{ timestamps: true });
 
   memberSchema.pre('save', function (next) {
-    this.password = this.Surname;
+    // this.password = this.Surname;
     this.monthCreated =  new Date().getMonth() +1 ;
     this.Year =  new Date().getFullYear();
     this.role = 'member'

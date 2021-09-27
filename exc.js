@@ -1,16 +1,63 @@
 
-var gg = [
-{a:47,h:9,_id:"h1"},
-{a:37,h:9,_id:"h2"},
-{a:27,h:9,_id:"h3"},
-{a:17,h:9,_id:"h4"},
-]
-const nn = gg.findIndex((e)=> e._id === 'h3')
-const arr = gg.splice(nn,1) 
-console.log('filterd',gg)
-const hh = gg.filter((e)=> e._id !== "h3")
+const monthInWords = (num)=>{
+	 let month = ['Jan','Feb','Mar','Apl','May','June','July','Aug','Sept','Oct','Nov','Dec'];
+	let result22 = ''
+	if(num == 1){
+		result22 = month[0]
+	}
+	else if(num == 2){
+		result22 = month[1]
+	}
+	else if(num == 3){
+		result22 = month[2]
+	}
+	else if(num == 4){
+		result22 = month[3]
+	}
+	else if(num == 5){
+		result22 = month[4] 
+	}
+	else if(num == 6){
+		result22 = month[5]
+	}
+	else if(num == 7){
+		result22 = month[6]
+	}
+	else if(num == 8){
+		result22 = month[7]
+	}
+	else if(num == 9){
+		result22 = month[8]
+	}
+	else if(num == 10){
+		result22 = month[9]
+	}
+	else if(num == 11){
+		result22 = month[10]
+	}
+	else if(num == 12){
+		result22 = month[11]
+	}
+	else{
+		result22 = 'MonthError'
+	}
+	return result22
+}
+console.log('month',monthInWords(10))
 
-console.log(hh)
+
+// var gg = [
+// {a:47,h:9,_id:"h1"},
+// {a:37,h:9,_id:"h2"},
+// {a:27,h:9,_id:"h3"},
+// {a:17,h:9,_id:"h4"},
+// ]
+// const nn = gg.findIndex((e)=> e._id === 'h3')
+// const arr = gg.splice(nn,1) 
+// console.log('filterd',gg)
+// const hh = gg.filter((e)=> e._id !== "h3")
+
+// console.log(hh)
 // subadmin22
 // console.log('2021/9/2' === '2021/9/2')
 // console.log(new Date("2021-09-24T06:34:22.462Z").getMonth())//"2021-09-19T19:14:09.993Z"

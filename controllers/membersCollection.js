@@ -5,7 +5,8 @@ const MemberModel = require('../models/membersModel');
 const JourneyAttendanceModel = require('../models/journeyAttendanceModel');
 const JourneyModel = require('../models/JourneyModel');
 const JourneyDateModel = require('../models/journeyDateModel');
-
+// const cloudinary = require('../utils/cloudinary')
+var cloudinary = require('cloudinary').v2
 
 //////////////////////////////////Multer config//////////
 
@@ -249,7 +250,7 @@ exports.membersBulkUpload = async (req,res,next)=>{
 				e.nextJourney =nextj[0]._id
 				e.role = 'member'
 				e.journeyAttend = []
-				e.monthCreated = new Date().getMonth()
+				e.monthCreated = new Date().getMonth()+1
 				e.Year = new Date().getFullYear()
 				e.DOB = Number.isInteger(e.DOB)?ExcelDateToJSDate(e.DOB):e.DOB
 				e.WeddingAnniversary = Number.isInteger(e.WeddingAnniversary)?ExcelDateToJSDate(e.WeddingAnniversary):e.WeddingAnniversary
@@ -518,13 +519,33 @@ exports.singleMember = (req,res,next)=>{
      
 }
 
-exports.singleFile = (req,res,next)=>{
+exports.singleFile = async (req,res,next)=>{
+	try{
+		cloudinary.config({ 
+			cloud_name: 'drnmgqzz1', 
+			api_key: '341368962355296', 
+			api_secret: 'fgZj7bcrS8bnCoNh1wQk7FihnyQ' 
+		  })
+		// console.log(req.body.file)
+		const uploader = await cloudinary.uploader.upload(req.body.file,{
+		upload_preset:'DTMDMS'
+	})
+	console.log(uploader)
 	// console.log(req.file)
 	res.status(200).json({
-		status:'file uploaded'
+		status:'file uploaded',
+		data:uploader
 	})
+	} catch (error) {
+			if(error){
+				console.log(error)
+			}
+	} 
+	
 }
-
+// asset_id: "0d406fadfdf8a475a30f564486d50458"
+// secure_url: "https://res.cloudinary.com/drnmgqzz1/image/upload/v1632626421/DTMDMS/mwvi9a5ownjki7zwl6p6.jpg"
+// signature: "5ff809f31f357e149c161f688a14c2dcc89de99e"
 exports.updateUser = async (req,res,next)=>{
 	const {RegNumber,Surname,Firstname,Address,PhoneNo,Sex,Email,Dob,MaritalStatus,WeddingAnniversary,Occupation,Business,Expertise,DateJoinedTKA} = req.body
 	
@@ -545,4 +566,24 @@ exports.updateUser = async (req,res,next)=>{
 		}
 	
 
+}
+
+exports.deleteMember = async (req, res, next) => {
+	const {id} = req.body
+
+	const delAdmin = await MemberModel.deleteOne({_id:id})
+	
+	if(delAdmin.deletedCount >= 1){
+		res.status(200).json({
+			status:'success',
+		})
+	}else{
+		res.status(500).json({
+			status:'fail',
+			message:'Fail to delete'
+		})
+	}
+	
+	
+	
 }

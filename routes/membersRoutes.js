@@ -29,7 +29,13 @@ router.post(
   '/memberUpdate/:id',
   membersController.updateUser
 )
-router.post('/fuploads',membersController.upload.single('memberImg') ,membersController.singleFile)
+
+router.post(
+  '/deleteMember',
+  membersController.deleteMember
+);
+
+router.post('/fuploads',membersController.singleFile)
   
 
 module.exports = router;
