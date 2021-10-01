@@ -94,14 +94,14 @@ exports.dashboarStatic =((req, res, next) => {
 			//console.log(data)
 			
 			for(let i = 0; i < memsData.length; i++){
-				if(memsData[i].Sex == 'Male'){
+				if(memsData[i].Sex == 'Male' || memsData[i].Sex == 'male' || memsData[i].Sex == 'MALE'){
 					male.push(memsData[i])
 				//console.log(data[i])
 				}
 			}
 			// female
 			for(let i = 0; i < memsData.length; i++){
-				if(memsData[i].Sex == 'Female'){
+				if(memsData[i].Sex == 'Female' || memsData[i].Sex == 'female' || memsData[i].Sex == 'FEMALE'){
 					female.push(memsData[i])
 				//console.log(data[i])
 				}
