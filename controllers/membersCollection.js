@@ -585,6 +585,43 @@ exports.deleteMember = async (req, res, next) => {
 		})
 	}
 	
-	
-	
+}
+
+exports.idSearch = (req, res, next) => {
+	const {id} = req.body
+
+	// const resSearch = await MemberModel.findById({_id:id})
+	MemberModel.find({_id:id})
+		.populate('currentJourney')
+		.populate('nextJourney')
+		. populate({
+			path: 'journeyAttend',
+			populate: {
+			path: ' JourneyId'
+			}
+		})
+		.exec()
+		.then((result)=>{
+			if(result.length >= 1){
+				// console.log(result)
+				res.status(200).json({
+				 status:'success',
+				 data:result
+				})
+			}else{
+				res.status(404).json({
+				 status:'fail',
+				 message:'Member not found'
+			 })
+			}
+		})
+		.catch((err)=>{
+			if(err){
+				res.status(500).json({
+					status:'fail',
+					message:err
+				})
+			}
+			
+		})
 }

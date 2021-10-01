@@ -7,7 +7,13 @@ const router = express.Router();
 router.post(
   '/getSingleMember',
   membersController.singleMember 
-)
+);
+
+router.post(
+  '/getSingleMemById',
+  membersController.idSearch 
+);
+
 router.post(
     '/memberRegistration',
     membersController.upload.single('memberImg'),
