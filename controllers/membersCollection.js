@@ -246,17 +246,18 @@ exports.membersBulkUpload = async (req,res,next)=>{
 			const nextj = await JourneyModel.find({JourneyPriority:2})
 			const maindata = req.body
 			maindata.forEach((e)=>{	
-				e.currentJourney = current[0]._id
-				e.nextJourney =nextj[0]._id
-				e.role = 'member'
-				e.journeyAttend = []
-				e.monthCreated = new Date().getMonth()+1
-				e.Year = new Date().getFullYear()
-				e.DOB = Number.isInteger(e.DOB)?ExcelDateToJSDate(e.DOB):e.DOB
-				e.WeddingAnniversary = Number.isInteger(e.WeddingAnniversary)?ExcelDateToJSDate(e.WeddingAnniversary):e.WeddingAnniversary
-				e.DateJoinedTKA = Number.isInteger(e.DateJoinedTKA)?ExcelDateToJSDate(e.DateJoinedTKA):e.DateJoinedTKA,
+				e.currentJourney = current[0]._id;
+				e.nextJourney =nextj[0]._id;
+				e.ImageUrl = `${req.protocol}://${req.get('host')}/publicFile/members/default.jpg`,
+				e.role = 'member';
+				e.journeyAttend = [];
+				e.monthCreated = new Date().getMonth() + 1;
+				e.Year = new Date().getFullYear();
+				e.DOB = Number.isInteger(e.DOB)?ExcelDateToJSDate(e.DOB):e.DOB;
+				e.WeddingAnniversary = Number.isInteger(e.WeddingAnniversary)?ExcelDateToJSDate(e.WeddingAnniversary):e.WeddingAnniversary;
+				e.DateJoinedTKA = Number.isInteger(e.DateJoinedTKA)?ExcelDateToJSDate(e.DateJoinedTKA):e.DateJoinedTKA;
 				//let mydata = [e]
-				MemberModel.insertMany(e)
+				MemberModel.insertMany(e);
 				
 			})
 				
@@ -477,7 +478,7 @@ exports.singleMember = (req,res,next)=>{
 			
 		})
 	}else{
-		console.log('string')
+		// console.log('string')
 		const regex = new RegExp(!isnum?escapeRegex(word):'', 'gi')
 		MemberModel.find({$or:[{Surname:regex},{RegNumber:regex},{Email:regex}]})
 		.populate('currentJourney')
