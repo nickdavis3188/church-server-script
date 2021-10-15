@@ -118,6 +118,7 @@ exports.memberRegistration = async (req,res,next)=>{
 						Business,
 						Expertise,
 						DateJoinedTKA,
+						Primary:Firstname.toLowerCase() + Surname.lowerCase(),
 						currentJourney:journey22[0]._id,
 						nextJourney:journey33[0]._id
 					})
@@ -145,6 +146,7 @@ exports.memberRegistration = async (req,res,next)=>{
 						Business,
 						Expertise,
 						DateJoinedTKA,
+						Primary:Firstname.lowerCase() + Surname.lowerCase(),
 						currentJourney:journey22[0]._id,
 						nextJourney:journey33[0]._id
 					})
@@ -181,6 +183,7 @@ exports.memberRegistration = async (req,res,next)=>{
 						Business,
 						Expertise,
 						DateJoinedTKA,
+						Primary:Firstname.lowerCase() + Surname.lowerCase(),
 						currentJourney:journey11[0]._id,
 						nextJourney:journey44[0]._id
 						
@@ -209,6 +212,7 @@ exports.memberRegistration = async (req,res,next)=>{
 						Business,
 						Expertise,
 						DateJoinedTKA,
+						Primary:Firstname.lowerCase() + Surname.lowerCase(),
 						currentJourney:journey11[0]._id,
 						nextJourney:journey44[0]._id
 						
@@ -256,6 +260,7 @@ exports.membersBulkUpload = async (req,res,next)=>{
 				e.DOB = Number.isInteger(e.DOB)?ExcelDateToJSDate(e.DOB):e.DOB;
 				e.WeddingAnniversary = Number.isInteger(e.WeddingAnniversary)?ExcelDateToJSDate(e.WeddingAnniversary):e.WeddingAnniversary;
 				e.DateJoinedTKA = Number.isInteger(e.DateJoinedTKA)?ExcelDateToJSDate(e.DateJoinedTKA):e.DateJoinedTKA;
+				e.Primary = e.Firstname.lowerCase() + e.Surname.lowerCase(),
 				//let mydata = [e]
 				MemberModel.insertMany(e);
 				
@@ -589,7 +594,7 @@ exports.deleteMember = async (req, res, next) => {
 
 exports.idSearch = (req, res, next) => {
 	const {id} = req.body
-
+	console.log(id)
 	// const resSearch = await MemberModel.findById({_id:id})
 	MemberModel.find({_id:id})
 		.populate('currentJourney')

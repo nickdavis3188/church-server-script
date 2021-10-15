@@ -179,6 +179,11 @@ exports.login = catchAsync(async (req, res, next) => {
 			 
 		   
 		  }
+		  
+	 		  
+		  if(admin.isAchive == 'achive'){
+			  return next(new AppError('Sorry, This Account Was Suspended',401))
+		  }
 
 		  // Update last login time
 		  admin.lastLoginTime = new Date();
@@ -542,7 +547,7 @@ exports.inviteAdmin = async (req, res, next) => {
 
 exports.allAdminExcludingMe = async (req, res, next) => {
 	const {id}= req.body
-	console.log('id',id)
+	// console.log('id',id)
 	const alAdmin = await AdminModel.find({})
 	if(alAdmin.length >= 1){
 	
@@ -577,8 +582,62 @@ exports.deleteAdmin = async (req, res, next) => {
 			message:'Fail to delete'
 		})
 	}
+}
+
+exports.archiveAdmin = async (req, res, next) => {
+	console.log('achiv',req.body.id)
+	const updateIsAchive1 = await AdminModel.updateOne(
+		{_id:req.body.id},
+		{
+			$set:{isArchive:'archive'}
+		}
+	)
+	// console.log(updateIsAchive1)
+	if(updateIsAchive1.nModified == 1){
+		res.status(200).json({
+			status:'success',
+		})
+	}else{
+		res.status(500).json({
+			status:'fail',
+			message:'Fail to Achive'
+		})
+	}
+}
+exports.unArchiveAdmin = async (req, res, next) => {
+	console.log('unachiv',req.body.id)
+	const updateIsAchive2 = await AdminModel.updateOne(
+		{_id:req.body.id},
+		{
+			$set:{isArchive:'unarchive'}
+		}
+	)
+	// console.log(updateIsAchive2)
+	if(updateIsAchive2.nModified == 1){
+		res.status(200).json({
+			status:'success',
+		})
+	}else{
+		res.status(500).json({
+			status:'fail',
+			message:'Fail to UnAchive'
+		})
+	}
+}
+
+exports.getAdmiinById = async (req, res, next)=>{
 	
-	
-	
+	const singleAdmin = await AdminModel.find({_id:req.body.id})
+	if(singleAdmin.length >= 1){
+		res.status(200).json({
+			status:'success',
+			data:singleAdmin
+		})
+	}else{
+		res.status(404).json({
+			status:'fail',
+			message:'Admin Not Found'
+		})
+	}
 }
 

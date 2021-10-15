@@ -39,14 +39,21 @@ const adminShema = mongoose.Schema(
           },
     
           message: 'Passwords are not the same!',
-        },
+        }
       },
+	  
       role: {
         type: String,
         enum: ['admin','sub-admin','member'],
         default: 'admin',
       },
-    
+	  
+	  isArchive: {
+        type: String,
+        enum: ['unarchive','archive'],
+        default: 'unarchive',
+      },
+	  
       lastLoginTime: Date,
       lastLogoutTime: Date,
       passwordChangedAt: Date,

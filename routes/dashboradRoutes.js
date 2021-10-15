@@ -12,4 +12,10 @@ router.post(
     '/dashboradStatistics',
     dashboradController.statisticsDashborad
 );
+
+router.post(
+    '/attendanceDashborad',
+    dashboradController.attendanceDashborad
+);
+
 module.exports = router;

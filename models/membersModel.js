@@ -73,7 +73,15 @@ const memberSchema = mongoose.Schema(
     monthCreated:Number,
     Year:Number,
   },{ timestamps: true });
-
+  
+	memberSchema.post('find', async function(docs) {
+	  for (let doc of docs) {
+		if (doc.isPublic) {
+		  await doc.populate('currentJourney')
+		}
+	  }
+	});
+	// 
   memberSchema.pre('save', function (next) {
     // this.password = this.Surname;
     this.monthCreated =  new Date().getMonth() +1 ;

@@ -50,9 +50,26 @@ router.post(
   '/allAdmin',
   authController.allAdminExcludingMe
 );
+
 router.post(
   '/deleteAdmin',
   authController.deleteAdmin
 );
-// 
+
+router.post(
+  '/archive',
+  authController.archiveAdmin
+);
+
+router.post(
+  '/unArchive',
+  authController.unArchiveAdmin
+);
+
+router.post(
+  '/getSingleAdminById',
+  authController.getAdmiinById
+);
+// unAchiveAdmin
+
 module.exports = router;
