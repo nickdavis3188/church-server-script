@@ -181,8 +181,8 @@ exports.login = catchAsync(async (req, res, next) => {
 		  }
 		  
 	 		  
-		  if(admin.isAchive == 'achive'){
-			  return next(new AppError('Sorry, This Account Was Suspended',401))
+		  if(admin.isArchive == 'archive'){
+			  return next(new AppError('Sorry, This Account Was Suspended',404))
 		  }
 
 		  // Update last login time
@@ -640,4 +640,5 @@ exports.getAdmiinById = async (req, res, next)=>{
 		})
 	}
 }
+
 
