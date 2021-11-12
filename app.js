@@ -15,7 +15,7 @@ const authRouter = require('./routes/authRoutes')
 const seachRouter = require("./routes/searchRoutes")
 const journeyRouter = require("./routes/journeyRoutes")
 const journeyDate = require("./routes/journeyDateRoutes")
-
+const report = require("./routes/reportRoutes")
 
 const app = express();
 //Body parser
@@ -60,6 +60,7 @@ app.use('/api/v1/admin', adminRouter);
 app.use('/api/v1/search',seachRouter);
 app.use('/api/v1/journey',journeyRouter);
 app.use('/api/v1/journeyDate',journeyDate);
+app.use('/api/v1/report',report);
 
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

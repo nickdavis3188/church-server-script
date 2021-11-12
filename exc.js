@@ -1,557 +1,749 @@
 var _ = require('underscore');
-const hh4455 = [
-{
-            "role": "member",
-            "journeyAttend": [
-                {
-                    "_id": "613f62a683d75e0c300ddfd3",
-                    "JourneyDate": "2020-09-04T00:00:00.000Z",
-                    "JourneyId": {
-                        "_id": "613b8af13861f220a07bc606",
-                        "JourneyName": "Journey 101",
-                        "JourneyPriority": 1,
-                        "__v": 0
-                    },
-                    "__v": 0,
-                    "id": "613f62a683d75e0c300ddfd3"
-                },
-                {
-                    "_id": "6140739053fb8b01a42b10bb",
-                    "JourneyDate": "2020-09-04T00:00:00.000Z",
-                    "JourneyId": {
-                        "_id": "613b8b003861f220a07bc607",
-                        "JourneyName": "Journey 201",
-                        "JourneyPriority": 2,
-                        "__v": 0
-                    },
-                    "__v": 0,
-                    "id": "6140739053fb8b01a42b10bb"
-                },
-                {
-                    "_id": "614073ab53fb8b01a42b10bc",
-                    "JourneyDate": "2020-09-09T00:00:00.000Z",
-                    "JourneyId": {
-                        "_id": "613b8b123861f220a07bc608",
-                        "JourneyName": "Journey 202",
-                        "JourneyPriority": 3,
-                        "__v": 0
-                    },
-                    "__v": 0,
-                    "id": "614073ab53fb8b01a42b10bc"
-                },
-                {
-                    "_id": "614073c253fb8b01a42b10bd",
-                    "JourneyDate": "2021-09-12T00:00:00.000Z",
-                    "JourneyId": {
-                        "_id": "613b8b313861f220a07bc609",
-                        "JourneyName": "Journey 301",
-                        "JourneyPriority": 4,
-                        "__v": 0
-                    },
-                    "__v": 0,
-                    "id": "614073c253fb8b01a42b10bd"
-                },
-                {
-                    "_id": "614073d753fb8b01a42b10be",
-                    "JourneyDate": "2021-09-13T00:00:00.000Z",
-                    "JourneyId": {
-                        "_id": "613b8b3d3861f220a07bc60a",
-                        "JourneyName": "Journey 401",
-                        "JourneyPriority": 5,
-                        "__v": 0
-                    },
-                    "__v": 0,
-                    "id": "614073d753fb8b01a42b10be"
-                },
-                {
-                    "_id": "614073f853fb8b01a42b10bf",
-                    "JourneyDate": "2021-09-09T00:00:00.000Z",
-                    "JourneyId": {
-                        "_id": "613b8b523861f220a07bc60b",
-                        "JourneyName": "Done",
-                        "JourneyPriority": 6,
-                        "__v": 0
-                    },
-                    "__v": 0,
-                    "id": "614073f853fb8b01a42b10bf"
-                }
-            ],
-            "_id": "613e98d4312e2019742a0276",
-            "RegNumber": "hh6688",
-            "Surname": "Edet",
-            "Firstname": "Emmanuel",
-            "Address": "Uyo",
-            "PhoneNo": 2348899778866,
-            "ImageUrl": "http://localhost:3000/publicFile/members/2021IMG_20210429_144554.jpg",
-            "Sex": "Male",
-            "Email": "nyaknodavis318@gmail.com",
-            "MaritalStatus": "Single",
-            "WeddingAnniversary": null,
-            "Occupation": "marketer",
-            "Business": "import and export",
-            "Expertise": "developeer",
-            "DateJoinedTKA": "2020-02-05T00:00:00.000Z",
-            "currentJourney": "613b8b523861f220a07bc60b",
-            "nextJourney": "613b8af13861f220a07bc606",
-            "createdAt": "2021-09-13T00:18:28.203Z",
-            "updatedAt": "2021-09-14T10:05:44.925Z",
-            "password": "Edet",
-            "monthCreated": 8,
-            "Year": 2021,
-            "__v": 0,
-            "Dob": "2018-06-11T00:00:00.000Z"
-        },
-        {
-            "role": "member",
-            "journeyAttend": [
-                {
-                    "_id": "613eaafa679c720ea02fbf26",
-                    "JourneyDate": "2020-09-03T00:00:00.000Z",
-                    "JourneyId": {
-                        "_id": "613b8af13861f220a07bc606",
-                        "JourneyName": "Journey 101",
-                        "JourneyPriority": 1,
-                        "__v": 0
-                    },
-                    "__v": 0,
-                    "id": "613eaafa679c720ea02fbf26"
-                }
-            ],
-            "_id": "613ea92d679c720ea02fbf25",
-            "RegNumber": "hh66881",
-            "Surname": "Date",
-            "Firstname": "dateTast",
-            "Address": "date",
-            "PhoneNo": 234990088764,
-            "ImageUrl": "http://localhost:3000/publicFile/members/default.jpg",
-            "Sex": "Female",
-            "Email": "date@gmail.com",
-            "Dob": "2021-09-10T00:00:00.000Z",
-            "MaritalStatus": "Seprated",
-            "WeddingAnniversary": null,
-            "Occupation": "ff1",
-            "Business": "jjj",
-            "Expertise": "dancing",
-            "DateJoinedTKA": "2021-09-02T00:00:00.000Z",
-            "currentJourney": "613b8b003861f220a07bc607",
-            "nextJourney": "613b8b123861f220a07bc608",
-            "createdAt": "2021-09-13T01:28:13.587Z",
-            "updatedAt": "2021-09-13T01:35:55.487Z",
-            "password": "Date",
-            "monthCreated": 8,
-            "Year": 2021,
-            "__v": 0
-        },
-        {
-            "role": "member",
-            "journeyAttend": [
-				{
-                    "_id": "613f62a683d75e0c300ddfd3",
-                    "JourneyDate": "2021-09-04T00:00:00.000Z",
-                    "JourneyId": {
-                        "_id": "613b8af13861f220a07bc606",
-                        "JourneyName": "Journey 101",
-                        "JourneyPriority": 1,
-                        "__v": 0
-                    },
-                    "__v": 0,
-                    "id": "613f62a683d75e0c300ddfd3"
-                },
-                {
-                    "_id": "6140739053fb8b01a42b10bb",
-                    "JourneyDate": "2021-09-04T00:00:00.000Z",
-                    "JourneyId": {
-                        "_id": "613b8b003861f220a07bc607",
-                        "JourneyName": "Journey 201",
-                        "JourneyPriority": 2,
-                        "__v": 0
-                    },
-                    "__v": 0,
-                    "id": "6140739053fb8b01a42b10bb"
-                },],
-            "_id": "6140cd5021155c282803c5fc",
-            "Address": "elioz",
-            "PhoneNo": 9036264607,
-            "RegNumber": "fds44",
-            "Sex": "female",
-            "MaritalStatus": "single",
-            "Expertise": "dancing",
-            "DateJoinedTKA": "2021-09-02T23:00:00.000Z",
-            "currentJourney": "613b8af13861f220a07bc606",
-            "nextJourney": "613b8b003861f220a07bc607",
-            "monthCreated": 8,
-            "Year": 2021,
-            "__v": 0,
-            "createdAt": "2020-09-14T16:26:56.782Z",
-            "updatedAt": "2021-09-14T16:26:56.782Z"
-        },
-        {
-            "role": "member",
-            "journeyAttend": [
-				{
-                    "_id": "613f62a683d75e0c300ddfd3",
-                    "JourneyDate": "2021-08-04T00:00:00.000Z",
-                    "JourneyId": {
-                        "_id": "613b8af13861f220a07bc606",
-                        "JourneyName": "Journey 101",
-                        "JourneyPriority": 1,
-                        "__v": 0
-                    },
-                    "__v": 0,
-                    "id": "613f62a683d75e0c300ddfd3"
-                },
-                {
-                    "_id": "6140739053fb8b01a42b10bb",
-                    "JourneyDate": "2021-09-04T00:00:00.000Z",
-                    "JourneyId": {
-                        "_id": "613b8b003861f220a07bc607",
-                        "JourneyName": "Journey 201",
-                        "JourneyPriority": 2,
-                        "__v": 0
-                    },
-                    "__v": 0,
-                    "id": "6140739053fb8b01a42b10bb"
-                },],
-            "_id": "6140cd4f21155c282803c5fa",
-            "Address": "choba",
-            "PhoneNo": 9036103607,
-            "RegNumber": "rfgr343",
-            "Sex": "male",
-            "MaritalStatus": "single",
-            "Expertise": "web development",
-            "DateJoinedTKA": "2021-08-31T23:00:00.000Z",
-            "currentJourney": "613b8af13861f220a07bc606",
-            "nextJourney": "613b8b003861f220a07bc607",
-            "monthCreated": 8,
-            "Year": 2021,
-            "__v": 0,
-            "createdAt": "2020-09-14T16:26:56.406Z",
-            "updatedAt": "2021-09-14T16:26:56.406Z"
-        },
-        {
-            "role": "member",
-            "journeyAttend": [],
-            "_id": "6140d8f221155c282803c5ff",
-            "Address": "elioz",
-            "PhoneNo": 9036264607,
-            "RegNumber": "fds44",
-            "Sex": "female",
-            "MaritalStatus": "single",
-            "Expertise": "dancing",
-            "DateJoinedTKA": "2021-09-02T23:00:00.000Z",
-            "currentJourney": "613b8af13861f220a07bc606",
-            "nextJourney": "613b8b003861f220a07bc607",
-            "monthCreated": 8,
-            "Year": 2021,
-            "__v": 0,
-            "createdAt": "2021-09-14T17:16:35.040Z",
-            "updatedAt": "2021-09-14T17:16:35.040Z"
-        },
-        {
-            "role": "member",
-            "journeyAttend": [],
-            "_id": "6140d8f221155c282803c5fe",
-            "Address": "rukpokwu",
-            "PhoneNo": 9036233607,
-            "RegNumber": "23ffg",
-            "Sex": "female",
-            "MaritalStatus": "married",
-            "WeddingAnniversary": "2017-04-12T23:00:00.000Z",
-            "Expertise": "driving",
-            "DateJoinedTKA": "2021-09-01T23:00:00.000Z",
-            "currentJourney": "613b8af13861f220a07bc606",
-            "nextJourney": "613b8b003861f220a07bc607",
-            "monthCreated": 8,
-            "Year": 2021,
-            "__v": 0,
-            "createdAt": "2021-09-14T17:16:35.038Z",
-            "updatedAt": "2021-09-14T17:16:35.038Z"
-        },
-        {
-            "role": "member",
-            "journeyAttend": [],
-            "_id": "6140d8f221155c282803c5fd",
-            "Address": "choba",
-            "PhoneNo": 9036103607,
-            "RegNumber": "rfgr343",
-            "Sex": "male",
-            "MaritalStatus": "single",
-            "Expertise": "web development",
-            "DateJoinedTKA": "2021-08-31T23:00:00.000Z",
-            "currentJourney": "613b8af13861f220a07bc606",
-            "nextJourney": "613b8b003861f220a07bc607",
-            "monthCreated": 8,
-            "Year": 2021,
-            "__v": 0,
-            "createdAt": "2021-09-14T17:16:35.015Z",
-            "updatedAt": "2021-09-14T17:16:35.015Z"
-        },
-        {
-            "role": "member",
-            "journeyAttend": [],
-            "_id": "6141f18d5bd7451f94a9a59c",
-            "Address": "choba",
-            "PhoneNo": 9036103607,
-            "RegNumber": "rfgr343",
-            "Sex": "male",
-            "MaritalStatus": "single",
-            "Expertise": "web development",
-            "DateJoinedTKA": "2021-08-31T23:00:00.000Z",
-            "currentJourney": "613b8af13861f220a07bc606",
-            "nextJourney": "613b8b003861f220a07bc607",
-            "monthCreated": 8,
-            "Year": 2021,
-            "__v": 0,
-            "createdAt": "2021-09-15T13:13:49.083Z",
-            "updatedAt": "2021-09-15T13:13:49.083Z"
-        },
-        {
-            "role": "member",
-            "journeyAttend": [],
-            "_id": "6141f18d5bd7451f94a9a59d",
-            "Address": "rukpokwu",
-            "PhoneNo": 9036233607,
-            "RegNumber": "23ffg",
-            "Sex": "female",
-            "MaritalStatus": "married",
-            "WeddingAnniversary": "2017-04-12T23:00:00.000Z",
-            "Expertise": "driving",
-            "DateJoinedTKA": "2021-09-01T23:00:00.000Z",
-            "currentJourney": "613b8af13861f220a07bc606",
-            "nextJourney": "613b8b003861f220a07bc607",
-            "monthCreated": 8,
-            "Year": 2021,
-            "__v": 0,
-            "createdAt": "2021-09-15T13:13:49.096Z",
-            "updatedAt": "2021-09-15T13:13:49.096Z"
-        },
-        {
-            "role": "member",
-            "journeyAttend": [],
-            "_id": "6141f18d5bd7451f94a9a59e",
-            "Address": "elioz",
-            "PhoneNo": 9036264607,
-            "RegNumber": "fds44",
-            "Sex": "female",
-            "MaritalStatus": "single",
-            "Expertise": "dancing",
-            "DateJoinedTKA": "2021-09-02T23:00:00.000Z",
-            "currentJourney": "613b8af13861f220a07bc606",
-            "nextJourney": "613b8b003861f220a07bc607",
-            "monthCreated": 8,
-            "Year": 2021,
-            "__v": 0,
-            "createdAt": "2021-09-15T13:13:49.098Z",
-            "updatedAt": "2021-09-15T13:13:49.098Z"
-        },
-        {
-            "role": "member",
-            "journeyAttend": [],
-            "_id": "61521f77b1b43608c401b19e",
-            "RegNumber": "jjgg",
-            "Surname": "Sam",
-            "Firstname": "gen",
-            "Address": "Victory Estate Rukpokw",
-            "PhoneNo": 667746899987,
-            "ImageUrl": "http://localhost:3000/publicFile/members/2021hqdefault (2).webp",
-            "Sex": "Female",
-            "Email": "joegen@gmail.com",
-            "Dob": "2021-09-02T00:00:00.000Z",
-            "MaritalStatus": "Single",
-            "WeddingAnniversary": null,
-            "Occupation": "web dev",
-            "Business": "Freelancing",
-            "Expertise": "developeer",
-            "DateJoinedTKA": "2021-09-02T00:00:00.000Z",
-            "currentJourney": "613b8af13861f220a07bc606",
-            "nextJourney": "613b8b003861f220a07bc607",
-            "createdAt": "2021-09-27T19:46:00.036Z",
-            "updatedAt": "2021-09-27T19:48:09.018Z",
-            "monthCreated": 9,
-            "Year": 2021,
-            "__v": 0
-        },
-        {
-            "role": "member",
-            "journeyAttend": [],
-            "_id": "615c67c34fa5be1d749e7233",
-            "RegNumber": "ffgg12",
-            "Firstname": "Nick2",
-            "Surname": "Davis2",
-            "Address": "Choba2",
-            "PhoneNo": 12345,
-            "Email": "any1@gmail.com",
-            "Sex": "Female",
-            "Dob": "1970-01-01T00:00:44.229Z",
-            "MaritalStatus": "Married",
-            "WeddingAnniversary": "2021-02-01T23:00:00.000Z",
-            "Occupation": "web developer2",
-            "Expertise": "codding2",
-            "DateJoinedTKA": "2021-02-01T23:00:00.000Z",
-            "Business": "importation2",
-            "currentJourney": "613b8af13861f220a07bc606",
-            "nextJourney": "613b8b003861f220a07bc607",
-            "ImageUrl": "http://localhost:3000/publicFile/members/default.jpg",
-            "monthCreated": 10,
-            "Year": 2021,
-            "__v": 0,
-            "createdAt": "2021-10-05T14:57:07.215Z",
-            "updatedAt": "2021-10-05T14:57:07.215Z"
-        },
-        {
-            "role": "member",
-            "journeyAttend": [],
-            "_id": "615c67c34fa5be1d749e7232",
-            "RegNumber": "ffgg11",
-            "Firstname": "Nick1",
-            "Surname": "Davis1",
-            "Address": "Choba1",
-            "PhoneNo": 12345,
-            "Email": "any1@gmail.com",
-            "Sex": "Male",
-            "Dob": "1970-01-01T00:00:44.228Z",
-            "MaritalStatus": "Married",
-            "Occupation": "web developer1",
-            "Expertise": "codding1",
-            "DateJoinedTKA": "2021-01-31T23:00:00.000Z",
-            "Business": "importation122",
-            "currentJourney": "613b8af13861f220a07bc606",
-            "nextJourney": "613b8b003861f220a07bc607",
-            "ImageUrl": "http://localhost:3000/publicFile/members/default.jpg",
-            "monthCreated": 10,
-            "Year": 2021,
-            "__v": 0,
-            "createdAt": "2021-10-05T14:57:07.126Z",
-            "updatedAt": "2021-10-05T15:33:56.181Z",
-            "WeddingAnniversary": "2021-10-02T00:00:00.000Z"
-        },
-        {
-            "role": "member",
-            "journeyAttend": [],
-            "_id": "615c67c34fa5be1d749e7234",
-            "RegNumber": "ffgg13",
-            "Firstname": "Nick3",
-            "Surname": "Davis3",
-            "Address": "Choba3",
-            "PhoneNo": 12345,
-            "Email": "any1@gmail.com",
-            "Sex": "Male",
-            "Dob": "1970-01-01T00:00:44.230Z",
-            "MaritalStatus": "Divorce",
-            "WeddingAnniversary": "2021-02-02T23:00:00.000Z",
-            "Occupation": "web developer3",
-            "Expertise": "codding3",
-            "DateJoinedTKA": "2021-02-02T23:00:00.000Z",
-            "Business": "importation3",
-            "currentJourney": "613b8af13861f220a07bc606",
-            "nextJourney": "613b8b003861f220a07bc607",
-            "ImageUrl": "http://localhost:3000/publicFile/members/default.jpg",
-            "monthCreated": 10,
-            "Year": 2021,
-            "__v": 0,
-            "createdAt": "2021-10-05T14:57:07.221Z",
-            "updatedAt": "2021-10-05T14:57:07.221Z"
-        },
-        {
-            "role": "member",
-            "journeyAttend": [],
-            "_id": "615c67c34fa5be1d749e7235",
-            "RegNumber": "ffgg14",
-            "Firstname": "Nick4",
-            "Surname": "Davis4",
-            "Address": "Choba4",
-            "PhoneNo": 12345,
-            "Email": "any1@gmail.com",
-            "Sex": "Female",
-            "Dob": "1970-01-01T00:00:44.231Z",
-            "MaritalStatus": "Seprated",
-            "WeddingAnniversary": "2021-02-03T23:00:00.000Z",
-            "Occupation": "web developer4",
-            "Expertise": "codding4",
-            "DateJoinedTKA": "2021-02-03T23:00:00.000Z",
-            "Business": "importation4",
-            "currentJourney": "613b8af13861f220a07bc606",
-            "nextJourney": "613b8b003861f220a07bc607",
-            "ImageUrl": "http://localhost:3000/publicFile/members/default.jpg",
-            "monthCreated": 10,
-            "Year": 2021,
-            "__v": 0,
-            "createdAt": "2022-10-05T14:57:07.223Z",
-            "updatedAt": "2021-10-05T14:57:07.223Z"
-        },
-        {
-            "role": "member",
-            "journeyAttend": [],
-            "_id": "615c67c34fa5be1d749e7236",
-            "RegNumber": "ffgg15",
-            "Firstname": "Nick5",
-            "Surname": "Davis5",
-            "Address": "Choba5",
-            "PhoneNo": 12345,
-            "Email": "any1@gmail.com",
-            "Sex": "Female",
-            "Dob": "1970-01-01T00:00:44.232Z",
-            "MaritalStatus": "Single",
-            "Occupation": "web developer5",
-            "Expertise": "codding5",
-            "DateJoinedTKA": "2021-02-04T23:00:00.000Z",
-            "Business": "importation5",
-            "currentJourney": "613b8af13861f220a07bc606",
-            "nextJourney": "613b8b003861f220a07bc607",
-            "ImageUrl": "http://localhost:3000/publicFile/members/default.jpg",
-            "monthCreated": 10,
-            "Year": 2021,
-            "__v": 0,
-            "createdAt": "2022-10-05T14:57:07.226Z",
-            "updatedAt": "2021-10-05T14:57:07.226Z"
-        },
-        {
-            "role": "member",
-            "journeyAttend": [],
-            "_id": "615c67c34fa5be1d749e7237",
-            "RegNumber": "ffgg16",
-            "Firstname": "Nick6",
-            "Surname": "Davis6",
-            "Address": "Choba6",
-            "PhoneNo": 12345,
-            "Email": "any1@gmail.com",
-            "Sex": "Male",
-            "Dob": "1970-01-01T00:00:44.233Z",
-            "MaritalStatus": "Single",
-            "Occupation": "web developer6",
-            "Expertise": "codding6",
-            "DateJoinedTKA": "2021-02-05T23:00:00.000Z",
-            "Business": "importation6",
-            "currentJourney": "613b8af13861f220a07bc606",
-            "nextJourney": "613b8b003861f220a07bc607",
-            "ImageUrl": "http://localhost:3000/publicFile/members/default.jpg",
-            "monthCreated": 10,
-            "Year": 2021,
-            "__v": 0,
-            "createdAt": "2022-10-05T14:57:07.232Z",
-            "updatedAt": "2021-10-05T14:57:07.232Z"
-        }
-    ]
-
-const jj99 = hh4455.filter((e)=> new Date(e.createdAt).getFullYear() == 2020)
-
-
-
- const jj88 = hh4455.filter((e)=> e.journeyAttend.length >= 1)
-
- const iu =  _.pluck(jj88,"journeyAttend")
-  const iu2 =  _.pluck(iu,"JourneyId")
-  
-  let arrr1 = []
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 9  && iu[i][k].JourneyId.JourneyPriority == 1 ){
-				arrr1.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-
+let levles = [1,2,3,4,5]
+let getCurrentLevle = levles.splice(levles.indexOf(3))
+console.log(getCurrentLevle[1])
+////////////////////////
+console.log('hhhhhhhh',2021 - 2022)
+/////////////////
+let bb = 4
+const journeyNamess = (num)=>{
+	let name = ''
+	if(num == 1){
+		name = 'Journey 101'
+	}else if(num == 2){
+		name = 'Journey 201'
+	}else if(num == 3){
+		name = 'journey 202'
+	}else if(num == 4){
+		name = 'Journey 301'
+	}else if(num == 5){
+		name = 'Journey 401'
 	}
+	else{
+		name = 'not a number'
+	}
+	return name
+}
+
+	console.log('New',journeyNamess(3))
+
+////////
+// let diffArr = [['g','r'],['h',3],['hh','dd'],[8,9]]
+// let obbj = _.object(diffArr)
+// console.log('ob',obbj)
+  const formatDate2 = (date)=>{
+	var d = new Date(date),
+	month = '' + (d.getMonth() + 1),
+	day = '' + d.getDate(),
+	year = d.getFullYear();
+
+	if (month.length < 2) 
+		month = '0' + month;
+	if (day.length < 2) 
+		day = '0' + day;
+
+	return [year, month, day].join('-');
+  }
+  
+  console.log('format',formatDate2('2021-10-24T06:53:19.216Z'))
+let fff = [{gg:{car:3,big:5},row:'yes'},{gg:{car:1,big:3},row:'hello'}]
+let aarr = []
+fff.map((ee,i)=>aarr.push({newgg:ee.gg.car,newrow:ee.row,newBig:ee.gg.big}))
+console.log('aarr',aarr)
+
+
+// for(let i = 0; i < fff.length; i++){
+	
+// }
+let result = _.map(fff, function(currentObject) {
+	return _.pick(currentObject,'gg',"row");
+});
+console.log('pick',result)
+////////////////////
+// let currJourney = await JourneyAttendanceModel.find($and[{MemberId:sinMem[0]._id},{_id:sinMem[0].SincurrentJourney},{Status:'Repeated'}])
+		// .populate('JourneyId')
+		
+		// let levles = [1,2,3,4,5]
+		
+		// let getCurrentLevle = levles.splice(levles.indexOf(currJourney[0].JourneyId.JourneyPriority))
+		
+		///////check for journey with status Repeated
+		// let fillRep = prevJourney.filter((e)=> e.Status == 'Repeated');
+		
+		// if(fillRep.length >= 1){
+			// let lastRepJourney = fillRep[fillRep.length -1]
+			// if(sinMem[0].currentJourney.JourneyPriority != lastRepJourney.JourneyId.JourneyPriority){
+				
+				// const updataMember2 = await MemberModel.updateOne(
+					// {_id:sinMem._id},
+					// {
+						// $push:{journeyAttend:newJourneyAttaindance._id},
+						// $set:{SincurrentJourney:newJourneyAttaindance._id},
+						// $set:{SinnextJourney:allJourney2[0]._id}
+					// }
+				// )
+			// }
+		// }
+	// }
+	
+	////For Compair////
+	// let newJourneyAttaindance22 = await JourneyAttendanceModel.find({MemberId:req.body.id})
+	// .populate('JourneyId')
+	// if(newJourneyAttaindance22.length >= 1){
+		// let fillDon = newJourneyAttaindance22.filter((e)=> e.Status == 'Done');
+		/////////comper this/////////////
+		// let lastInd = fillDon[fillDon.length -1];
+		/////////
+		
+		// const attainedMember2 = await MemberModel.findById(req.body.id);
+	
+		// const currentJourney2 = await JourneyModel.find({JourneyPriority:req.body.code})
+		
+		// if(attainedMember2){
+			// const newJourneyAttaindance2 = await JourneyAttendanceModel.create({
+				// MemberId:attainedMember2._id,
+			   // JourneyDate:new Date(req.dateAttain).toLocaleDateString(),
+			   // JourneyId:currentJourney2[0]._id,
+			   // Status:'Repeated'
+			// })
+			
+			// if(newJourneyAttaindance2){
+				
+				// const updataMember2 = await MemberModel.updateOne(
+					// {_id:attainedMember._id},
+					// {
+						// $push:{journeyAttend:newJourneyAttaindance._id},
+						// $set:{currentJourney:allJourney2[0]._id}
+					// }
+				// )
+				// if(updataMember2.nModified ==1){
+					// res.status(200).json({
+						// status:'success',
+						// data:DayFilter
+					// })
+				// }else{
+					// res.status(404).json({
+						// status:'not found'
+					// })
+				// }
+			
+			// }
+		// }
+
+let inde = [2,4,6];
+let docu =[{a:'hello1'},
+		   {a:'hello2'},
+		   {a:'hello3'},
+		   {a:'hello4'},
+		   {a:'hello5'},
+		   {a:'hello6'},
+		   {a:'hello7'},
+		   {a:'hello8'},
+		   {a:'hello9'},
+		   {a:'hello110'},
+		   {a:'hello11'},
+		   {a:'hello12'},
+		   {a:'hello13'}
+] 
+
+let ress = inde.map((a)=>{
+	console.log(a)
+	return docu[a]
+})
+
+console.log('getFIllIndex',ress)
+
+let chars = ['A', 'B', 'C'];
+let uniqueChars = [...new Set(chars)];
+
+console.log(uniqueChars);
+
+
+
+let searchDate = new Date("2021-10-24").toISOString();
+console.log(searchDate)
+if('2021-10-24T06:53:19.216Z' == new Date("2021-10-24").toISOString()){
+	console.log('True')
+}else{
+	console.log('False')
+}
+// const hh4455 = [
+
+   // <tr key={i}>
+		// <td><input class="form-check-input" type="checkbox" ref={complet} onChange={()=> cangeChake()} /></td>
+		// <td> <input type="text" class="form-control" value={e.MemberId.Firstname?e.MemberId.Firstname:''} onChange={(e)=>setFName(e.target.value)}/></td>
+		// <td> <input type="text" class="form-control" value={e.MemberId.Surname?e.MemberId.Surname:''} onChange={(e)=>setSName(e.target.value)}/></td>
+		// <td> <input type="text" class="form-control" value={e.MemberId.Address?e.MemberId.Address:''} onChange={(e)=>setAddr(e.target.value)}/></td>
+		// <td> <input type="number" class="form-control" value={e.MemberId.PhoneNo?e.MemberId.PhoneNo:''} onChange={(e)=>setPhone(e.target.value)}/></td>
+		// <td><input type="text" class="form-control" value={e.MemberId.Sex?e.MemberId.Sex:''} onChange={(e)=>setSex(e.target.value)}/></td>                                   
+		// <td> <input type="email" class="form-control" value={e.MemberId.Email?e.MemberId.Email:''} onChange={(e)=>setEmail(e.target.value)}/></td>
+		// <td> <input type="email" class="form-control" value={e.MemberId.Dob?formatDate(e.MemberId.Dob):''} onChange={(e)=>setEmail(e.target.value)}/></td>								
+		// <td><input type="text" class="form-control" value={e.MemberId.MaritalStatus?e.MemberId.MaritalStatus:''} onChange={(e)=>setMs(e.target.value)}/></td>                           
+		// <td> <input type="text" class="form-control" value={e.MemberId.Occupation?e.MemberId.Occupation:''} onChange={(e)=>setOcc(e.target.value)}/></td>
+		// <td> <input type="text" class="form-control" value={e.MemberId.Business?e.MemberId.Business:''} onChange={(e)=>setBus(e.target.value)}/></td>
+		// <td> <input type="text" class="form-control" value={e.MemberId.Expertise?e.MemberId.Expertise:''} onChange={(e)=>setExp(e.target.value)}/></td>                              
+	// </tr>)
+
+
+
+
+// {
+//             "role": "member",
+//             "journeyAttend": [
+//                 {
+//                     "_id": "613f62a683d75e0c300ddfd3",
+//                     "JourneyDate": "2020-09-04T00:00:00.000Z",
+//                     "JourneyId": {
+//                         "_id": "613b8af13861f220a07bc606",
+//                         "JourneyName": "Journey 101",
+//                         "JourneyPriority": 1,
+//                         "__v": 0
+//                     },
+//                     "__v": 0,
+//                     "id": "613f62a683d75e0c300ddfd3"
+//                 },
+//                 {
+//                     "_id": "6140739053fb8b01a42b10bb",
+//                     "JourneyDate": "2020-09-04T00:00:00.000Z",
+//                     "JourneyId": {
+//                         "_id": "613b8b003861f220a07bc607",
+//                         "JourneyName": "Journey 201",
+//                         "JourneyPriority": 2,
+//                         "__v": 0
+//                     },
+//                     "__v": 0,
+//                     "id": "6140739053fb8b01a42b10bb"
+//                 },
+//                 {
+//                     "_id": "614073ab53fb8b01a42b10bc",
+//                     "JourneyDate": "2020-09-09T00:00:00.000Z",
+//                     "JourneyId": {
+//                         "_id": "613b8b123861f220a07bc608",
+//                         "JourneyName": "Journey 202",
+//                         "JourneyPriority": 3,
+//                         "__v": 0
+//                     },
+//                     "__v": 0,
+//                     "id": "614073ab53fb8b01a42b10bc"
+//                 },
+//                 {
+//                     "_id": "614073c253fb8b01a42b10bd",
+//                     "JourneyDate": "2021-09-12T00:00:00.000Z",
+//                     "JourneyId": {
+//                         "_id": "613b8b313861f220a07bc609",
+//                         "JourneyName": "Journey 301",
+//                         "JourneyPriority": 4,
+//                         "__v": 0
+//                     },
+//                     "__v": 0,
+//                     "id": "614073c253fb8b01a42b10bd"
+//                 },
+//                 {
+//                     "_id": "614073d753fb8b01a42b10be",
+//                     "JourneyDate": "2021-09-13T00:00:00.000Z",
+//                     "JourneyId": {
+//                         "_id": "613b8b3d3861f220a07bc60a",
+//                         "JourneyName": "Journey 401",
+//                         "JourneyPriority": 5,
+//                         "__v": 0
+//                     },
+//                     "__v": 0,
+//                     "id": "614073d753fb8b01a42b10be"
+//                 },
+//                 {
+//                     "_id": "614073f853fb8b01a42b10bf",
+//                     "JourneyDate": "2021-09-09T00:00:00.000Z",
+//                     "JourneyId": {
+//                         "_id": "613b8b523861f220a07bc60b",
+//                         "JourneyName": "Done",
+//                         "JourneyPriority": 6,
+//                         "__v": 0
+//                     },
+//                     "__v": 0,
+//                     "id": "614073f853fb8b01a42b10bf"
+//                 }
+//             ],
+//             "_id": "613e98d4312e2019742a0276",
+//             "RegNumber": "hh6688",
+//             "Surname": "Edet",
+//             "Firstname": "Emmanuel",
+// 			"Primary":"EmmanuelEdet",
+//             "Address": "Uyo",
+//             "PhoneNo": 2348899778866,
+//             "ImageUrl": "http://localhost:3000/publicFile/members/2021IMG_20210429_144554.jpg",
+//             "Sex": "Male",
+//             "Email": "nyaknodavis318@gmail.com",
+//             "MaritalStatus": "Single",
+//             "WeddingAnniversary": null,
+//             "Occupation": "marketer",
+//             "Business": "import and export",
+//             "Expertise": "developeer",
+//             "DateJoinedTKA": "2020-02-05T00:00:00.000Z",
+//             "currentJourney": "613b8b523861f220a07bc60b",
+//             "nextJourney": "613b8af13861f220a07bc606",
+//             "createdAt": "2021-09-13T00:18:28.203Z",
+//             "updatedAt": "2021-09-14T10:05:44.925Z",
+//             "password": "Edet",
+//             "monthCreated": 8,
+//             "Year": 2021,
+//             "__v": 0,
+//             "Dob": "2018-06-11T00:00:00.000Z"
+//         },
+//         {
+//             "role": "member",
+//             "journeyAttend": [
+//                 {
+//                     "_id": "613eaafa679c720ea02fbf26",
+//                     "JourneyDate": "2020-09-03T00:00:00.000Z",
+//                     "JourneyId": {
+//                         "_id": "613b8af13861f220a07bc606",
+//                         "JourneyName": "Journey 101",
+//                         "JourneyPriority": 1,
+//                         "__v": 0
+//                     },
+//                     "__v": 0,
+//                     "id": "613eaafa679c720ea02fbf26"
+//                 }
+//             ],
+//             "_id": "613ea92d679c720ea02fbf25",
+//             "RegNumber": "hh66881",
+//             "Surname": "Date",
+//             "Firstname": "dateTast",
+// 			"Primary":"dateTastDate",
+//             "Address": "date",
+//             "PhoneNo": 234990088764,
+//             "ImageUrl": "http://localhost:3000/publicFile/members/default.jpg",
+//             "Sex": "Female",
+//             "Email": "date@gmail.com",
+//             "Dob": "2021-09-10T00:00:00.000Z",
+//             "MaritalStatus": "Seprated",
+//             "WeddingAnniversary": null,
+//             "Occupation": "ff1",
+//             "Business": "jjj",
+//             "Expertise": "dancing",
+//             "DateJoinedTKA": "2021-09-02T00:00:00.000Z",
+//             "currentJourney": "613b8b003861f220a07bc607",
+//             "nextJourney": "613b8b123861f220a07bc608",
+//             "createdAt": "2021-09-13T01:28:13.587Z",
+//             "updatedAt": "2021-09-13T01:35:55.487Z",
+//             "password": "Date",
+//             "monthCreated": 8,
+//             "Year": 2021,
+//             "__v": 0
+//         },
+//         {
+//             "role": "member",
+//             "journeyAttend": [
+// 				{
+//                     "_id": "613f62a683d75e0c300ddfd3",
+//                     "JourneyDate": "2021-09-04T00:00:00.000Z",
+//                     "JourneyId": {
+//                         "_id": "613b8af13861f220a07bc606",
+//                         "JourneyName": "Journey 101",
+//                         "JourneyPriority": 1,
+//                         "__v": 0
+//                     },
+//                     "__v": 0,
+//                     "id": "613f62a683d75e0c300ddfd3"
+//                 },
+//                 {
+//                     "_id": "6140739053fb8b01a42b10bb",
+//                     "JourneyDate": "2021-09-04T00:00:00.000Z",
+//                     "JourneyId": {
+//                         "_id": "613b8b003861f220a07bc607",
+//                         "JourneyName": "Journey 201",
+//                         "JourneyPriority": 2,
+//                         "__v": 0
+//                     },
+//                     "__v": 0,
+//                     "id": "6140739053fb8b01a42b10bb"
+//                 },],
+//             "_id": "6140cd5021155c282803c5fc",
+//             "Address": "elioz",
+//             "PhoneNo": 9036264607,
+//             "RegNumber": "fds44",
+//             "Sex": "female",
+//             "MaritalStatus": "single",
+//             "Expertise": "dancing",
+//             "DateJoinedTKA": "2021-09-02T23:00:00.000Z",
+//             "currentJourney": "613b8af13861f220a07bc606",
+//             "nextJourney": "613b8b003861f220a07bc607",
+//             "monthCreated": 8,
+//             "Year": 2021,
+//             "__v": 0,
+//             "createdAt": "2020-09-14T16:26:56.782Z",
+//             "updatedAt": "2021-09-14T16:26:56.782Z"
+//         },
+//         {
+//             "role": "member",
+//             "journeyAttend": [
+// 				{
+//                     "_id": "613f62a683d75e0c300ddfd3",
+//                     "JourneyDate": "2021-08-04T00:00:00.000Z",
+//                     "JourneyId": {
+//                         "_id": "613b8af13861f220a07bc606",
+//                         "JourneyName": "Journey 101",
+//                         "JourneyPriority": 1,
+//                         "__v": 0
+//                     },
+//                     "__v": 0,
+//                     "id": "613f62a683d75e0c300ddfd3"
+//                 },
+//                 {
+//                     "_id": "6140739053fb8b01a42b10bb",
+//                     "JourneyDate": "2021-09-04T00:00:00.000Z",
+//                     "JourneyId": {
+//                         "_id": "613b8b003861f220a07bc607",
+//                         "JourneyName": "Journey 201",
+//                         "JourneyPriority": 2,
+//                         "__v": 0
+//                     },
+//                     "__v": 0,
+//                     "id": "6140739053fb8b01a42b10bb"
+//                 },],
+//             "_id": "6140cd4f21155c282803c5fa",
+//             "Address": "choba",
+//             "PhoneNo": 9036103607,
+//             "RegNumber": "rfgr343",
+//             "Sex": "male",
+//             "MaritalStatus": "single",
+//             "Expertise": "web development",
+//             "DateJoinedTKA": "2021-08-31T23:00:00.000Z",
+//             "currentJourney": "613b8af13861f220a07bc606",
+//             "nextJourney": "613b8b003861f220a07bc607",
+//             "monthCreated": 8,
+//             "Year": 2021,
+//             "__v": 0,
+//             "createdAt": "2020-09-14T16:26:56.406Z",
+//             "updatedAt": "2021-09-14T16:26:56.406Z"
+//         },
+//         {
+//             "role": "member",
+//             "journeyAttend": [],
+//             "_id": "6140d8f221155c282803c5ff",
+//             "Address": "elioz",
+//             "PhoneNo": 9036264607,
+//             "RegNumber": "fds44",
+//             "Sex": "female",
+//             "MaritalStatus": "single",
+//             "Expertise": "dancing",
+//             "DateJoinedTKA": "2021-09-02T23:00:00.000Z",
+//             "currentJourney": "613b8af13861f220a07bc606",
+//             "nextJourney": "613b8b003861f220a07bc607",
+//             "monthCreated": 8,
+//             "Year": 2021,
+//             "__v": 0,
+//             "createdAt": "2021-09-14T17:16:35.040Z",
+//             "updatedAt": "2021-09-14T17:16:35.040Z"
+//         },
+//         {
+//             "role": "member",
+//             "journeyAttend": [],
+//             "_id": "6140d8f221155c282803c5fe",
+//             "Address": "rukpokwu",
+//             "PhoneNo": 9036233607,
+//             "RegNumber": "23ffg",
+//             "Sex": "female",
+//             "MaritalStatus": "married",
+//             "WeddingAnniversary": "2017-04-12T23:00:00.000Z",
+//             "Expertise": "driving",
+//             "DateJoinedTKA": "2021-09-01T23:00:00.000Z",
+//             "currentJourney": "613b8af13861f220a07bc606",
+//             "nextJourney": "613b8b003861f220a07bc607",
+//             "monthCreated": 8,
+//             "Year": 2021,
+//             "__v": 0,
+//             "createdAt": "2021-09-14T17:16:35.038Z",
+//             "updatedAt": "2021-09-14T17:16:35.038Z"
+//         },
+//         {
+//             "role": "member",
+//             "journeyAttend": [],
+//             "_id": "6140d8f221155c282803c5fd",
+//             "Address": "choba",
+//             "PhoneNo": 9036103607,
+//             "RegNumber": "rfgr343",
+//             "Sex": "male",
+//             "MaritalStatus": "single",
+//             "Expertise": "web development",
+//             "DateJoinedTKA": "2021-08-31T23:00:00.000Z",
+//             "currentJourney": "613b8af13861f220a07bc606",
+//             "nextJourney": "613b8b003861f220a07bc607",
+//             "monthCreated": 8,
+//             "Year": 2021,
+//             "__v": 0,
+//             "createdAt": "2021-09-14T17:16:35.015Z",
+//             "updatedAt": "2021-09-14T17:16:35.015Z"
+//         },
+//         {
+//             "role": "member",
+//             "journeyAttend": [],
+//             "_id": "6141f18d5bd7451f94a9a59c",
+//             "Address": "choba",
+//             "PhoneNo": 9036103607,
+//             "RegNumber": "rfgr343",
+//             "Sex": "male",
+//             "MaritalStatus": "single",
+//             "Expertise": "web development",
+//             "DateJoinedTKA": "2021-08-31T23:00:00.000Z",
+//             "currentJourney": "613b8af13861f220a07bc606",
+//             "nextJourney": "613b8b003861f220a07bc607",
+//             "monthCreated": 8,
+//             "Year": 2021,
+//             "__v": 0,
+//             "createdAt": "2021-09-15T13:13:49.083Z",
+//             "updatedAt": "2021-09-15T13:13:49.083Z"
+//         },
+//         {
+//             "role": "member",
+//             "journeyAttend": [],
+//             "_id": "6141f18d5bd7451f94a9a59d",
+//             "Address": "rukpokwu",
+//             "PhoneNo": 9036233607,
+//             "RegNumber": "23ffg",
+//             "Sex": "female",
+//             "MaritalStatus": "married",
+//             "WeddingAnniversary": "2017-04-12T23:00:00.000Z",
+//             "Expertise": "driving",
+//             "DateJoinedTKA": "2021-09-01T23:00:00.000Z",
+//             "currentJourney": "613b8af13861f220a07bc606",
+//             "nextJourney": "613b8b003861f220a07bc607",
+//             "monthCreated": 8,
+//             "Year": 2021,
+//             "__v": 0,
+//             "createdAt": "2021-09-15T13:13:49.096Z",
+//             "updatedAt": "2021-09-15T13:13:49.096Z"
+//         },
+//         {
+//             "role": "member",
+//             "journeyAttend": [],
+//             "_id": "6141f18d5bd7451f94a9a59e",
+//             "Address": "elioz",
+//             "PhoneNo": 9036264607,
+//             "RegNumber": "fds44",
+//             "Sex": "female",
+//             "MaritalStatus": "single",
+//             "Expertise": "dancing",
+//             "DateJoinedTKA": "2021-09-02T23:00:00.000Z",
+//             "currentJourney": "613b8af13861f220a07bc606",
+//             "nextJourney": "613b8b003861f220a07bc607",
+//             "monthCreated": 8,
+//             "Year": 2021,
+//             "__v": 0,
+//             "createdAt": "2021-09-15T13:13:49.098Z",
+//             "updatedAt": "2021-09-15T13:13:49.098Z"
+//         },
+//         {
+//             "role": "member",
+//             "journeyAttend": [],
+//             "_id": "61521f77b1b43608c401b19e",
+//             "RegNumber": "jjgg",
+//             "Surname": "Sam",
+//             "Firstname": "gen",
+//             "Address": "Victory Estate Rukpokw",
+//             "PhoneNo": 667746899987,
+//             "ImageUrl": "http://localhost:3000/publicFile/members/2021hqdefault (2).webp",
+//             "Sex": "Female",
+//             "Email": "joegen@gmail.com",
+//             "Dob": "2021-09-02T00:00:00.000Z",
+//             "MaritalStatus": "Single",
+//             "WeddingAnniversary": null,
+//             "Occupation": "web dev",
+//             "Business": "Freelancing",
+//             "Expertise": "developeer",
+//             "DateJoinedTKA": "2021-09-02T00:00:00.000Z",
+//             "currentJourney": "613b8af13861f220a07bc606",
+//             "nextJourney": "613b8b003861f220a07bc607",
+//             "createdAt": "2021-09-27T19:46:00.036Z",
+//             "updatedAt": "2021-09-27T19:48:09.018Z",
+//             "monthCreated": 9,
+//             "Year": 2021,
+//             "__v": 0
+//         },
+//         {
+//             "role": "member",
+//             "journeyAttend": [],
+//             "_id": "615c67c34fa5be1d749e7233",
+//             "RegNumber": "ffgg12",
+//             "Firstname": "Nick2",
+//             "Surname": "Davis2",
+//             "Address": "Choba2",
+//             "PhoneNo": 12345,
+//             "Email": "any1@gmail.com",
+//             "Sex": "Female",
+//             "Dob": "1970-01-01T00:00:44.229Z",
+//             "MaritalStatus": "Married",
+//             "WeddingAnniversary": "2021-02-01T23:00:00.000Z",
+//             "Occupation": "web developer2",
+//             "Expertise": "codding2",
+//             "DateJoinedTKA": "2021-02-01T23:00:00.000Z",
+//             "Business": "importation2",
+//             "currentJourney": "613b8af13861f220a07bc606",
+//             "nextJourney": "613b8b003861f220a07bc607",
+//             "ImageUrl": "http://localhost:3000/publicFile/members/default.jpg",
+//             "monthCreated": 10,
+//             "Year": 2021,
+//             "__v": 0,
+//             "createdAt": "2021-10-05T14:57:07.215Z",
+//             "updatedAt": "2021-10-05T14:57:07.215Z"
+//         },
+//         {
+//             "role": "member",
+//             "journeyAttend": [],
+//             "_id": "615c67c34fa5be1d749e7232",
+//             "RegNumber": "ffgg11",
+//             "Firstname": "Nick1",
+//             "Surname": "Davis1",
+//             "Address": "Choba1",
+//             "PhoneNo": 12345,
+//             "Email": "any1@gmail.com",
+//             "Sex": "Male",
+//             "Dob": "1970-01-01T00:00:44.228Z",
+//             "MaritalStatus": "Married",
+//             "Occupation": "web developer1",
+//             "Expertise": "codding1",
+//             "DateJoinedTKA": "2021-01-31T23:00:00.000Z",
+//             "Business": "importation122",
+//             "currentJourney": "613b8af13861f220a07bc606",
+//             "nextJourney": "613b8b003861f220a07bc607",
+//             "ImageUrl": "http://localhost:3000/publicFile/members/default.jpg",
+//             "monthCreated": 10,
+//             "Year": 2021,
+//             "__v": 0,
+//             "createdAt": "2021-10-05T14:57:07.126Z",
+//             "updatedAt": "2021-10-05T15:33:56.181Z",
+//             "WeddingAnniversary": "2021-10-02T00:00:00.000Z"
+//         },
+//         {
+//             "role": "member",
+//             "journeyAttend": [],
+//             "_id": "615c67c34fa5be1d749e7234",
+//             "RegNumber": "ffgg13",
+//             "Firstname": "Nick3",
+//             "Surname": "Davis3",
+//             "Address": "Choba3",
+//             "PhoneNo": 12345,
+//             "Email": "any1@gmail.com",
+//             "Sex": "Male",
+//             "Dob": "1970-01-01T00:00:44.230Z",
+//             "MaritalStatus": "Divorce",
+//             "WeddingAnniversary": "2021-02-02T23:00:00.000Z",
+//             "Occupation": "web developer3",
+//             "Expertise": "codding3",
+//             "DateJoinedTKA": "2021-02-02T23:00:00.000Z",
+//             "Business": "importation3",
+//             "currentJourney": "613b8af13861f220a07bc606",
+//             "nextJourney": "613b8b003861f220a07bc607",
+//             "ImageUrl": "http://localhost:3000/publicFile/members/default.jpg",
+//             "monthCreated": 10,
+//             "Year": 2021,
+//             "__v": 0,
+//             "createdAt": "2021-10-05T14:57:07.221Z",
+//             "updatedAt": "2021-10-05T14:57:07.221Z"
+//         },
+//         {
+//             "role": "member",
+//             "journeyAttend": [],
+//             "_id": "615c67c34fa5be1d749e7235",
+//             "RegNumber": "ffgg14",
+//             "Firstname": "Nick4",
+//             "Surname": "Davis4",
+//             "Address": "Choba4",
+//             "PhoneNo": 12345,
+//             "Email": "any1@gmail.com",
+//             "Sex": "Female",
+//             "Dob": "1970-01-01T00:00:44.231Z",
+//             "MaritalStatus": "Seprated",
+//             "WeddingAnniversary": "2021-02-03T23:00:00.000Z",
+//             "Occupation": "web developer4",
+//             "Expertise": "codding4",
+//             "DateJoinedTKA": "2021-02-03T23:00:00.000Z",
+//             "Business": "importation4",
+//             "currentJourney": "613b8af13861f220a07bc606",
+//             "nextJourney": "613b8b003861f220a07bc607",
+//             "ImageUrl": "http://localhost:3000/publicFile/members/default.jpg",
+//             "monthCreated": 10,
+//             "Year": 2021,
+//             "__v": 0,
+//             "createdAt": "2022-10-05T14:57:07.223Z",
+//             "updatedAt": "2021-10-05T14:57:07.223Z"
+//         },
+//         {
+//             "role": "member",
+//             "journeyAttend": [],
+//             "_id": "615c67c34fa5be1d749e7236",
+//             "RegNumber": "ffgg15",
+//             "Firstname": "Nick5",
+//             "Surname": "Davis5",
+//             "Address": "Choba5",
+//             "PhoneNo": 12345,
+//             "Email": "any1@gmail.com",
+//             "Sex": "Female",
+//             "Dob": "1970-01-01T00:00:44.232Z",
+//             "MaritalStatus": "Single",
+//             "Occupation": "web developer5",
+//             "Expertise": "codding5",
+//             "DateJoinedTKA": "2021-02-04T23:00:00.000Z",
+//             "Business": "importation5",
+//             "currentJourney": "613b8af13861f220a07bc606",
+//             "nextJourney": "613b8b003861f220a07bc607",
+//             "ImageUrl": "http://localhost:3000/publicFile/members/default.jpg",
+//             "monthCreated": 10,
+//             "Year": 2021,
+//             "__v": 0,
+//             "createdAt": "2022-10-05T14:57:07.226Z",
+//             "updatedAt": "2021-10-05T14:57:07.226Z"
+//         },
+//         {
+//             "role": "member",
+//             "journeyAttend": [],
+//             "_id": "615c67c34fa5be1d749e7237",
+//             "RegNumber": "ffgg16",
+//             "Firstname": "Nick6",
+//             "Surname": "Davis6",
+//             "Address": "Choba6",
+//             "PhoneNo": 12345,
+//             "Email": "any1@gmail.com",
+//             "Sex": "Male",
+//             "Dob": "1970-01-01T00:00:44.233Z",
+//             "MaritalStatus": "Single",
+//             "Occupation": "web developer6",
+//             "Expertise": "codding6",
+//             "DateJoinedTKA": "2021-02-05T23:00:00.000Z",
+//             "Business": "importation6",
+//             "currentJourney": "613b8af13861f220a07bc606",
+//             "nextJourney": "613b8b003861f220a07bc607",
+//             "ImageUrl": "http://localhost:3000/publicFile/members/default.jpg",
+//             "monthCreated": 10,
+//             "Year": 2021,
+//             "__v": 0,
+//             "createdAt": "2022-10-05T14:57:07.232Z",
+//             "updatedAt": "2021-10-05T14:57:07.232Z"
+//         }
+//     ]
+//
+// 	const uu1 = hh4455.filter((e)=> e.Primary)
+// 	console.log(uu1)
+// 	const uu12 = uu1.filter((e)=> e.Primary == "EmmanuelEdet" )
+// 	const uuu =  _.pluck(uu1,("Primary"))
+// 	console.log(("Primary").toUpperCase() + ("Secondry").toUpperCase())
+//
+// 	const jj99 = hh4455.filter((e)=> new Date(e.createdAt).getFullYear() == 2020)
+// 	const jj88 = hh4455.filter((e)=> e.journeyAttend.length >= 1)
+//
+//  const iu =  _.pluck(jj88,"journeyAttend")
+//   const iu2 =  _.pluck(iu,"JourneyId")
+//
+//   let arrr1 = []
+// 	for (let i = 0; i < iu.length;i++){
+// 		let ress = iu[i]
+// 		for(k in iu[i]){
+// 			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 9  && iu[i][k].JourneyId.JourneyPriority == 1 ){
+// 				arrr1.push(iu[i][k].JourneyId.JourneyPriority)
+// 			}
+// 		}
+//
+// 	}
 	// const dateFiltrer = data.filter((e)=> new Date(e.createdAt).getFullYear() == selectedYear)
 	// let arrr = []
 	// for (let i = 0; i < iu.length;i++){
@@ -566,8 +758,11 @@ const jj99 = hh4455.filter((e)=> new Date(e.createdAt).getFullYear() == 2020)
 	// }
 // console.log('pp',jj99)
 /////////////////////////////////////////////////////////////////////////////////////
+
+
+
 function filterAttendance(data,selectedYear){
-	
+
 	var journey101 = []
 	var journey201 = []
 	var journey202 = []
@@ -576,14 +771,14 @@ function filterAttendance(data,selectedYear){
 	// console.log('year',selectedYear)
 	const dateFiltrer = data.filter((e)=> new Date(e.createdAt).getFullYear() == selectedYear)
 	// console.log('mem',dateFiltrer)
-	
+
 	const attendFilter = dateFiltrer.filter((e)=> e.journeyAttend.length >= 1)
 	// console.log('memAttend',attendFilter)
-	
+
     const iu =  _.pluck(attendFilter,"journeyAttend")
-	
+
     const iu2 =  _.pluck(iu,"JourneyId")
-	
+
 	////////////////////////////////////////////Journey 101 /////////////////////////
 	let arrrM1 = []
 	let arrrM2 = []
@@ -597,7 +792,7 @@ function filterAttendance(data,selectedYear){
 	let arrrM10 = []
 	let arrrM11 = []
 	let arrrM12 = []
-	
+
 	for (let i = 0; i < iu.length;i++){
 		let ress = iu[i]
 		for(k in iu[i]){
@@ -706,7 +901,7 @@ function filterAttendance(data,selectedYear){
 		}
 	}
 	////////////////////////////////////////Journey 201//////////////////////////////////////////////////////////
-	
+
 	let arrr2M1 = []
 	let arrr2M2 = []
 	let arrr2M3 = []
@@ -719,7 +914,7 @@ function filterAttendance(data,selectedYear){
 	let arrr2M10 = []
 	let arrr2M11 = []
 	let arrr2M12 = []
-	
+
 	for (let i = 0; i < iu.length;i++){
 		let ress = iu[i]
 		for(k in iu[i]){
@@ -827,9 +1022,9 @@ function filterAttendance(data,selectedYear){
 			}
 		}
 	}
-	
+
 	//////////////////////////////////////Journey 202 ///////////////////////
-	
+
 	let arrr3M1 = []
 	let arrr3M2 = []
 	let arrr3M3 = []
@@ -842,8 +1037,8 @@ function filterAttendance(data,selectedYear){
 	let arrr3M10 = []
 	let arrr3M11 = []
 	let arrr3M12 = []
-	
-	
+
+
 	for (let i = 0; i < iu.length;i++){
 		let ress = iu[i]
 		for(k in iu[i]){
@@ -853,7 +1048,7 @@ function filterAttendance(data,selectedYear){
 		}
 	}
 	////////////////
-	
+
 	for (let i = 0; i < iu.length;i++){
 		let ress = iu[i]
 		for(k in iu[i]){
@@ -953,7 +1148,7 @@ function filterAttendance(data,selectedYear){
 		}
 	}
 	////////////////////////////////////////Journey 301 ///////////////////
-	
+
 	let arrr4M1 = []
 	let arrr4M2 = []
 	let arrr4M3 = []
@@ -966,7 +1161,7 @@ function filterAttendance(data,selectedYear){
 	let arrr4M10 = []
 	let arrr4M11 = []
 	let arrr4M12 = []
-	
+
 	for (let i = 0; i < iu.length;i++){
 		let ress = iu[i]
 		for(k in iu[i]){
@@ -1084,7 +1279,7 @@ function filterAttendance(data,selectedYear){
 		}
 	}
 	////////////////////////////////Journey 401 /////////////////
-	
+
 	let arrr5M1 = []
 	let arrr5M2 = []
 	let arrr5M3 = []
@@ -1097,7 +1292,7 @@ function filterAttendance(data,selectedYear){
 	let arrr5M10 = []
 	let arrr5M11 = []
 	let arrr5M12 = []
-	
+
 	for (let i = 0; i < iu.length;i++){
 		let ress = iu[i]
 		for(k in iu[i]){
@@ -1205,8 +1400,8 @@ function filterAttendance(data,selectedYear){
 			}
 		}
 	}
-	
-	
+
+
 	/////////////////////Push Into Array ///////////////
 
 // var journey101 = []
@@ -1227,7 +1422,7 @@ function filterAttendance(data,selectedYear){
 	journey101.push((arrrM10.length !== 0?arrrM10.length:0))
 	journey101.push((arrrM11.length !== 0?arrrM11.length:0))
 	journey101.push((arrrM12.length !== 0?arrrM12.length:0))
-	
+
 	console.log('month9101',arrrM9)
 	//Pushing journey 201
 
@@ -1244,9 +1439,9 @@ function filterAttendance(data,selectedYear){
 	journey201.push((arrr2M11.length !== 0?arrr2M11.length:0))
 	journey201.push((arrr2M12.length !== 0?arrr2M12.length:0))
 	console.log('month9201',arrr2M9)
-	
+
 	//Pushing journey 202
-	
+
 	journey202.push((arrr3M1.length !== 0?arrr3M1.length:0))
 	journey202.push((arrr3M2.length !== 0?arrr3M2.length:0))
 	journey202.push((arrr3M3.length !== 0?arrr3M3.length:0))
@@ -1260,9 +1455,9 @@ function filterAttendance(data,selectedYear){
 	journey202.push((arrr3M11.length !== 0?arrr3M11.length:0))
 	journey202.push((arrr3M12.length !== 0?arrr3M12.length:0))
 	console.log('month9202',arrr3M9)
-	
+
 	//Pushing journey 301
-	
+
 	journey301.push((arrr4M1.length !== 0?arrr4M1.length:0))
 	journey301.push((arrr4M2.length !== 0?arrr4M2.length:0))
 	journey301.push((arrr4M3.length !== 0?arrr4M3.length:0))
@@ -1291,7 +1486,7 @@ function filterAttendance(data,selectedYear){
 	journey401.push((arrr5M11.length !== 0?arrr5M11.length:0))
 	journey401.push((arrr5M12.length !== 0?arrr5M12.length:0))
 	console.log('month9401',arrr5M9)
-	
+
 	if(selectedYear == new Date().getFullYear()){
 		let sli = new Date().getMonth()
 		let finalJourney101 = journey101.slice(0,sli + 1)
@@ -1299,7 +1494,7 @@ function filterAttendance(data,selectedYear){
 		let finalJourney202 = journey202.slice(0,sli + 1)
 		let finalJourney301 = journey301.slice(0,sli + 1)
 		let finalJourney401 = journey401.slice(0,sli + 1)
-	
+
 		// console.log('slicejourneys',{levle1:finalJourney101,levle2:finalJourney201,levle3:finalJourney202,levle4:finalJourney301,levle5:finalJourney401})
 		return {levle1:finalJourney101,levle2:finalJourney201,levle3:finalJourney202,levle4:finalJourney301,levle5:finalJourney401}
 	}
@@ -1308,15 +1503,16 @@ function filterAttendance(data,selectedYear){
 
 }
 
+let hh = [7,9,3]
+console.log('kkkkkk',hh[hh.length - 1])
 
-
-console.log(filterAttendance(hh4455,2020))
+// console.log(filterAttendance(hh4455,2020))
 /////////////////////////////////////////////////////////////////////////////////////
 
 
 
 // printArray(parentArray);
-console.log(new Date("2022-10-05T14:57:07.232Z").getFullYear())
+// console.log(new Date("2022-10-05T14:57:07.232Z").getFullYear())
  // console.log('fill',jj99)
 
 // const test33 = [
@@ -1344,7 +1540,7 @@ console.log(new Date("2022-10-05T14:57:07.232Z").getFullYear())
 		// result22 = month[3]
 	// }
 	// else if(num == 5){
-		// result22 = month[4] 
+		// result22 = month[4]
 	// }
 	// else if(num == 6){
 		// result22 = month[5]
@@ -1382,7 +1578,7 @@ console.log(new Date("2022-10-05T14:57:07.232Z").getFullYear())
 // {a:17,h:9,_id:"h4"},
 // ]
 // const nn = gg.findIndex((e)=> e._id === 'h3')
-// const arr = gg.splice(nn,1) 
+// const arr = gg.splice(nn,1)
 // console.log('filterd',gg)
 // const hh = gg.filter((e)=> e._id !== "h3")
 
@@ -1396,16 +1592,16 @@ console.log(new Date("2021-09-24T06:34:22.462Z").getMonth()+1)//"2021-09-19T19:1
         month = '' + (d.getMonth() + 1),
         day = '' + d.getDate(),
         year = d.getFullYear();
-    
-        if (month.length < 2) 
+
+        if (month.length < 2)
             month = '0' + month;
-        if (day.length < 2) 
+        if (day.length < 2)
             day = '0' + day;
-    
+
         return [year, month, day].join('-');
       }
 	console.log(formatDate("2021-09-19T19:14:09.993Z"))
-	
+
 // 	let  gg = [3]
 // 	console.log(gg[gg.length -1])
 // var _ = require('underscore')
@@ -1472,8 +1668,8 @@ console.log(new Date("2021-09-24T06:34:22.462Z").getMonth()+1)//"2021-09-19T19:1
     // }
 // ];
 // var employeesCollection = [
-    
-    
+
+
     // {
         // id:3,
         // name:"Akanksha",
@@ -1510,7 +1706,7 @@ console.log(new Date("2021-09-24T06:34:22.462Z").getMonth()+1)//"2021-09-19T19:1
         // designation:"AZ",
         // salary:35000
     // }
- 
+
 // ];
 
 // let se1 = _.pluck(employeesCollection1, "designation")
@@ -1554,11 +1750,11 @@ console.log(new Date("2021-09-24T06:34:22.462Z").getMonth()+1)//"2021-09-19T19:1
 		// for(let j = 0; j<employeesCollection.length;j++){
 			// if(hhu[i] === employeesCollection[j].designation ){
 			// fina.push(employeesCollection[j])
-			
+
 		// }
-		
+
 	// }
-	
+
 // }
 
 // let nn = _.pluck(fina,"designation")
@@ -1569,7 +1765,7 @@ console.log(new Date("2021-09-24T06:34:22.462Z").getMonth()+1)//"2021-09-19T19:1
 		// if(kk[v] === employeesCollection[h].designation)
 		// rej.push(employeesCollection[h])
 	// }
-	
+
 // }
 // console.log("nn",nn)
 // console.log('save',fina)
@@ -1589,9 +1785,9 @@ console.log(new Date("2021-09-24T06:34:22.462Z").getMonth()+1)//"2021-09-19T19:1
         // day = '' + d.getDate(),
         // year = d.getFullYear();
 
-    // if (month.length < 2) 
+    // if (month.length < 2)
         // month = '0' + month;
-    // if (day.length < 2) 
+    // if (day.length < 2)
         // day = '0' + day;
 
     // return [year, month, day].join('/');
@@ -1616,22 +1812,22 @@ console.log(new Date("2021-09-24T06:34:22.462Z").getMonth()+1)//"2021-09-19T19:1
 				// <span className="c-avatar-status bg-success"></span>
 			  // </div>
 			// </td>
-			
+
 			// <td>
 			  // <div>Yiorgos Avraamu</div>
 			  // <div className="small text-muted">
 				// <span>New</span> | Registered: Jan 1, 2015
 			  // </div>
 			// </td>
-			
+
 			// <td>
 			  // <strong>09036103607</strong>
 			// </td>
-			
+
 			// <td>
 			  // <strong>nickdavis3188@gmail.com</strong>
 			// </td>
-			
+
 			// <td>
 			  // <div className="clearfix">
 				// <div className="float-left">
@@ -1640,7 +1836,7 @@ console.log(new Date("2021-09-24T06:34:22.462Z").getMonth()+1)//"2021-09-19T19:1
 			  // </div>
 			  // <CProgress className="progress-xs" color="success" value="50" />
 			// </td>
-			
+
 		// </tr>
 	// </tbody>
 // </table>
@@ -1789,7 +1985,7 @@ console.log(new Date("2021-09-24T06:34:22.462Z").getMonth()+1)//"2021-09-19T19:1
 //   {
 // 	Author:{ type: mongoose.Schema.ObjectId, ref: 'Author' },
 // 	Comments:{ type: mongoose.Schema.ObjectId, ref: 'comment' },
-	
+
 // },
 //   { timestamps: true }
 // )
@@ -1804,7 +2000,7 @@ console.log(new Date("2021-09-24T06:34:22.462Z").getMonth()+1)//"2021-09-19T19:1
 // const AuthorSchema = new mongoose.Schema(
 //   {
 //     Name:String,
-	
+
 // },
 //   { timestamps: true }
 // )
@@ -1812,7 +2008,7 @@ console.log(new Date("2021-09-24T06:34:22.462Z").getMonth()+1)//"2021-09-19T19:1
 // const commentSchema = new mongoose.Schema(
 //   {
 //     body:String,
-	
+
 // },
 //   { timestamps: true }
 // )
@@ -1829,7 +2025,7 @@ console.log(new Date("2021-09-24T06:34:22.462Z").getMonth()+1)//"2021-09-19T19:1
  //       type:Number,
  ////       required: true,
  //   },
-   
+
 
 //})
 
@@ -1849,11 +2045,11 @@ console.log(new Date("2021-09-24T06:34:22.462Z").getMonth()+1)//"2021-09-19T19:1
 // 			await posts.create({
 // 			Author:authors._id,
 // 			Comments:comments._id
-// 			}) 
+// 			})
 // 		}
-		
+
 // 	}
-	
+
 // }
 
 // saveComment()
@@ -1870,11 +2066,10 @@ console.log(new Date("2021-09-24T06:34:22.462Z").getMonth()+1)//"2021-09-19T19:1
 //		console.log(ddd)
 //	}else{
 //		console.log('not found')
-//	}			
+//	}
 //})
 //.catch((err)=>{
 //	if(err){
 //		console.log(err)
 //	}
-//}) 
-
+//})

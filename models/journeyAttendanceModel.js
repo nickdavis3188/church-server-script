@@ -1,11 +1,24 @@
 const mongoose = require('mongoose');
 const journeyAttendanceSchema = mongoose.Schema({
+    MemberId:{
+         type: mongoose.Schema.ObjectId,
+         ref: 'Members'
+     },
     JourneyDate:{
-      type:Date 
-    }, 
+      type:Date
+    },
     JourneyId:{
        type: mongoose.Schema.ObjectId,
        ref: 'journey'
+   },
+   Status:{
+      type: String,
+      enum: ['New','Repeated'],
+      default: 'New'
+    },
+	AdminId:{
+       type: mongoose.Schema.ObjectId,
+       ref: 'admin'
    },
 },
 {
@@ -13,22 +26,5 @@ const journeyAttendanceSchema = mongoose.Schema({
   toObject: { virtuals: true },
 });
 
-// journeyAttendanceSchema.pre(/^find/, function (next) {
 
-//     this.populate({
-//       path:'MemberID',
-//       select: 'Firstname Surname ImageUrl _id',
-//     });
-//     next()
-//   });
-
-  // Author.
-  // findOne().
-  // populate({
-  //   path: 'posts',
-  //   populate: {
-  //     path: ' JourneyId'
-  //   }
-  // }).
-  // exec
 module.exports = mongoose.model('attendance',journeyAttendanceSchema);

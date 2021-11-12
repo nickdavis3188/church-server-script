@@ -6,12 +6,12 @@ const authController = require('../controllers/authController');
 const router = express.Router();
 router.post(
   '/getSingleMember',
-  membersController.singleMember 
+  membersController.singleMember
 );
 
 router.post(
   '/getSingleMemById',
-  membersController.idSearch 
+  membersController.idSearch
 );
 
 router.post(
@@ -41,7 +41,37 @@ router.post(
   membersController.deleteMember
 );
 
-router.post('/fuploads',membersController.singleFile)
-  
+
+router.post(
+  '/bulkUpdateSearch',
+  membersController.bulkUpdateSearchData
+);
+
+router.post(
+  '/bulkUpdate',
+  membersController.bulkUpdate
+);
+
+//
+// router.post('/test',membersController.test)
+router.post(
+  '/checkJourneyM',
+  membersController.cheackJourney
+);
+
+router.post(
+  '/setNJourney',
+  membersController.setNJourney 
+);
+
+router.post(
+  '/journeyAttendSecond',
+  membersController.journeyDateCheck,
+  membersController.journeyAttendSecond 
+);
+router.post(
+  '/confirmJourney',
+  membersController.confirmJourney 
+);
 
 module.exports = router;

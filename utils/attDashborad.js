@@ -1,1 +1,4 @@
-"hello" 
+const loopsFilter = {
+	
+}
+module.exports = loopsFilter

@@ -4,7 +4,7 @@ const JourneyModel = require('../models/JourneyModel')
 
 const memberSchema = mongoose.Schema(
   {
-    
+
     Firstname: {
       type: String,
       trim: true
@@ -52,36 +52,54 @@ const memberSchema = mongoose.Schema(
     Business: {
       type:String,
 	  trim:true
-     
+
     },
 
     Expertise: {
       type:String,
 	  trim:true
     },
-    DateJoinedTKA:Date,   
+    DateJoinedTKA:Date,
+
     role: {
       type: String,
       enum: ['admin','sub-admin','member'],
       default: 'member',
     },
-   currentJourney: {type:mongoose.Schema.Types.ObjectId,ref:"journey"},
+
+	Primary:{
+		type:String,
+		trim:true
+	},
+
+    currentJourney: {type:mongoose.Schema.Types.ObjectId,ref:"journey"},
+
     nextJourney:{type:mongoose.Schema.Types.ObjectId,ref:"journey"},
+	
+	SincurrentJourney: {type:mongoose.Schema.Types.ObjectId,ref:"journey"},
+    SinnextJourney:{type:mongoose.Schema.Types.ObjectId,ref:"journey"},
+	
     journeyAttend:[{type:mongoose.Schema.Types.ObjectId,ref:"attendance"}],
-    memberStatus:String,
+	
+	memberStatus:{
+      type: String,
+      enum: ['new','Repeated'],
+      default: 'new'
+    },
+   
     // password:String,
     monthCreated:Number,
     Year:Number,
   },{ timestamps: true });
-  
+
 	memberSchema.post('find', async function(docs) {
 	  for (let doc of docs) {
-		if (doc.isPublic) {
-		  await doc.populate('currentJourney')
-		}
+  		if (doc.isPublic) {
+  		  await doc.populate('currentJourney')
+  		}
 	  }
 	});
-	// 
+	//
   memberSchema.pre('save', function (next) {
     // this.password = this.Surname;
     this.monthCreated =  new Date().getMonth() +1 ;

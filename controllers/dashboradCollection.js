@@ -740,7 +740,7 @@ function filterAttendance(data,selectedYear){
 	journey101.push((arrrM11.length !== 0?arrrM11.length:0))
 	journey101.push((arrrM12.length !== 0?arrrM12.length:0))
 	
-	console.log('month9101',arrrM9)
+	// console.log('month9101',arrrM9)
 	//Pushing journey 201
 
 	journey201.push((arrr2M1.length !== 0?arrr2M1.length:0))
@@ -755,7 +755,7 @@ function filterAttendance(data,selectedYear){
 	journey201.push((arrr2M10.length !== 0?arrr2M10.length:0))
 	journey201.push((arrr2M11.length !== 0?arrr2M11.length:0))
 	journey201.push((arrr2M12.length !== 0?arrr2M12.length:0))
-	console.log('month9201',arrr2M9)
+	// console.log('month9201',arrr2M9)
 	
 	//Pushing journey 202
 	
@@ -771,7 +771,7 @@ function filterAttendance(data,selectedYear){
 	journey202.push((arrr3M10.length !== 0?arrr3M10.length:0))
 	journey202.push((arrr3M11.length !== 0?arrr3M11.length:0))
 	journey202.push((arrr3M12.length !== 0?arrr3M12.length:0))
-	console.log('month9202',arrr3M9)
+	// console.log('month9202',arrr3M9)
 	
 	//Pushing journey 301
 	
@@ -787,7 +787,7 @@ function filterAttendance(data,selectedYear){
 	journey301.push((arrr4M10.length !== 0?arrr4M10.length:0))
 	journey301.push((arrr4M11.length !== 0?arrr4M11.length:0))
 	journey301.push((arrr4M12.length !== 0?arrr4M12.length:0))
-	console.log('month9301',arrr4M9)
+	// console.log('month9301',arrr4M9)
 	//Pushing journey 401
 
 	journey401.push((arrr5M1.length !== 0?aarrr5M1.length:0))
@@ -802,7 +802,7 @@ function filterAttendance(data,selectedYear){
 	journey401.push((arrr5M10.length !== 0?arrr5M10.length:0))
 	journey401.push((arrr5M11.length !== 0?arrr5M11.length:0))
 	journey401.push((arrr5M12.length !== 0?arrr5M12.length:0))
-	console.log('month9401',arrr5M9)
+	// console.log('month9401',arrr5M9)
 	
 	if(selectedYear == new Date().getFullYear()){
 		let sli = new Date().getMonth()
@@ -882,7 +882,7 @@ exports.statisticsDashborad = (req, res, next) => {
 		if(memsData.length >= 1){
 			//console.log(memsData)
 			let maindd = dashboradFilter(memsData,req.body.ya)
-			console.log('dsh',maindd)
+			// console.log('dsh',maindd)
 			res.status(200).json({
 				status:'success',
 				data:maindd
@@ -909,9 +909,9 @@ exports.attendanceDashborad = async(req, res, next) => {
 			}
 		})
 	.exec()
-	console.log(req.body.ya)
+	// console.log(req.body.ya)
 	const attResult = filterAttendance(allMembers,req.body.ya)
-	console.log(attResult)
+	// console.log(attResult)
 	res.status(200).json({
 	 status:'success',
 	 data:attResult
@@ -921,5 +921,4 @@ exports.attendanceDashborad = async(req, res, next) => {
 	 // data:allMembers
 	// })
 
-	
 }
