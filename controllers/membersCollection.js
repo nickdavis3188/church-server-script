@@ -30,10 +30,9 @@ const fileFilter = (req,file,cb)=>{
 
 exports.upload = multer({storage:storage,fileFilter:fileFilter})
 
-//////////////////////////////////////////////
 
 
-/////////////////////////////////////////////////////////////
+
 //Code to resize image and store as jpg
 exports.resizeUserPhoto = catchAsync(async (req, res, next) => {
   if (!req.file) return next();
@@ -827,7 +826,7 @@ exports.cheackJourney = async (req, res, next) => {
 				
 				// console.log('monthCompar',currentMonth - journeyMonth)
 				if(confirmMonth >= 6){
-					console.log('6 month and above')
+					// console.log('6 month and above')
 					const updataMember363 = await MemberModel.updateOne(
 					{_id:req.body.id},
 					{
@@ -842,7 +841,7 @@ exports.cheackJourney = async (req, res, next) => {
 					}
 				}else if(confirmMonth >= 3){
 					
-					console.log('3 month and above')
+					// console.log('3 month and above')
 					const updataMember364 = await MemberModel.updateOne(
 						{_id:req.body.id},
 						{
@@ -856,7 +855,7 @@ exports.cheackJourney = async (req, res, next) => {
 						})
 					}
 				}else{
-					console.log('no month and above')
+					// console.log('no month and above')
 					res.status(200).json({
 						status:'success',
 						code:0
@@ -910,7 +909,7 @@ exports.setNJourney = async (req, res, next) => {
 
 exports.journeyAttendSecond = async (req, res, next) => {
 	
-	const sinMem = await MemberModel.find({_id:req.body.id})
+	const sinMem2 = await MemberModel.find({_id:req.body.id})
 		.populate('currentJourney')
 		.populate('nextJourney')
 		.populate({
@@ -923,7 +922,7 @@ exports.journeyAttendSecond = async (req, res, next) => {
 		if(req.dateAttain){
 			// console.log(req.dateAttain)
 			const journey = [1,2,3,4,5];
-			const attainedMember = await MemberModel.findById(sinMem[0]._id);
+			const attainedMember = await MemberModel.findById(sinMem2[0]._id);
 			if(attainedMember){
 
 				const currentJourney = await JourneyModel.find({_id:attainedMember.SincurrentJourney})
