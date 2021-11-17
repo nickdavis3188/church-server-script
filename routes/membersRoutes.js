@@ -56,6 +56,7 @@ router.post(
 // router.post('/test',membersController.test)
 router.post(
   '/checkJourneyM',
+  membersController.cheackSinJourney,
   membersController.cheackJourney
 );
 
