@@ -11,6 +11,7 @@ const {DATABASE_LOCAL,DB_URL} = process.env;
 //let DB= (process.env.NODE_ENV !== "production")?DB_URL:DATABASE_LOCAL
 let DB2 = 'mongodb://localhost:27017/DTMDMS'
 let DB = 'mongodb+srv://Dtmdms:5XnU9tD5tP9XIVfw@dtmdms.li78v.mongodb.net/Dtmdms?retryWrites=true&w=majority'
+//let DB = 'mongodb+srv://Dtmdms:5XnU9tD5tP9XIVfw@dtmdms.li78v.mongodb.net/Dtmdms?retryWrites=true&w=majority'
 //let DB = 'mongodb+srv://nick:8YloyZM18f0Wkg7n@cluster0.atigc.mongodb.net/DTMDMS?retryWrites=true&w=majority';
 //let DB = process.env.DB_URL;
 //if (process.env.NODE_ENV === 'production') {
