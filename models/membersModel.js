@@ -30,7 +30,9 @@ const memberSchema = mongoose.Schema(
       type:String,
 	  trim:true
     },
-    PhoneNo:Number,
+	
+    PhoneNo:String,
+	
     Sex: {
         type:String,
         trim:true

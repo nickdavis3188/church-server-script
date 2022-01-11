@@ -276,8 +276,8 @@ exports.membersBulkUpload = async (req,res,next)=>{
 				e.DOB = Number.isInteger(e.DOB)?ExcelDateToJSDate(e.DOB):e.DOB;
 				e.WeddingAnniversary = Number.isInteger(e.WeddingAnniversary)?ExcelDateToJSDate(e.WeddingAnniversary):e.WeddingAnniversary;
 				e.DateJoinedTKA = Number.isInteger(e.DateJoinedTKA)?ExcelDateToJSDate(e.DateJoinedTKA):e.DateJoinedTKA;
-				e.Primary = e.Firstname.toUpperCase() + e.Surname.toUpperCase(),
-				//let mydata = [e]
+				e.Primary = e.Firstname + e.Surname
+			
 				MemberModel.insertMany(e);
 
 			})
@@ -287,32 +287,20 @@ exports.membersBulkUpload = async (req,res,next)=>{
 				status:'success',
 				message:'Bulk upload successful'
 			})
-			// for(let i = 0; i < maindata.length;i++){
-				// MemberModel.find({RegNumber:maindata[i].RegNumber},(err,data22)=>{
-					// if(data22.length >= 1){
-						// res.status(500).json({
-							// status:'fail',
-							// message:'reg exist',
-						//	data:data22
-						// })
-
-					// }else{
-
-					// }
-				// })
-			// }
-
-
-
-
-
+			
+		}else{
+			res.status(404).json({
+				status:'NOTFOUND',
+				message:'File not send to the server.'
+			})
 		}
-		return next(new AppError('File not found',404))
+		
 	} catch (error) {
 		if(error){
+			console.log(error)
 			res.status(500).json({
 				status:'fail',
-				message:error
+				message:'XLSX validation faild'
 			})
 		}
 	}

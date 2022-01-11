@@ -9,36 +9,36 @@ const dashboradFilter = (data,selectedYear)=>{
 	var totalMalePreMonth = []
 	var totalFemalePreMonth = []
 	
-	const yearFilterdData = data.filter((e)=> new Date(e.createdAt).getFullYear() == selectedYear)
+	const yearFilterdData = data.filter((e)=> new Date(e.DateJoinedTKA).getFullYear() == selectedYear)
 	
 	//female
-	const femaleJan = yearFilterdData.filter((e)=> e.Sex =='Female' || e.Sex =='female' || e.Sex =='FEMALE').filter((e)=> e.monthCreated ==1)
-	const femaleFeb = yearFilterdData.filter((e)=> e.Sex =='Female' || e.Sex =='female' || e.Sex =='FEMALE').filter((e)=> e.monthCreated ==2)
-	const femaleMac = yearFilterdData.filter((e)=> e.Sex =='Female' || e.Sex =='female' || e.Sex =='FEMALE').filter((e)=> e.monthCreated ==3)
-	const femaleApl = yearFilterdData.filter((e)=> e.Sex =='Female' || e.Sex =='female' || e.Sex =='FEMALE').filter((e)=> e.monthCreated ==4)
-	const femaleMy = yearFilterdData.filter((e)=> e.Sex =='Female' || e.Sex =='female' || e.Sex =='FEMALE').filter((e)=> e.monthCreated ==5)
-	const femaleJn = yearFilterdData.filter((e)=> e.Sex =='Female' || e.Sex =='female' || e.Sex =='FEMALE').filter((e)=> e.monthCreated ==6)
-	const femaleJl = yearFilterdData.filter((e)=> e.Sex =='Female' || e.Sex =='female' || e.Sex =='FEMALE').filter((e)=> e.monthCreated ==7)
-	const femaleAug = yearFilterdData.filter((e)=> e.Sex =='Female' || e.Sex =='female' || e.Sex =='FEMALE').filter((e)=> e.monthCreated ==8)
-	const femaleSep = yearFilterdData.filter((e)=> e.Sex =='Female' || e.Sex =='female' || e.Sex =='FEMALE').filter((e)=> e.monthCreated ==9)
-	const femaleOct = yearFilterdData.filter((e)=> e.Sex =='Female' || e.Sex =='female' || e.Sex =='FEMALE').filter((e)=> e.monthCreated ==10)
-	const femaleNov = yearFilterdData.filter((e)=> e.Sex =='Female' || e.Sex =='female' || e.Sex =='FEMALE').filter((e)=> e.monthCreated ==11)
-	const femaleDec = yearFilterdData.filter((e)=> e.Sex =='Female' || e.Sex =='female' || e.Sex =='FEMALE').filter((e)=> e.monthCreated ==12)
-	
+	const femaleJan = yearFilterdData.filter((e)=> e.Sex =='Female' || e.Sex =='female' || e.Sex =='FEMALE').filter((e)=>e.DateJoinedTKA?new Date(e.DateJoinedTKA).getMonth()+1==1:'')
+	const femaleFeb = yearFilterdData.filter((e)=> e.Sex =='Female' || e.Sex =='female' || e.Sex =='FEMALE').filter((e)=>e.DateJoinedTKA?new Date(e.DateJoinedTKA).getMonth()+1 ==2:'')
+	const femaleMac = yearFilterdData.filter((e)=> e.Sex =='Female' || e.Sex =='female' || e.Sex =='FEMALE').filter((e)=>e.DateJoinedTKA?new Date(e.DateJoinedTKA).getMonth()+1==3:'')
+	const femaleApl = yearFilterdData.filter((e)=> e.Sex =='Female' || e.Sex =='female' || e.Sex =='FEMALE').filter((e)=>e.DateJoinedTKA?new Date(e.DateJoinedTKA).getMonth()+1 ==4:'')
+	const femaleMy = yearFilterdData.filter((e)=> e.Sex =='Female' || e.Sex =='female' || e.Sex =='FEMALE').filter((e)=>e.DateJoinedTKA?new Date(e.DateJoinedTKA).getMonth()+1 ==5:'')
+	const femaleJn = yearFilterdData.filter((e)=> e.Sex =='Female' || e.Sex =='female' || e.Sex =='FEMALE').filter((e)=>e.DateJoinedTKA?new Date(e.DateJoinedTKA).getMonth()+1==6:'')
+	const femaleJl = yearFilterdData.filter((e)=> e.Sex =='Female' || e.Sex =='female' || e.Sex =='FEMALE').filter((e)=>e.DateJoinedTKA?new Date(e.DateJoinedTKA).getMonth()+1 ==7:'')
+	const femaleAug = yearFilterdData.filter((e)=> e.Sex =='Female' || e.Sex =='female' || e.Sex =='FEMALE').filter((e)=>e.DateJoinedTKA?new Date(e.DateJoinedTKA).getMonth()+1 ==8:'')
+	const femaleSep = yearFilterdData.filter((e)=> e.Sex =='Female' || e.Sex =='female' || e.Sex =='FEMALE').filter((e)=>e.DateJoinedTKA?new Date(e.DateJoinedTKA).getMonth()+1 ==9:'')
+	const femaleOct = yearFilterdData.filter((e)=> e.Sex =='Female' || e.Sex =='female' || e.Sex =='FEMALE').filter((e)=>e.DateJoinedTKA?new Date(e.DateJoinedTKA).getMonth()+1==10:'')
+	const femaleNov = yearFilterdData.filter((e)=> e.Sex =='Female' || e.Sex =='female' || e.Sex =='FEMALE').filter((e)=>e.DateJoinedTKA?new Date(e.DateJoinedTKA).getMonth()+1==11:'')
+	const femaleDec = yearFilterdData.filter((e)=> e.Sex =='Female' || e.Sex =='female' || e.Sex =='FEMALE').filter((e)=>e.DateJoinedTKA?new Date(e.DateJoinedTKA).getMonth()+1==12:'')
+
 	//male
-	const maleJan = yearFilterdData.filter((e)=> e.Sex =='Male'|| e.Sex =='male' || e.Sex =='MALE').filter((e)=> e.monthCreated ==1)
-	const maleFeb = yearFilterdData.filter((e)=> e.Sex =='Male' || e.Sex =='male' || e.Sex =='MALE').filter((e)=> e.monthCreated ==2)
-	const maleMac = yearFilterdData.filter((e)=> e.Sex =='Male' || e.Sex =='male' || e.Sex =='MALE').filter((e)=> e.monthCreated ==3)
-	const maleApl = yearFilterdData.filter((e)=> e.Sex =='Male' || e.Sex =='male' || e.Sex =='MALE').filter((e)=> e.monthCreated ==4)
-	const maleMy = yearFilterdData.filter((e)=> e.Sex =='Male' || e.Sex =='male' || e.Sex =='MALE').filter((e)=> e.monthCreated ==5)
-	const maleJn = yearFilterdData.filter((e)=> e.Sex =='Male' || e.Sex =='male' || e.Sex =='MALE').filter((e)=> e.monthCreated ==6)
-	const maleJl = yearFilterdData.filter((e)=> e.Sex =='Male' || e.Sex =='male' || e.Sex =='MALE').filter((e)=> e.monthCreated ==7)
-	const maleAug = yearFilterdData.filter((e)=> e.Sex =='Male' || e.Sex =='male' || e.Sex =='MALE').filter((e)=> e.monthCreated ==8)
-	const maleSep = yearFilterdData.filter((e)=> e.Sex =='Male' || e.Sex =='male' || e.Sex =='MALE').filter((e)=> e.monthCreated ==9)
-	const maleOct = yearFilterdData.filter((e)=> e.Sex =='Male' || e.Sex =='male' || e.Sex =='MALE').filter((e)=> e.monthCreated ==10)
-	const maleNov = yearFilterdData.filter((e)=> e.Sex =='Male' || e.Sex =='male' || e.Sex =='MALE').filter((e)=> e.monthCreated ==11)
-	const maleDec = yearFilterdData.filter((e)=> e.Sex =='Male' || e.Sex =='male' || e.Sex =='MALE').filter((e)=> e.monthCreated ==12)
-	
+	const maleJan = yearFilterdData.filter((e)=> e.Sex =='Male'|| e.Sex =='male' || e.Sex =='MALE').filter((e)=>e.DateJoinedTKA?new Date(e.DateJoinedTKA).getMonth()+1==1:'')
+	const maleFeb = yearFilterdData.filter((e)=> e.Sex =='Male' || e.Sex =='male' || e.Sex =='MALE').filter((e)=>e.DateJoinedTKA?new Date(e.DateJoinedTKA).getMonth()+1==2:'')
+	const maleMac = yearFilterdData.filter((e)=> e.Sex =='Male' || e.Sex =='male' || e.Sex =='MALE').filter((e)=>e.DateJoinedTKA?new Date(e.DateJoinedTKA).getMonth()+1 ==3:'')
+	const maleApl = yearFilterdData.filter((e)=> e.Sex =='Male' || e.Sex =='male' || e.Sex =='MALE').filter((e)=>e.DateJoinedTKA?new Date(e.DateJoinedTKA).getMonth()+1==4:'')
+	const maleMy = yearFilterdData.filter((e)=> e.Sex =='Male' || e.Sex =='male' || e.Sex =='MALE').filter((e)=>e.DateJoinedTKA?new Date(e.DateJoinedTKA).getMonth()+1==5:'')
+	const maleJn = yearFilterdData.filter((e)=> e.Sex =='Male' || e.Sex =='male' || e.Sex =='MALE').filter((e)=>e.DateJoinedTKA?new Date(e.DateJoinedTKA).getMonth()+1==6:'')
+	const maleJl = yearFilterdData.filter((e)=> e.Sex =='Male' || e.Sex =='male' || e.Sex =='MALE').filter((e)=>e.DateJoinedTKA?new Date(e.DateJoinedTKA).getMonth()+1 ==7:'')
+	const maleAug = yearFilterdData.filter((e)=> e.Sex =='Male' || e.Sex =='male' || e.Sex =='MALE').filter((e)=>e.DateJoinedTKA?new Date(e.DateJoinedTKA).getMonth()+1 ==8:'')
+	const maleSep = yearFilterdData.filter((e)=> e.Sex =='Male' || e.Sex =='male' || e.Sex =='MALE').filter((e)=>e.DateJoinedTKA?new Date(e.DateJoinedTKA).getMonth()+1 ==9:'')
+	const maleOct = yearFilterdData.filter((e)=> e.Sex =='Male' || e.Sex =='male' || e.Sex =='MALE').filter((e)=>e.DateJoinedTKA?new Date(e.DateJoinedTKA).getMonth()+1 ==10:'')
+	const maleNov = yearFilterdData.filter((e)=> e.Sex =='Male' || e.Sex =='male' || e.Sex =='MALE').filter((e)=>e.DateJoinedTKA?new Date(e.DateJoinedTKA).getMonth()+1 ==11:'')
+	const maleDec = yearFilterdData.filter((e)=> e.Sex =='Male' || e.Sex =='male' || e.Sex =='MALE').filter((e)=>e.DateJoinedTKA?new Date(e.DateJoinedTKA).getMonth()+1 ==12:'')
+
 	//male
 	totalMalePreMonth.push((maleJan.length !== 0?maleJan.length:0))
 	totalMalePreMonth.push((maleFeb.length !== 0?maleFeb.length:0))
@@ -68,7 +68,7 @@ const dashboradFilter = (data,selectedYear)=>{
 	totalFemalePreMonth.push((femaleDec.length !== 0?femaleDec.length:0))
 
 	if(selectedYear == new Date().getFullYear()){
-		let sli = new Date().getMonth()
+		let sli = new Date().getMonth() 
 		let finalMale = totalMalePreMonth.slice(0,sli + 1)
 		let finalFemale = totalFemalePreMonth.slice(0,sli + 1)
 		// console.log('as',{male:finalMale,female:finalFemale})
@@ -861,14 +861,7 @@ exports.dashboarStatic =((req, res, next) => {
 			})		
 		}
    })	
-   // .catch((err)=>{
-	   // res.status(500).json({
-		   // status:'fail',
-		   // data:err
-		// })
-   // })
-    
-   
+ 
 })
 
 
@@ -881,7 +874,7 @@ exports.statisticsDashborad = (req, res, next) => {
 	.then((memsData)=>{
 		if(memsData.length >= 1){
 			//console.log(memsData)
-			let maindd = dashboradFilter(memsData,req.body.ya)
+			let maindd = dashboradFilter(memsData,req.body.ya)	
 			// console.log('dsh',maindd)
 			res.status(200).json({
 				status:'success',
@@ -890,13 +883,7 @@ exports.statisticsDashborad = (req, res, next) => {
 		}
 		
 	})
-	// .catch((err)=>{
-	   // res.status(500).json({
-		   // status:'fail',
-		   // data:err
-		// })
-   // })
-	//console.log(memsData)
+	
 		 
 }
 exports.attendanceDashborad = async(req, res, next) => {
@@ -916,9 +903,6 @@ exports.attendanceDashborad = async(req, res, next) => {
 	 status:'success',
 	 data:attResult
 	})
-	// res.status(200).json({
-	 // status:'success',
-	 // data:allMembers
-	// })
+	
 
 }

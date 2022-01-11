@@ -19,21 +19,23 @@ let DB = 'mongodb+srv://Dtmdms:5XnU9tD5tP9XIVfw@dtmdms.li78v.mongodb.net/Dtmdms?
 //}
 
 let myDb = (process.env.NODE_ENV !== "production")?DB2:DB
+mongoose.connect(myDb)
+.then(()=>{console.log('DB Connection Successful')})
+.catch((err)=>{console.log(err)})
 
-mongoose.connect(myDb, {
-  useCreateIndex: true,
-  useFindAndModify: false,
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then((e) =>{
-  return console.log('DB Connection Successful')
-})
-.catch((err) => console.log(err));
+//mongoose.connect(myDb, {
+ // useNewUrlParser: true,
+ // useFindAndModify: false,
+ // useUnifiedTopology: true
+//})
+//.then((e) =>{
+ // return console.log('DB Connection Successful')
+//})
+//.catch((err) => console.log(err));
 
 // Instantiate the HTTP server
 const server = http.createServer(app);
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 
 // Start the HTTP server
 server.listen(port, function () {
