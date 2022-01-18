@@ -304,9 +304,108 @@ exports.membersBulkUpload = async (req,res,next)=>{
 			})
 		}
 	}
+}
+
+exports.attendanceBulkUpload = async (req,res,next)=>{
+	// console.log(req.body)
+	try {
+		if(req.body){
+			
+			const maindata = req.body
+			
+			for(let e = 0; e < maindata.length; e++){
+				
+				if(maindata[e].MemberId){
+					// console.log(req.dateAttain)
+					const journey = [1,2,3,4,5];
+					const attainedMember = await MemberModel.findById(maindata[e].MemberId);
+					// console.log(attainedMember)
+					if(attainedMember){
+
+						const currentJourney = await JourneyModel.find({_id:attainedMember.currentJourney})
+						if(currentJourney.length >= 1){
+
+							const newJourneyAttaindance = await JourneyAttendanceModel.create({
+								MemberId:maindata[e].MemberId,
+							   JourneyDate:maindata[e].JourneyDate,
+							   JourneyId:maindata[e].JourneyId,
+							   AdminId:maindata[e].AdminId
+							})
+
+							if(newJourneyAttaindance){
+
+
+								const currentNextJourney = await JourneyModel.find({_id:attainedMember.nextJourney})
+
+								const currentJourney = await JourneyModel.find({_id:attainedMember.currentJourney})
+
+								let currentNextJourneyIndex = journey.indexOf(currentNextJourney[0].JourneyPriority);
+
+								let currentCurrentJourneyIndex = journey.indexOf(currentJourney[0].JourneyPriority);
 
 
 
+								if(currentNextJourneyIndex === 4){
+									const allJourney = await JourneyModel.find({JourneyPriority:6})
+									const updataMember = await MemberModel.updateOne(
+										{_id:attainedMember._id},
+										{
+											$push:{journeyAttend:newJourneyAttaindance._id},
+											$set:{currentJourney:attainedMember.nextJourney, nextJourney:allJourney[0]._id}
+										}
+									)
+									
+								}else if(currentCurrentJourneyIndex === 4 ){
+									const allJourney2 = await JourneyModel.find({JourneyPriority:6})
+									const updataMember2 = await MemberModel.updateOne(
+										{_id:attainedMember._id},
+										{
+											$push:{journeyAttend:newJourneyAttaindance._id},
+											$set:{currentJourney:allJourney2[0]._id}
+										}
+									)
+									
+								}
+								else{
+									const allJourney3 = await JourneyModel.find({})
+									const updataMember3 = await MemberModel.updateOne(
+										{_id:attainedMember._id},
+										{
+											$push:{journeyAttend:newJourneyAttaindance._id},
+											$set:{currentJourney:attainedMember.nextJourney,nextJourney:allJourney3[currentNextJourneyIndex + 1]}
+										}
+									)
+									
+								}
+
+							}
+						}
+					}
+				}
+			}
+			
+			res.status(200).json({
+				status:'success',
+				message:'Bulk upload successful'
+			})
+			
+			
+		}else{
+			res.status(404).json({
+				status:'NOTFOUND',
+				message:'File not send to the server.'
+			})
+		}
+		
+	} catch (error) {
+		if(error){
+			console.log(error)
+			res.status(500).json({
+				status:'fail',
+				message:'XLSX validation faild'
+			})
+		}
+	}
 }
 
 // gchek Journey Date
@@ -329,7 +428,8 @@ exports.journeyDateCheck = async (req,res,next)=>{
 			}
 
 			// console.log('singlrDate',currentOrLastDate.journeyDate)
-			req.dateAttain = currentOrLastDate.journeyDate
+			req.dateAttain = journeyDate[0].journeyDate
+			
 			// GRANT ACCESS TO ROUTE
 			next()
 
@@ -343,12 +443,14 @@ exports.journeyDateCheck = async (req,res,next)=>{
 
 }
 
+
 // Attendace
 
 exports.Attendace = async (req,res,next)=>{
     const {id} = req.body
 
     try {
+	
 		if(req.dateAttain){
 			// console.log(req.dateAttain)
 			const journey = [1,2,3,4,5];
@@ -360,7 +462,7 @@ exports.Attendace = async (req,res,next)=>{
 
 					const newJourneyAttaindance = await JourneyAttendanceModel.create({
 						MemberId:attainedMember._id,
-					   JourneyDate:new Date(req.dateAttain).toLocaleDateString(),
+					   JourneyDate:req.dateAttain,
 					   JourneyId:currentJourney[0]._id,
 					   AdminId:req.body.addId
 					})
@@ -522,6 +624,7 @@ exports.singleMember = (req,res,next)=>{
 		})
 		.catch((err)=>{
 			if(err){
+				console.log(err)
 				res.status(500).json({
 					status:'fail',
 					message:err
@@ -774,6 +877,14 @@ exports.cheackSinJourney = async (req, res, next) => {
 }
 
 
+
+let currentMonthtPass = ()=>{
+	let mth = [1,2,3,4,5,6,7,8,9,10,11,12];
+	let currentMonth = new Date().getMonth() + 1;	
+	let sliceMonth = mth.slice(0,currentMonth - 1);	
+	return sliceMonth.length
+}
+
 exports.cheackJourney = async (req, res, next) => {
 	// console.log(req.body.id)
 	const sin = await MemberModel.find({_id:req.body.id})
@@ -792,34 +903,79 @@ exports.cheackJourney = async (req, res, next) => {
 			const journey = [1,2,3,4,5];
 			const journeyWithNewStatus =  sin[0].journeyAttend.filter((e)=>e.Status == 'New')
 			let lastNew = journeyWithNewStatus[journeyWithNewStatus.length -1]
-			// console.log(lastNew)
+			console.log('lastNew',lastNew)
 			if(lastNew.JourneyId.JourneyPriority < 5){
 				let confirmYear = new Date().getFullYear() - new Date(lastNew.JourneyDate).getFullYear() != 0? new Date().getFullYear()- new Date(lastNew.JourneyDate).getFullYear():0
-				
+				console.log('confirmYear',confirmYear)
 				let currentMonth = new Date().getMonth() + 1;
 				let journeyMonth = new Date(lastNew.JourneyDate).getMonth() + 1;
 				
 				let confirmMonth = currentMonth - journeyMonth != 0 ? currentMonth - journeyMonth:0
 				
-				// const curJourney = await JourneyModel.find({_id:lastNew.JourneyId._id})
-				// let JourneyIndex = journey.indexOf(curJourney[0].JourneyPriority);
-				// let jIndex = JourneyIndex + 2
-				// console.log('JourneyIndex',JourneyIndex)
-				// const JourneyNe = await JourneyModel.findOne({JourneyPriority:journey.indexOf(curJourney[0].JourneyPriority)+2})
-							
-				// console.log('yearCompar',new Date().getFullYear() - new Date(lastNew.JourneyDate).getFullYear())
 				
-				// console.log('currentMonth',new Date().getMonth() + 1)
-				// console.log('journeyMonth',new Date(lastNew.JourneyDate).getMonth() + 1)	
-				
-				// console.log('monthCompar',currentMonth - journeyMonth)
-				if(confirmMonth >= 6){
+				if(confirmYear == 1 ){
+					let currentMonthPassed = currentMonthtPass();
+					let journyMonthLeft = 12 - journeyMonth;
+					let totalMonth = journyMonthLeft + currentMonthPassed;
+					if(totalMonth >= 6){
+					// console.log('6 month and above')
+					const updataMember3633 = await MemberModel.updateOne(
+						{_id:req.body.id},
+						{
+							$set:{memberStatus:'Repeated'}		
+						}
+					)
+					if(updataMember3633.nModified ==1){
+						res.status(200).json({
+							status:'success',
+							code:6
+						})
+					}
+					}else if(totalMonth >= 3){
+						
+						// console.log('3 month and above')
+						const updataMember3644 = await MemberModel.updateOne(
+							{_id:req.body.id},
+							{
+								$set:{memberStatus:'Repeated'}	
+							}
+						)
+						if(updataMember3644.nModified ==1){
+							 res.status(200).json({
+								status:'success',
+								code:3
+							})
+						}
+					}else{
+						// console.log('no month and above')
+						res.status(200).json({
+							status:'success',
+							code:0
+						})
+					}
+					
+				}
+				else if(confirmYear > 1){
+					const updataMember3632 = await MemberModel.updateOne(
+						{_id:req.body.id},
+						{
+							$set:{memberStatus:'Repeated'}		
+						}
+					)
+					if(updataMember3632.nModified ==1){
+						res.status(200).json({
+							status:'success',
+							code:6
+						})
+					}
+				}else{
+					if(confirmMonth >= 6){
 					// console.log('6 month and above')
 					const updataMember363 = await MemberModel.updateOne(
-					{_id:req.body.id},
-					{
-						$set:{memberStatus:'Repeated'}		
-					}
+						{_id:req.body.id},
+						{
+							$set:{memberStatus:'Repeated'}		
+						}
 					)
 					if(updataMember363.nModified ==1){
 						res.status(200).json({
@@ -827,28 +983,30 @@ exports.cheackJourney = async (req, res, next) => {
 							code:6
 						})
 					}
-				}else if(confirmMonth >= 3){
-					
-					// console.log('3 month and above')
-					const updataMember364 = await MemberModel.updateOne(
-						{_id:req.body.id},
-						{
-							$set:{memberStatus:'Repeated'}	
+					}else if(confirmMonth >= 3){
+						
+						// console.log('3 month and above')
+						const updataMember364 = await MemberModel.updateOne(
+							{_id:req.body.id},
+							{
+								$set:{memberStatus:'Repeated'}	
+							}
+						)
+						if(updataMember364.nModified ==1){
+							 res.status(200).json({
+								status:'success',
+								code:3
+							})
 						}
-					)
-					if(updataMember364.nModified ==1){
-						 res.status(200).json({
+					}else{
+						// console.log('no month and above')
+						res.status(200).json({
 							status:'success',
-							code:3
+							code:0
 						})
 					}
-				}else{
-					// console.log('no month and above')
-					res.status(200).json({
-						status:'success',
-						code:0
-					})
-				}				
+				}
+								
 			}else{
 				res.status(200).json({
 					status:'success',
@@ -863,7 +1021,6 @@ exports.cheackJourney = async (req, res, next) => {
 		})
 	}
 }
-
 
 
 
@@ -908,7 +1065,7 @@ exports.journeyAttendSecond = async (req, res, next) => {
 	})
 	if(sinMem.length >= 1){
 		if(req.dateAttain){
-			// console.log(req.dateAttain)
+			// console.log(req.dateAttain
 			const journey = [1,2,3,4,5];
 			const attainedMember = await MemberModel.findById(sinMem2[0]._id);
 			if(attainedMember){

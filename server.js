@@ -19,7 +19,12 @@ let DB = 'mongodb+srv://Dtmdms:5XnU9tD5tP9XIVfw@dtmdms.li78v.mongodb.net/Dtmdms?
 //}
 
 let myDb = (process.env.NODE_ENV !== "production")?DB2:DB
-mongoose.connect(myDb)
+mongoose.connect(myDb,{
+	useNewUrlParser: true,
+	useUnifiedTopology: true,
+	useCreateIndex:true,
+	useFindAndModify:true,
+	})
 .then(()=>{console.log('DB Connection Successful')})
 .catch((err)=>{console.log(err)})
 

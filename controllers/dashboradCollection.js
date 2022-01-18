@@ -2,6 +2,7 @@ const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 //const dashFilter = require('../utils/memberDashboradFilter');
 const Member = require('../models/membersModel');
+const JourneyAttendanceModel = require('../models/journeyAttendanceModel');
 const _ = require('underscore');
 //statistics function
 const dashboradFilter = (data,selectedYear)=>{
@@ -78,25 +79,17 @@ const dashboradFilter = (data,selectedYear)=>{
 	return {Male:totalMalePreMonth,Female:totalFemalePreMonth}
 }
 				
-function filterAttendance(data,selectedYear){
-	
+function filterAttendance(dateFiltrer,selectedYear){
+	// console.log('data',data)
 	var journey101 = []
 	var journey201 = []
 	var journey202 = []
 	var journey301 = []
 	var journey401 = []
-	// console.log('year',selectedYear)
-	const dateFiltrer = data.filter((e)=> new Date(e.createdAt).getFullYear() == selectedYear)
-	// console.log('mem',dateFiltrer)
 	
-	const attendFilter = dateFiltrer.filter((e)=> e.journeyAttend.length >= 1)
-	// console.log('memAttend',attendFilter)
 	
-    const iu =  _.pluck(attendFilter,"journeyAttend")
+	///////////////////////////journey101///////////
 	
-    const iu2 =  _.pluck(iu,"JourneyId")
-	
-	////////////////////////////////////////////Journey 101 /////////////////////////
 	let arrrM1 = []
 	let arrrM2 = []
 	let arrrM3 = []
@@ -110,114 +103,38 @@ function filterAttendance(data,selectedYear){
 	let arrrM11 = []
 	let arrrM12 = []
 	
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 1  && iu[i][k].JourneyId.JourneyPriority == 1 ){
-				arrrM1.push(iu[i][k].JourneyId.JourneyPriority)
-			}
+	const priority1 = dateFiltrer.filter((e)=> e.JourneyId.JourneyPriority == 1)
+	// console.log('priority1',priority1)
+	for(let a = 0; a < priority1.length; a++){
+		if(new Date(priority1[a].JourneyDate).getMonth()+ 1 == 1){
+			arrrM1.push(1)
+		}else if(new Date(priority1[a].JourneyDate).getMonth()+ 1 == 2){
+			arrrM2.push(1)
+		}else if(new Date(priority1[a].JourneyDate).getMonth()+ 1 == 3){
+			arrrM3.push(1)
+		}else if(new Date(priority1[a].JourneyDate).getMonth()+ 1 == 4){
+			arrrM4.push(1)
+		}else if(new Date(priority1[a].JourneyDate).getMonth()+ 1 == 5){
+			arrrM5.push(1)
+		}else if(new Date(priority1[a].JourneyDate).getMonth()+ 1 == 6){
+			arrrM6.push(1)
+		}else if(new Date(priority1[a].JourneyDate).getMonth()+ 1 == 7){
+			arrrM7.push(1)
+		}else if(new Date(priority1[a].JourneyDate).getMonth()+ 1 == 8){
+			arrrM8.push(1)
+		}else if(new Date(priority1[a].JourneyDate).getMonth()+ 1 == 9){
+			arrrM9.push(1)
+		}else if(new Date(priority1[a].JourneyDate).getMonth()+ 1 == 10){
+			arrrM10.push(1)
+		}else if(new Date(priority1[a].JourneyDate).getMonth()+ 1 == 11){
+			arrrM11.push(1)
+		}else if(new Date(priority1[a].JourneyDate).getMonth()+ 1 == 12){
+			arrrM12.push(1)
+		}else{
+			console.logf('non')
 		}
 	}
-	/////////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 2  && iu[i][k].JourneyId.JourneyPriority == 1 ){
-				arrrM2.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	///////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 3  && iu[i][k].JourneyId.JourneyPriority == 1 ){
-				arrrM3.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	////////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 4  && iu[i][k].JourneyId.JourneyPriority == 1 ){
-				arrrM4.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	////////////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 5  && iu[i][k].JourneyId.JourneyPriority == 1 ){
-				arrrM5.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	///////////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 6  && iu[i][k].JourneyId.JourneyPriority == 1 ){
-				arrrM6.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	////////////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 7  && iu[i][k].JourneyId.JourneyPriority == 1 ){
-				arrrM7.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	/////////////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 8  && iu[i][k].JourneyId.JourneyPriority == 1 ){
-				arrrM8.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	////////////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 9  && iu[i][k].JourneyId.JourneyPriority == 1 ){
-				arrrM9.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	/////////////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 10  && iu[i][k].JourneyId.JourneyPriority == 1 ){
-				arrrM10.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	////////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 11  && iu[i][k].JourneyId.JourneyPriority == 1 ){
-				arrrM11.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	////////////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 12  && iu[i][k].JourneyId.JourneyPriority == 1 ){
-				arrrM12.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	////////////////////////////////////////Journey 201//////////////////////////////////////////////////////////
+	///////////////////////////journey201///////////
 	
 	let arrr2M1 = []
 	let arrr2M2 = []
@@ -232,115 +149,38 @@ function filterAttendance(data,selectedYear){
 	let arrr2M11 = []
 	let arrr2M12 = []
 	
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 1  && iu[i][k].JourneyId.JourneyPriority == 2 ){
-				arrr2M1.push(iu[i][k].JourneyId.JourneyPriority)
-			}
+	const priority2 = dateFiltrer.filter((e)=> e.JourneyId.JourneyPriority == 2)
+	// console.log('priority2',priority2)
+	for(let a = 0; a < priority2.length; a++){
+		if(new Date(priority2[a].JourneyDate).getMonth()+ 1 == 1){
+			arrr2M1.push(2)
+		}else if(new Date(priority2[a].JourneyDate).getMonth()+ 1 == 2){
+			arrr2M2.push(2)
+		}else if(new Date(priority2[a].JourneyDate).getMonth()+ 1 == 3){
+			arrr2M3.push(2)
+		}else if(new Date(priority2[a].JourneyDate).getMonth()+ 1 == 4){
+			arrr2M4.push(2)
+		}else if(new Date(priority2[a].JourneyDate).getMonth()+ 1 == 5){
+			arrr2M5.push(2)
+		}else if(new Date(priority2[a].JourneyDate).getMonth()+ 1 == 6){
+			arrr2M6.push(2)
+		}else if(new Date(priority2[a].JourneyDate).getMonth()+ 1 == 7){
+			arrr2M7.push(2)
+		}else if(new Date(priority2[a].JourneyDate).getMonth()+ 1 == 8){
+			arrr2M8.push(2)
+		}else if(new Date(priority2[a].JourneyDate).getMonth()+ 1 == 9){
+			arrr2M9.push(2)
+		}else if(new Date(priority2[a].JourneyDate).getMonth()+ 1 == 10){
+			arrr2M10.push(2)
+		}else if(new Date(priority2[a].JourneyDate).getMonth()+ 1 == 11){
+			arrr2M11.push(2)
+		}else if(new Date(priority2[a].JourneyDate).getMonth()+ 1 == 12){
+			arrr2M12.push(2)
+		}else{
+			console.logf('non')
 		}
 	}
-	/////////////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 2  && iu[i][k].JourneyId.JourneyPriority == 2 ){
-				arrr2M2.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	//////////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 3  && iu[i][k].JourneyId.JourneyPriority == 2 ){
-				arrr2M3.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	////////////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 4  && iu[i][k].JourneyId.JourneyPriority == 2 ){
-				arrr2M4.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	//////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 5  && iu[i][k].JourneyId.JourneyPriority == 2 ){
-				arrr2M5.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	////////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 6  && iu[i][k].JourneyId.JourneyPriority == 2 ){
-				arrr2M6.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	/////////////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 7  && iu[i][k].JourneyId.JourneyPriority == 2 ){
-				arrr2M7.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	///////////////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 8  && iu[i][k].JourneyId.JourneyPriority == 2 ){
-				arrr2M8.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	/////////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 9  && iu[i][k].JourneyId.JourneyPriority == 2 ){
-				arrr2M9.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	/////////////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 10  && iu[i][k].JourneyId.JourneyPriority == 2 ){
-				arrr2M10.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	//////////////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 11  && iu[i][k].JourneyId.JourneyPriority == 2 ){
-				arrr2M11.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	///////////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 12  && iu[i][k].JourneyId.JourneyPriority == 2 ){
-				arrr2M12.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	
-	//////////////////////////////////////Journey 202 ///////////////////////
+	///////////////////////////journey202///////////
 	
 	let arrr3M1 = []
 	let arrr3M2 = []
@@ -355,116 +195,37 @@ function filterAttendance(data,selectedYear){
 	let arrr3M11 = []
 	let arrr3M12 = []
 	
-	
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 1  && iu[i][k].JourneyId.JourneyPriority == 3 ){
-				arrr3M1.push(iu[i][k].JourneyId.JourneyPriority)
-			}
+	const priority3 = dateFiltrer.filter((e)=> e.JourneyId.JourneyPriority == 3)
+	for(let a = 0; a < priority3.length; a++){
+		if(new Date(priority3[a].JourneyDate).getMonth()+ 1 == 1){
+			arrr3M1.push(3)
+		}else if(new Date(priority3[a].JourneyDate).getMonth()+ 1 == 2){
+			arrr3M2.push(3)
+		}else if(new Date(priority3[a].JourneyDate).getMonth()+ 1 == 3){
+			arrr3M3.push(3)
+		}else if(new Date(priority3[a].JourneyDate).getMonth()+ 1 == 4){
+			arrr3M4.push(3)
+		}else if(new Date(priority3[a].JourneyDate).getMonth()+ 1 == 5){
+			arrr3M5.push(3)
+		}else if(new Date(priority3[a].JourneyDate).getMonth()+ 1 == 6){
+			arrr3M6.push(3)
+		}else if(new Date(priority3[a].JourneyDate).getMonth()+ 1 == 7){
+			arrr3M7.push(3)
+		}else if(new Date(priority3[a].JourneyDate).getMonth()+ 1 == 8){
+			arrr3M8.push(3)
+		}else if(new Date(priority3[a].JourneyDate).getMonth()+ 1 == 9){
+			arrr3M9.push(3)
+		}else if(new Date(priority3[a].JourneyDate).getMonth()+ 1 == 10){
+			arrr3M10.push(3)
+		}else if(new Date(priority3[a].JourneyDate).getMonth()+ 1 == 11){
+			arrr3M11.push(3)
+		}else if(new Date(priority3[a].JourneyDate).getMonth()+ 1 == 12){
+			arrr3M12.push(3)
+		}else{
+			console.logf('non')
 		}
 	}
-	////////////////
-	
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 2  && iu[i][k].JourneyId.JourneyPriority == 3 ){
-				arrr3M2.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	///////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 3  && iu[i][k].JourneyId.JourneyPriority == 3 ){
-				arrr3M3.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	////////////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 4  && iu[i][k].JourneyId.JourneyPriority == 3 ){
-				arrr3M4.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	////////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 5  && iu[i][k].JourneyId.JourneyPriority == 3 ){
-				arrr3M5.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	////////////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 6  && iu[i][k].JourneyId.JourneyPriority == 3 ){
-				arrr3M6.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	/////////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 7  && iu[i][k].JourneyId.JourneyPriority == 3 ){
-				arrr3M7.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	//////////////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 8  && iu[i][k].JourneyId.JourneyPriority == 3 ){
-				arrr3M8.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	/////////////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 9  && iu[i][k].JourneyId.JourneyPriority == 3 ){
-				arrr3M9.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	//////////////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 10  && iu[i][k].JourneyId.JourneyPriority == 3 ){
-				arrr3M10.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	///////////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 11  && iu[i][k].JourneyId.JourneyPriority == 3 ){
-				arrr3M11.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	/////////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 12  && iu[i][k].JourneyId.JourneyPriority == 3 ){
-				arrr3M12.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	////////////////////////////////////////Journey 301 ///////////////////
+	///////////////////////////journey301///////////
 	
 	let arrr4M1 = []
 	let arrr4M2 = []
@@ -479,123 +240,37 @@ function filterAttendance(data,selectedYear){
 	let arrr4M11 = []
 	let arrr4M12 = []
 	
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 1  && iu[i][k].JourneyId.JourneyPriority == 4 ){
-				arrr4M1.push(iu[i][k].JourneyId.JourneyPriority)
-			}
+	const priority4 = dateFiltrer.filter((e)=> e.JourneyId.JourneyPriority == 4)
+	for(let a = 0; a < priority4.length; a++){
+		if(new Date(priority4[a].JourneyDate).getMonth()+ 1 == 1){
+			arrr4M1.push(4)
+		}else if(new Date(priority4[a].JourneyDate).getMonth()+ 1 == 2){
+			arrr4M2.push(4)
+		}else if(new Date(priority4[a].JourneyDate).getMonth()+ 1 == 3){
+			arrr4M3.push(4)
+		}else if(new Date(priority4[a].JourneyDate).getMonth()+ 1 == 4){
+			arrr4M4.push(4)
+		}else if(new Date(priority4[a].JourneyDate).getMonth()+ 1 == 5){
+			arrr4M5.push(4)
+		}else if(new Date(priority4[a].JourneyDate).getMonth()+ 1 == 6){
+			arrr4M6.push(4)
+		}else if(new Date(priority4[a].JourneyDate).getMonth()+ 1 == 7){
+			arrr4M7.push(4)
+		}else if(new Date(priority4[a].JourneyDate).getMonth()+ 1 == 8){
+			arrr4M8.push(4)
+		}else if(new Date(priority4[a].JourneyDate).getMonth()+ 1 == 9){
+			arrr4M9.push(4)
+		}else if(new Date(priority4[a].JourneyDate).getMonth()+ 1 == 10){
+			arrr4M10.push(4)
+		}else if(new Date(priority4[a].JourneyDate).getMonth()+ 1 == 11){
+			arrr4M11.push(4)
+		}else if(new Date(priority4[a].JourneyDate).getMonth()+ 1 == 12){
+			arrr4M12.push(4)
+		}else{
+			console.logf('non')
 		}
 	}
-	///////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 2  && iu[i][k].JourneyId.JourneyPriority == 4 ){
-				arrr4M2.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	////////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 3  && iu[i][k].JourneyId.JourneyPriority == 4 ){
-				arrr4M3.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	///////////////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 4  && iu[i][k].JourneyId.JourneyPriority == 4 ){
-				arrr4M4.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	////////////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 5  && iu[i][k].JourneyId.JourneyPriority == 4 ){
-				arrr4M5.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	//////////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 5  && iu[i][k].JourneyId.JourneyPriority == 4 ){
-				arrr4M5.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	////////////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 6  && iu[i][k].JourneyId.JourneyPriority == 4 ){
-				arrr4M6.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	//////////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 7  && iu[i][k].JourneyId.JourneyPriority == 4 ){
-				arrr4M7.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	//////////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 8  && iu[i][k].JourneyId.JourneyPriority == 4 ){
-				arrr4M8.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	////////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 9  && iu[i][k].JourneyId.JourneyPriority == 4 ){
-				arrr4M9.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	///////////////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 10  && iu[i][k].JourneyId.JourneyPriority == 4 ){
-				arrr4M10.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	//////////////////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 11  && iu[i][k].JourneyId.JourneyPriority == 4 ){
-				arrr4M11.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	/////////////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 12  && iu[i][k].JourneyId.JourneyPriority == 4 ){
-				arrr4M12.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	////////////////////////////////Journey 401 /////////////////
+	///////////////////////////journey401///////////
 	
 	let arrr5M1 = []
 	let arrr5M2 = []
@@ -610,122 +285,44 @@ function filterAttendance(data,selectedYear){
 	let arrr5M11 = []
 	let arrr5M12 = []
 	
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 1  && iu[i][k].JourneyId.JourneyPriority == 5 ){
-				arrr5M1.push(iu[i][k].JourneyId.JourneyPriority)
-			}
+	const priority5 = dateFiltrer.filter((e)=> e.JourneyId.JourneyPriority == 5)
+	for(let a = 0; a < priority5.length; a++){
+		if(new Date(priority5[a].JourneyDate).getMonth()+ 1 == 1){
+			arrr5M1.push(5)
+		}else if(new Date(priority5[a].JourneyDate).getMonth()+ 1 == 2){
+			arrr5M2.push(5)
+		}else if(new Date(priority5[a].JourneyDate).getMonth()+ 1 == 3){
+			arrr5M3.push(5)
+		}else if(new Date(priority5[a].JourneyDate).getMonth()+ 1 == 4){
+			arrr5M4.push(5)
+		}else if(new Date(priority5[a].JourneyDate).getMonth()+ 1 == 5){
+			arrr5M5.push(5)
+		}else if(new Date(priority5[a].JourneyDate).getMonth()+ 1 == 6){
+			arrr5M6.push(5)
+		}else if(new Date(priority5[a].JourneyDate).getMonth()+ 1 == 7){
+			arrr5M7.push(5)
+		}else if(new Date(priority5[a].JourneyDate).getMonth()+ 1 == 8){
+			arrr5M8.push(5)
+		}else if(new Date(priority5[a].JourneyDate).getMonth()+ 1 == 9){
+			arrr5M9.push(5)
+		}else if(new Date(priority5[a].JourneyDate).getMonth()+ 1 == 10){
+			arrr5M10.push(5)
+		}else if(new Date(priority5[a].JourneyDate).getMonth()+ 1 == 11){
+			arrr5M11.push(5)
+		}else if(new Date(priority5[a].JourneyDate).getMonth()+ 1 == 12){
+			arrr5M12.push(5)
+		}else{
+			console.logf('non')
 		}
 	}
-	////////////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 2  && iu[i][k].JourneyId.JourneyPriority == 5 ){
-				arrr5M2.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	/////////////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 13&& iu[i][k].JourneyId.JourneyPriority == 5 ){
-				arrr5M3.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	//////////////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 4  && iu[i][k].JourneyId.JourneyPriority == 5 ){
-				arrr5M4.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	////////////////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 5  && iu[i][k].JourneyId.JourneyPriority == 5 ){
-				arrr5M5.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	///////////////////////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 6  && iu[i][k].JourneyId.JourneyPriority == 5 ){
-				arrr5M6.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	//////////////////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 7  && iu[i][k].JourneyId.JourneyPriority == 5 ){
-				arrr5M7.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	/////////////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 8  && iu[i][k].JourneyId.JourneyPriority == 5 ){
-				arrr5M8.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	///////////////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 9  && iu[i][k].JourneyId.JourneyPriority == 5 ){
-				arrr5M9.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	////////////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 10  && iu[i][k].JourneyId.JourneyPriority == 5 ){
-				arrr5M10.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	/////////////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 11  && iu[i][k].JourneyId.JourneyPriority == 5 ){
-				arrr5M11.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
-	/////////////////
-	for (let i = 0; i < iu.length;i++){
-		let ress = iu[i]
-		for(k in iu[i]){
-			if(new Date(iu[i][k].JourneyDate).getMonth()+ 1 == 12  && iu[i][k].JourneyId.JourneyPriority == 5 ){
-				arrr5M12.push(iu[i][k].JourneyId.JourneyPriority)
-			}
-		}
-	}
+	/////////////////////////////////////////////////////////////////////////////
+	
+
 	
 	
 	/////////////////////Push Into Array ///////////////
 
-// var journey101 = []
-// var journey201 = []
-// var journey202 = []
-// var journey301 = []
-// var journey401 = []
+
 	//Pushing journey 101
 	journey101.push((arrrM1.length !== 0?arrrM1.length:0))
 	journey101.push((arrrM2.length !== 0?arrrM2.length:0))
@@ -888,21 +485,40 @@ exports.statisticsDashborad = (req, res, next) => {
 }
 exports.attendanceDashborad = async(req, res, next) => {
 
-	const allMembers = await Member.find({})
-	 .populate({
-			path: 'journeyAttend',
-			populate: {
-			path: ' JourneyId'
-			}
-		})
-	.exec()
-	// console.log(req.body.ya)
-	const attResult = filterAttendance(allMembers,req.body.ya)
-	// console.log(attResult)
-	res.status(200).json({
-	 status:'success',
-	 data:attResult
+	// const allMembers = await Member.find({})
+	 // .populate({
+			// path: 'journeyAttend',
+			// populate: {
+			// path: ' JourneyId'
+			// }
+		// })
+	// .exec()
+	const allJourney = await JourneyAttendanceModel.find({})
+	.populate({
+		path: 'JourneyId'
 	})
+	
+	
+	// console.log(req.body.ya)
+	if(allJourney.length >= 1){
+		// console.log(allJourney)
+		// console.log('lenght',allJourney.length)
+		var fillterdYearData = []
+		
+		for(let f = 0; f < allJourney.length; f++){
+			// console.log('hhh',allJourney[f])
+			if(new Date(allJourney[f].JourneyDate).getFullYear() == req.body.ya){
+				fillterdYearData.push(allJourney[f])
+			}			
+		}
+		const attResult = filterAttendance(fillterdYearData,req.body.ya)
+		// console.log('fillterdYearData',fillterdYearData)
+		res.status(200).json({
+		 status:'success',
+		 data:attResult
+		})
+	}
+	
 	
 
 }

@@ -27,6 +27,12 @@ router.post(
   );
 
 router.post(
+    '/attendUpload',
+    authController.protect,
+    membersController.attendanceBulkUpload
+  );
+
+router.post(
   '/attendance',
   membersController.journeyDateCheck,
   membersController.Attendace
