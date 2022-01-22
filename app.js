@@ -19,8 +19,8 @@ const report = require("./routes/reportRoutes")
 
 const app = express();
 //Body parser
-app.use(express.json({limit:2000000}));
-app.use(express.urlencoded({limit:2000000, extended: true }))
+app.use(express.json({limit:4000000}));
+app.use(express.urlencoded({limit:4000000, extended: true }))
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({ extended: true }));
 
