@@ -417,7 +417,7 @@ exports.journeyDateCheck = async (req,res,next)=>{
 			// console.log('dateJ',journeyDate)
 			const currentOrLastDate = journeyDate[ journeyDate.length -1 ]
 
-			const journeyD = new Date(currentOrLastDate.createdAt).toLocaleDateString()
+			const journeyD = new Date(currentOrLastDate.journeyDate).toLocaleDateString()
 			const currentD = new Date().toLocaleDateString()
 
 			if(currentD !== journeyD){
@@ -1063,7 +1063,7 @@ exports.journeyAttendSecond = async (req, res, next) => {
 			path: ' JourneyId'
 			}
 	})
-	if(sinMem.length >= 1){
+	if(sinMem2.length >= 1){
 		if(req.dateAttain){
 			// console.log(req.dateAttain
 			const journey = [1,2,3,4,5];

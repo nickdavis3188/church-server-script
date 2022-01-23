@@ -27,13 +27,9 @@ exports.getReport = async (req,res,next)=>{
 	if(attend.length >= 1){
 		// console.log(attend)
 		// const jIdFilter = attend.filter((e)=> e.MemberId )
-		const yearFilter = attend.filter((e)=> new Date(e.JourneyDate).getFullYear()== new Date(req.body.date).getFullYear()) 
-		const MonthFilter = yearFilter.filter((e)=> new Date(e.JourneyDate).getMonth()+1 == new Date(req.body.date).getMonth()+1) 
-		const DayFilter = MonthFilter.filter((e)=> new Date(e.JourneyDate).getDate() == new Date(req.body.date).getDate()) 
-		
-		if(DayFilter.length >= 1){
-			let pryfilter = DayFilter.filter((e)=> e.JourneyId.JourneyPriority == req.body.code)
-			
+		const yearFilter = attend.filter((e)=> new Date(e.JourneyDate).getFullYear()== req.body.date) 
+		if(yearFilter.length >= 1){
+			let pryfilter = yearFilter.filter((e)=> e.JourneyId.JourneyPriority == req.body.code)
 			if(pryfilter.length >= 1){
 				// console.log('filt',pryfilter)
 				
@@ -44,14 +40,14 @@ exports.getReport = async (req,res,next)=>{
 			}else{
 				res.status(404).json({
 					status:'fail',
-					message:`${journeyNamess(req.body.code)} Not attended on this Date`
+					message:`${journeyNamess(req.body.code)} Not attended on this Year`
 				})
 			}
-		}else{
 			
+		}else{
 			res.status(404).json({
 				status:'fail',
-				message:'No attendance on this date'
+				message:'No attendance on this year'
 			})
 		}
 	}

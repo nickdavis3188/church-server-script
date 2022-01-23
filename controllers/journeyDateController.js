@@ -49,7 +49,7 @@ exports.journeyDateCheck = async (req,res,next)=>{
 	if(journeyDate.length >= 1){
 		const currentOrLastDate = journeyDate[ journeyDate.length -1 ]
 
-		const journeyD = new Date(currentOrLastDate.createdAt).toLocaleDateString()
+		const journeyD = new Date(currentOrLastDate.journeyDate).toLocaleDateString()
 		const currentD = new Date().toLocaleDateString()
 
 		if(currentD !== journeyD){
@@ -63,11 +63,6 @@ exports.journeyDateCheck = async (req,res,next)=>{
 				message:'Date set...'
 			})
 		}	
-	}else{
-		res.status(404).json({
-			status:'not found',
-			message:'Journey Date Not Set'
-		})
 	}
 	
 	

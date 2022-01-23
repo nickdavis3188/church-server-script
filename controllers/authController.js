@@ -2,7 +2,6 @@ const { promisify } = require('util');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const signToken = require('../utils/signToken');
-const Email = require('../utils/email');
 const Member = require('../models/membersModel');
 const AdminModel = require('../models/adminModel');
 const crypto = require('crypto');
@@ -327,80 +326,25 @@ exports.accessControl = async (req, res, next) => {
 //Code for forgot password
 exports.forgotPassword = async (req, res, next) => {
   //1) Get user based on posted email
-  const { email,host } = req.body;
+  const { email} = req.body;
 //   try {
 	  const user99 = await AdminModel.findOne({ email });
 
 	  if (!user99) {
 		   res.status(404).json({
-			   status:'fail',
-			   message:'There is no user with that email'
-		   })
-	   
+			   status:'notFound',
+			   message:'There is no user with this email'
+		   })	   
+	  }else{
+		  res.status(404).json({
+			   status:'success',
+			   data:user99
+		   })	
 	  }
 	  
-	  let resetLink = `${host}/${user99._id}`
-		// console.log(resetLink)
-    //send reset code through email
-    await new Email(user99, resetLink).sendPasswordReset();
 
-    
-    user99.passwordRE = Date.now() + 60 * 10000;
-    user99.passwordResetExpires = Date.now() + 60 * 10000;
-    await user99.save({ validateBeforeSave: false });
-
-    res.status(200).json({
-      status: 'success',
-      message:'Reset Link has been sent to your Email address, check your inbox'
-    });
-// 	user99.createPassswordResetCode = undefined;
-// 	user99.passwordResetExpires = undefined;
-//   await user99.save({ validateBeforeSave: false });
-//   } catch (error) {
-//     if (error) {
-	
-// 		 res.status(500).json({
-// 		   status:'fail',
-// 		   message:'There was an error sending the email. Try again later!',
-// 		   error
-// 	   })
-      
-//     }
-//   }
 };
 
-//confirm password reset code
-// exports.confirmResetCode = catchAsync(async (req, res, next) => {
-	// try{
-		// check if the code exist
-		  // const user = await AdminModel.findOne({
-			// passwordResetCode: req.params.code,
-			// passwordRE: { $gt: Date.now() },
-		  // });
-
-		  //2) If token  has not expired, and there is user, set new password
-		  // if (!user) {
-			   // res.status(400).json({
-				   // status:'fail',
-				   // message:'Reset code is invalid or has expired'
-			   // })
-		 
-		  // }
-
-		  //GIVE PREMISION
-		  // res.status(200).json({
-			// status: 'success',
-			// message: 'Reset code is valid',
-			// passwordResetCode: req.params.code,
-		  // });
-	// }catch (error) {
-		// res.status(500).json({
-		   // status:'fail',
-		   // data:error
-	    // })
-	// }
- 
-// });
 
 //Code to reset User password
 exports.resetPassword = async (req, res, next) => {
@@ -510,8 +454,7 @@ exports.inviteAdmin = async (req, res, next) => {
 				role,
 				photoUrl:`${req.protocol}://${req.get('host')}/publicFile/admin/${req.file.filename}`
 			  })
-			  // await new Email(newAdmin).sendWelcome();
-			  // console.log(newAdmin)
+			
 			  
 			  res.status(200).json({
 				   status:'success',
