@@ -27,15 +27,33 @@ exports.getReport = async (req,res,next)=>{
 	if(attend.length >= 1){
 		// console.log(attend)
 		// const jIdFilter = attend.filter((e)=> e.MemberId )
-		const yearFilter = attend.filter((e)=> new Date(e.JourneyDate).getFullYear()== req.body.date) 
+		// const yearFilter = attend.filter((e)=> new Date(e.JourneyDate).getFullYear()== req.body.date)
+		
+		let yearFilter = [];
+		
+		for(let i = 0; i < attend.length; i++){
+			if(new Date(attend[i].JourneyDate).getFullYear() == req.body.date){
+				yearFilter.push(attend[i])
+			}
+		}
+		
 		if(yearFilter.length >= 1){
-			let pryfilter = yearFilter.filter((e)=> e.JourneyId.JourneyPriority == req.body.code)
-			if(pryfilter.length >= 1){
+			// let pryfilter = yearFilter.filter((e)=> e.JourneyId.JourneyPriority == req.body.code)
+			
+			let journeyFilter = [];
+			
+			for(let v = 0; v < yearFilter.length; v++){
+				if(yearFilter[v].JourneyId.JourneyPriority == req.body.code){
+					journeyFilter.push(yearFilter[v])
+				}
+			}
+			
+			if(journeyFilter.length >= 1){
 				// console.log('filt',pryfilter)
 				
 				res.status(200).json({
 					status:'success',
-					data:pryfilter
+					data:journeyFilter
 				})
 			}else{
 				res.status(404).json({
