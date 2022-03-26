@@ -258,16 +258,23 @@ exports.memberRegistration = async (req,res,next)=>{
 
 }
 
+
+
+
 exports.membersBulkUpload = async (req,res,next)=>{
 	// console.log(req.body)
 	try {
 		if(req.body){
-			const current = await JourneyModel.find({JourneyPriority:1})
-			const nextj = await JourneyModel.find({JourneyPriority:2})
+
+			
+			const current = await JourneyModel.findOne({JourneyPriority:1})
+			const nextj = await JourneyModel.findOne({JourneyPriority:2})
+			
 			const maindata = req.body
+			
 			maindata.forEach((e)=>{
-				e.currentJourney = current[0]._id;
-				e.nextJourney =nextj[0]._id;
+				e.currentJourney = current._id;
+				e.nextJourney =nextj._id;
 				e.ImageUrl = `${req.protocol}://${req.get('host')}/publicFile/members/default.jpg`,
 				e.role = 'member';
 				e.journeyAttend = [];
@@ -281,13 +288,12 @@ exports.membersBulkUpload = async (req,res,next)=>{
 				MemberModel.insertMany(e);
 
 			})
-
-
+		
 			res.status(200).json({
 				status:'success',
 				message:'Bulk upload successful'
 			})
-			
+
 		}else{
 			res.status(404).json({
 				status:'NOTFOUND',
@@ -305,6 +311,203 @@ exports.membersBulkUpload = async (req,res,next)=>{
 		}
 	}
 }
+
+const attendance = async(member_id,journey_date,journey_id,admin_id)=>{
+	const newJourneyAttaindance = await JourneyAttendanceModel.create({
+		MemberId:member_id,
+	   JourneyDate:journey_date,
+	   JourneyId:journey_id,
+	   AdminId:admin_id
+	})
+	
+	if(newJourneyAttaindance){
+		return newJourneyAttaindance._id
+	}
+}
+
+exports.bulkattendance = async (req,res,next)=>{
+	const {JourneyPriority,data} = req.body
+	
+	try{
+		const journey1 = await JourneyModel.findOne({JourneyPriority:1})
+		const journey2 = await JourneyModel.findOne({JourneyPriority:2})
+		const journey3 = await JourneyModel.findOne({JourneyPriority:3})
+		const journey4 = await JourneyModel.findOne({JourneyPriority:4})
+		const journey5 = await JourneyModel.findOne({JourneyPriority:5})
+		const journey6 = await JourneyModel.findOne({JourneyPriority:6})
+
+		if(JourneyPriority == 1){
+			let newMember = []
+			
+			for (let i = 0; i < data.length; i++) {
+			
+				const all_current_registerd_member = await MemberModel.findOne({RegNumber:data[i].RegNumber})
+				if(!all_current_registerd_member){
+					newMember.push(data[i])
+				}else{
+
+					const attent_result = await attendance(all_current_registerd_member._id,new Date(new Date().toLocaleString().slice(0,9)),journey1._id,req.user._id)
+	
+					await MemberModel.updateOne(
+						{RegNumber:all_current_registerd_member.RegNumber},
+						{
+							$push:{journeyAttend:attent_result},
+							$set:{currentJourney:journey2._id,nextJourney:journey3._id}
+						}
+	
+					)
+				}
+
+			}
+
+			res.status(200).json({
+				status:'success',
+				message:'Bulk journey101 successful',
+				notRegisterd:newMember
+			})
+
+		}else if(JourneyPriority == 2){
+			let newMember = []
+			for (let i = 0; i < data.length; i++) {
+				const registerd_member = await MemberModel.findOne({RegNumber:data[i].RegNumber})
+
+				const cheack_journey = await JourneyAttendanceModel.find({MemberId:registerd_member._id})
+				
+				if(cheack_journey.length < 1){
+					newMember.push(data[i])
+				}else{
+
+					const attent_result2 = await attendance(registerd_member._id,new Date(new Date().toLocaleString().slice(0,9)),journey2._id,req.user._id)
+
+					await MemberModel.updateOne(
+						{RegNumber:registerd_member.RegNumber},
+						{
+							$push:{journeyAttend:attent_result2},
+							$set:{currentJourney:journey3._id,nextJourney:journey4._id}
+						}
+	
+					)
+				}
+				
+			}
+			res.status(200).json({
+				status:'success',
+				message:'Bulk journey201 successful',
+				newMember:newMember,
+				prevJourney:1
+			})
+			
+		}else if (JourneyPriority == 3) {
+			let newMember2 = []
+			for (let i = 0; i < data.length; i++) {
+				const registerd_member1 = await MemberModel.findOne({RegNumber:data[i].RegNumber})
+
+				const cheack_journey = await JourneyAttendanceModel.find({MemberId:registerd_member1._id})
+				
+				if(cheack_journey.length < 2){
+					newMember2.push(data[i])
+				}else{
+					const attent_result3 = await attendance(registerd_member1._id,new Date(new Date().toLocaleString().slice(0,9)),journey3._id,req.user._id)
+
+					await MemberModel.updateOne(
+						{RegNumber:registerd_member1.RegNumber},
+						{
+							$push:{journeyAttend:attent_result3},
+							$set:{currentJourney:journey4._id,nextJourney:journey5._id}
+						}
+	
+					)
+				}
+				
+			}
+			res.status(200).json({
+				status:'success',
+				message:'Bulk journey201 successful',
+				newMember:newMember2,
+				prevJourney:2
+			})
+			
+		}else if(JourneyPriority == 4){
+			let newMember3 = []
+			for (let i = 0; i < data.length; i++) {
+				const registerd_member2 = await MemberModel.findOne({RegNumber:data[i].RegNumber})
+
+				const cheack_journey = await JourneyAttendanceModel.find({MemberId:registerd_member2._id})
+				
+				if(cheack_journey.length < 3){
+					newMember3.push(data[i])
+				}else{
+					const attent_result4 = await attendance(registerd_member2._id,new Date(new Date().toLocaleString().slice(0,9)),journey4._id,req.user._id)
+
+					await MemberModel.updateOne(
+						{RegNumber:registerd_member2.RegNumber},
+						{
+							$push:{journeyAttend:attent_result4},
+							$set:{currentJourney:journey5._id,nextJourney:journey6._id}
+						}
+	
+					)
+				}
+				
+			}
+			res.status(200).json({
+				status:'success',
+				message:'Bulk journey202 successful',
+				newMember:newMember3,
+				prevJourney:3
+			})
+
+		}else if(JourneyPriority == 5){
+			let newMember4 = []
+			for (let i = 0; i < data.length; i++) {
+				const registerd_member3 = await MemberModel.findOne({RegNumber:data[i].RegNumber})
+
+				const cheack_journey = await JourneyAttendanceModel.find({MemberId:registerd_member3._id})
+				
+				if(cheack_journey.length < 4){
+					newMember2.push(data[i])
+				}else{
+					const attent_result5 = await attendance(registerd_member3._id,new Date(new Date().toLocaleString().slice(0,9)),journey4._id,req.user._id)
+
+					await MemberModel.updateOne(
+						{RegNumber:registerd_member3.RegNumber},
+						{
+							$push:{journeyAttend:attent_result5},
+							$set:{currentJourney:journey6._id}
+						}
+	
+					)
+				}
+				
+			}
+			res.status(200).json({
+				status:'success',
+				message:'Bulk journey202 successful',
+				newMember:newMember4,
+				prevJourney:4
+			})
+		}else{
+			res.status(404).json({
+				status:'fail',
+				message:'journey exit not'
+			})
+
+		}
+			
+			
+			
+	
+	} catch (error) {
+		if(error){
+		
+			res.status(500).json({
+				status:'fail',
+				message:'XLSX validation faild'
+			})
+		}
+	}
+}
+
 
 exports.attendanceBulkUpload = async (req,res,next)=>{
 	// console.log(req.body)
@@ -410,15 +613,17 @@ exports.attendanceBulkUpload = async (req,res,next)=>{
 
 // gchek Journey Date
 exports.journeyDateCheck = async (req,res,next)=>{
-	// try {
+
 		const journeyDate = await JourneyDateModel.find({})
 
 		if(journeyDate.length >= 1){
-			// console.log('dateJ',journeyDate)
-			const currentOrLastDate = journeyDate[ journeyDate.length -1 ]
+		
+			const currentOrLastDate = journeyDate[0]
 
-			const journeyD = new Date(currentOrLastDate.journeyDate).toLocaleDateString()
+			const journeyD = new Date(currentOrLastDate.updatedAt).toLocaleDateString()
 			const currentD = new Date().toLocaleDateString()
+
+		
 
 			if(currentD !== journeyD){
 				res.status(404).json({
@@ -427,20 +632,13 @@ exports.journeyDateCheck = async (req,res,next)=>{
 				})
 			}
 
-			// console.log('singlrDate',currentOrLastDate.journeyDate)
 			req.dateAttain = journeyDate[0].journeyDate
 			
 			// GRANT ACCESS TO ROUTE
 			next()
 
 		}
-	// } catch (error) {
-	// 	res.status(500).json({
-	// 		status:'fail',
-	// 		message:console.error()
-	// 	})
-	// }
-
+	
 }
 
 
@@ -452,18 +650,18 @@ exports.Attendace = async (req,res,next)=>{
     try {
 	
 		if(req.dateAttain){
-			// console.log(req.dateAttain)
+			
 			const journey = [1,2,3,4,5];
 			const attainedMember = await MemberModel.findById(id);
 			if(attainedMember){
 
-				const currentJourney = await JourneyModel.find({_id:attainedMember.currentJourney})
-				if(currentJourney.length >= 1){
+				const currentJourney1 = await JourneyModel.findOne({_id:attainedMember.currentJourney})
+				if(currentJourney1){
 
 					const newJourneyAttaindance = await JourneyAttendanceModel.create({
 						MemberId:attainedMember._id,
 					   JourneyDate:req.dateAttain,
-					   JourneyId:currentJourney[0]._id,
+					   JourneyId:currentJourney1._id,
 					   AdminId:req.body.addId
 					})
 
@@ -536,12 +734,13 @@ exports.Attendace = async (req,res,next)=>{
 			}
 		}
 	} catch (error) {
-			if(error){
-				res.status(500).json({
-					status:'fail',
-					message:error
-				})
-			}
+		if(error){
+			console.log('attendError',error)
+			res.status(500).json({
+				status:'fail',
+				message:error
+			})
+		}
 	}
 }
 

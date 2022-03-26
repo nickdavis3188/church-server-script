@@ -25,6 +25,12 @@ router.post(
     authController.protect,
     membersController.membersBulkUpload
   );
+  
+router.post(
+    '/bulkAttendance',
+    authController.protect,
+    membersController.bulkattendance
+  );
 
 router.post(
     '/attendUpload',

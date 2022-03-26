@@ -3,6 +3,7 @@ const AppError = require('../utils/appError');
 //const dashFilter = require('../utils/memberDashboradFilter');
 const Member = require('../models/membersModel');
 const JourneyAttendanceModel = require('../models/journeyAttendanceModel');
+
 const _ = require('underscore');
 //statistics function
 const dashboradFilter = (data,selectedYear)=>{

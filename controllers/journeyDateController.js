@@ -47,11 +47,10 @@ exports.journeyDateCheck = async (req,res,next)=>{
 	const journeyDate = await jDate.find({})
 
 	if(journeyDate.length >= 1){
-		const currentOrLastDate = journeyDate[ journeyDate.length -1 ]
+		const currentOrLastDate = journeyDate[0]
 
-		const journeyD = new Date(currentOrLastDate.journeyDate).toLocaleDateString()
+		const journeyD = new Date(currentOrLastDate.updatedAt).toLocaleDateString()
 		const currentD = new Date().toLocaleDateString()
-
 		if(currentD !== journeyD){
 			res.status(404).json({
 				status:'not found',
